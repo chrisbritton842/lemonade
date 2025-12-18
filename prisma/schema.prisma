@@ -12,3 +12,153 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  id                  String    @id @default(cuid())
+  username            String?   @unique
+  email               String?   @unique
+  displayName         String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  isChild             Boolean   @default(false)
+  parentId            String?
+  parent              User?     @relation("ParentChildren", fields: [parentId],references: [id], onDelete: SetNull)
+  children            User[]    @relation("ParentChildren")
+
+  auth_session        Session[] @relation("UserSessions")
+  key                 Key[]     @relation("UserKeys")
+
+  memberships         Membership[]
+  ownedCoops          Cooperative[] @relation("CoopOwners")
+  tasksAssigned       Task[]    @relation("AssignedTasks")
+  payments            Payment[]
+  childConsents       ParentConsent[]   @relation("ChildConsents")
+  parentConsents      ParentConsent[]   @relation("ParentConsents")
+  auditLogs           AuthAuditLog[]  
+}
+
+model Session {
+  id                  String    @id @unique
+  userId              String
+  user                User      @relation("UserSessions", fields: [userId], references: [id], onDelete: Cascade)
+
+  active_expires      BigInt
+  idle_expires        BigInt
+
+  @@index([userId])
+}
+
+model Key {
+  id                  String    @id
+  passwordHash        String?
+  userId              String    
+  user                User      @relation("UserKeys", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@unique([userId, id])
+}
+
+model Cooperative {
+  id                  String    @id @default(cuid())
+  name                String
+  slug                String
+  description         String?
+  createdById         String
+  createdBy           User      @relation("CoopOwners", fields: [createdById], references: [id], onDelete: Restrict)
+  createdAt           DateTime  @default(now())
+
+  memberships         Membership[]
+
+  tasks               Task[]
+  payments            Payment[]
+
+  @@index([createdById])
+}
+
+model Membership {
+  id                  String    @id @default(cuid())
+  userId              String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coopId              String
+  cooperative         Cooperative  @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+  role                CoopRole  @default(MEMBER)
+  joinDate            DateTime  @default(now())
+  pointsAccrued       Int       @default(0)
+
+  @@unique([userId, coopId])
+  @@index([coopId])
+  @@index([userId])
+}
+
+enum CoopRole {
+  MEMBER
+  BOARD_OF_DIRECTORS
+  PRODUCTION
+  CUSTOMER_SERVICE
+  INVENTORY
+  MARKETING
+  ACCOUNTING
+}
+
+model Task {
+  id                  String    @id @default(cuid())
+  coopId              String
+  cooperative         Cooperative   @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+  title               String
+  description         String?
+  assignedToId        String?
+  assignedTo          User?     @relation("AssignedTasks", fields: [assignedToId], references: [id], onDelete: SetNull)
+  points              Int       @default(1)
+  completed           Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+  dueDate             DateTime?
+
+  @@index([coopId])
+  @@index([assignedToId])
+}
+
+model Payment {
+  id                  String    @id @default(cuid())
+  coopId              String
+  cooperative         Cooperative   @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+  amount              Decimal   @db.Decimal(12, 2)
+  distributed         Boolean   @default(false)
+  distributedAt       DateTime?
+  createdAt           DateTime  @default(now())
+  notes               String?
+  userId              String
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([coopId])
+}
+
+model ParentConsent {
+  id                  String    @id @default(cuid())
+  childId             String
+  child               User      @relation("ChildConsents", fields: [childId], references: [id], onDelete: Cascade)
+  parentId            String
+  parent              User      @relation("ParentConsents", fields: [parentId], references: [id], onDelete: Cascade)
+  consentGiven        Boolean   @default(false)
+  consentAt           DateTime?
+  createdAt           DateTime  @default(now())
+
+  @@unique([childId, parentId])
+}
+
+model AuthAuditLog {
+  id                  String    @id @default(cuid())
+  userId              String?
+  user                User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  event               String    // e.g., "sign_in", "sign_out", "password_reset", "parent_approved"
+  ip                  String?
+  userAgent           String?
+  createdAt           DateTime  @default(now())
+
+  @@index([userId])
+}
+
+

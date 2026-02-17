@@ -35,6 +35,7 @@ const eslintConfig = [
         },
       ],
       "simple-import-sort/exports": "error",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
 ];

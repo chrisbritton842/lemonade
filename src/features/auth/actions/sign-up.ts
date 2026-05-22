@@ -38,6 +38,8 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
         password: formData.get("password"),
     });
 
+    console.log("parsed success:", parsed.success);
+
     if (!parsed.success) {
         const errors = parsed.error.flatten().fieldErrors;
         return { success: false, errors };

@@ -31,6 +31,8 @@ const schema = z.object({
 });
 
 export  const signUpAction = async (_prevState: SignUpState, formData: FormData) => {
+    console.log("SIGNUP ACTION HIT");
+
     const parsed = schema.safeParse({
         username: formData.get("username"),
         password: formData.get("password"),

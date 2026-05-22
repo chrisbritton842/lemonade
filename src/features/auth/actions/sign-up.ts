@@ -54,6 +54,8 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
             parallelism: 1,
         });
 
+        console.log("Password hashed successfully for username:", username);
+
         const user = await prisma.$transaction(async (tx) => {
             const newUser = await tx.user.create({
                 data: {

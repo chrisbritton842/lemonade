@@ -1,8 +1,12 @@
 "use server";
 
 import { hash } from "@node-rs/argon2";
+import { redirect } from "next/navigation";
 import { z } from "zod";
+import { setSessionCookie } from "@/lib/auth/cookies";
+import { createSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
+import { homePagePath } from "@/paths";
 
 export type SignUpState = {
   success: boolean;
@@ -65,11 +69,10 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
             return newUser;
         });
 
-        return {
-            success: true,
-            userId: user.id,
-            errors: {},
-        };
+        const { sessionId, idle_expires } = await createSession(user.id);
+
+        await setSessionCookie(sessionId, idle_expires);
+
     } catch (error: any) {
         if (error.code === "P2002") {
             return {
@@ -82,5 +85,7 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
 
         return { success: false, errors: { general: ["An error occurred during sign up"] } };
     }
+
+    redirect(homePagePath())
 }
 

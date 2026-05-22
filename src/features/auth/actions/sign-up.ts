@@ -58,6 +58,8 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
                 },
             });
 
+            console.log("New user created:", newUser);
+
             await tx.key.create({
                 data: {
                     id: `password:${newUser.id}`,
@@ -65,6 +67,8 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
                     passwordHash,
                 },
             });
+
+            console.log("Password key created for user:", newUser.id);
 
             return newUser;
         });

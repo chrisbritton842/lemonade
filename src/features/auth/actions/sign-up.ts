@@ -31,14 +31,10 @@ const schema = z.object({
 });
 
 export  const signUpAction = async (_prevState: SignUpState, formData: FormData) => {
-    console.log("SIGNUP ACTION HIT");
-
     const parsed = schema.safeParse({
         username: formData.get("username"),
         password: formData.get("password"),
     });
-
-    console.log("parsed success:", parsed.success);
 
     if (!parsed.success) {
         const errors = parsed.error.flatten().fieldErrors;
@@ -54,8 +50,6 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
             parallelism: 1,
         });
 
-        console.log("Password hashed successfully for username:", username);
-
         const user = await prisma.$transaction(async (tx) => {
             const newUser = await tx.user.create({
                 data: {
@@ -63,8 +57,6 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
                     displayName: username,
                 },
             });
-
-            console.log("New user created:", newUser);
 
             await tx.key.create({
                 data: {
@@ -74,8 +66,6 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
                 },
             });
 
-            console.log("Password key created for user:", newUser.id);
-
             return newUser;
         });
 
@@ -84,8 +74,6 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
         await setSessionCookie(sessionId, idle_expires);
 
     } catch (error: any) {
-        console.error("SIGNUP ERROR:", error);
-        
         if (error.code === "P2002") {
             return {
                 success: false,

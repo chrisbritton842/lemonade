@@ -74,6 +74,8 @@ export  const signUpAction = async (_prevState: SignUpState, formData: FormData)
         await setSessionCookie(sessionId, idle_expires);
 
     } catch (error: any) {
+        console.error("SIGNUP ERROR:", error);
+        
         if (error.code === "P2002") {
             return {
                 success: false,

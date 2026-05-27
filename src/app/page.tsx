@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { businessesPagePath,newBusinessPagePath } from "@/paths";
+import { businessesPagePath, newBusinessPagePath } from "@/paths";
 
 const LandingPage = () => {
   return (

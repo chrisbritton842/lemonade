@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 export async function setSessionCookie(sessionId: string, idle_expires: bigint) {
     (await cookies()).set("session", sessionId, {

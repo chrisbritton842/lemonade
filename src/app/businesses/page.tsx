@@ -2,10 +2,10 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { signInPagePath } from "@/paths";
 
-const BusinessesPage = () => {
-    const currentUser = getCurrentUser();
+const BusinessesPage = async () => {
+    const user = await getCurrentUser();
 
-    if (!currentUser) {
+    if (!user) {
         redirect(signInPagePath());
     }
 

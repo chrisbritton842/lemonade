@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { StartBusinessWizard } from "@/features/cooperatives/components/start-business-wizard";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { signInPagePath } from "@/paths";
 
@@ -9,7 +10,7 @@ const NewBusinessPage = async () => {
     redirect(signInPagePath());
   }
   
-  return <h2 className="text-lg">NewBusinessPage</h2>;
+  return <StartBusinessWizard />;
 };
 
 export default NewBusinessPage;

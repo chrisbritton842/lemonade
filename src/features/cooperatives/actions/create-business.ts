@@ -45,6 +45,8 @@ const createBusinessAction = async (formData: FormData) => {
 
     const { name, description } = parsed.data;
     const roles = parsed.data.roles ? parsed.data.roles.split(",").filter(Boolean) : [];
+    const selectedRoles = new Set(roles);
+    selectedRoles.add("BOARD_OF_DIRECTORS");
 
     const baseSlug = slugify(name);
     const slug = `${baseSlug}-${crypto.randomUUID().slice(0, 8)}`;
@@ -58,7 +60,11 @@ const createBusinessAction = async (formData: FormData) => {
             membership: {
                 create: {
                     userId: user.user.id,
-                    role: roles[0] ?? "BOARD_OF_DIRECTORS",
+                    roles: {
+                        create: Array.from(selectedRoles).map((role) => ({
+                            role,
+                        })),
+                    },
                 },
             },
         },

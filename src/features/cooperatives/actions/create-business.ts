@@ -57,7 +57,7 @@ const createBusinessAction = async (formData: FormData) => {
             description,
             slug,
             createdById: user.user.id,
-            membership: {
+            memberships: {
                 create: {
                     userId: user.user.id,
                     roles: {

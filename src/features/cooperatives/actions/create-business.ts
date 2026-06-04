@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { CoopRole } from "@/generated/prisma/enums";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
 import { commandCenterPagePath } from "@/paths";
@@ -45,8 +46,15 @@ const createBusinessAction = async (formData: FormData) => {
 
     const { name, description } = parsed.data;
     const roles = parsed.data.roles ? parsed.data.roles.split(",").filter(Boolean) : [];
-    const selectedRoles = new Set(roles);
-    selectedRoles.add("BOARD_OF_DIRECTORS");
+    const selectedRoles = new Set<CoopRole>();
+    
+    roles.forEach((role) => {
+        if (Object.values(CoopRole).includes(role as CoopRole)) {
+            selectedRoles.add(role as CoopRole);
+        }
+    });
+
+    selectedRoles.add(CoopRole.BOARD_OF_DIRECTORS);
 
     const baseSlug = slugify(name);
     const slug = `${baseSlug}-${crypto.randomUUID().slice(0, 8)}`;

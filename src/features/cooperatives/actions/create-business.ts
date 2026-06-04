@@ -23,7 +23,7 @@ const slugify = (value: string) => {
         .replace(/^-+|-+$/g, "");
 }
 
-const createBusinessAction = async (formData: FormData) => {
+const createBusinessAction = async (formData: FormData): Promise<void> => {
     const user = await getCurrentUser();
 
     if (!user) {
@@ -38,10 +38,7 @@ const createBusinessAction = async (formData: FormData) => {
     });
 
     if (!parsed.success) {
-        return {
-            success: false,
-            errors: parsed.error.flatten().fieldErrors,
-        };
+        throw new Error("Invalid business information. Please check your input and try again.");
     }
 
     const { name, description } = parsed.data;

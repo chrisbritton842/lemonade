@@ -15,6 +15,7 @@ import {
     Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { createBusinessAction } from "../actions/create-business";
 
 const roles = [
     "BOARD_OF_DIRECTORS",
@@ -125,7 +126,8 @@ const StartBusinessWizard = () => {
                     )}
 
                     {step === 3 && (
-                        <Stack gap={4}>
+                        <form action={createBusinessAction}>
+                          <Stack gap={4}>
                             <Heading size="sm">Review Your Information</Heading>
 
                             <Text>
@@ -147,19 +149,39 @@ const StartBusinessWizard = () => {
                                     </Badge>
                                 ))}
                             </HStack>
-                        </Stack>
+
+                            <input type="hidden" name="name" value={form.name} />
+                            <input type="hidden" name="description" value={form.description} />
+                            <input type="hidden" name="salesDate" value={form.salesDate} />
+                            <input type="hidden" name="roles" value={JSON.stringify(form.roles)} />
+
+                            <HStack justify="space-between">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => setStep((s) => s - 1)}
+                                >
+                                    Back
+                                </Button>
+
+                                <Button type="submit" colorPalette="yellow">
+                                    Create Business
+                                </Button>
+                            </HStack>
+                          </Stack>
+                        </form>
                     )}
 
-                    <HStack justify="space-between">
-                        <Button
-                            variant="outline"
-                            disabled={step === 0}
-                            onClick={() => setStep((s) => s - 1)}
-                        >
-                            Back
-                        </Button>
+                    {step < 3 && (
+                        <HStack justify="space-between">
+                            <Button
+                                variant="outline"
+                                disabled={step === 0}
+                                onClick={() => setStep((s) => s - 1)}
+                            >
+                                Back
+                            </Button>
 
-                        {step < 3 ? (
                             <Button
                                 colorPalette="yellow"
                                 onClick={() => setStep((s) => s + 1)}
@@ -167,12 +189,8 @@ const StartBusinessWizard = () => {
                             >
                                 Continue
                             </Button>
-                        ) : (
-                            <Button colorPalette="yellow">
-                                Create Business
-                            </Button>
-                        )}
-                    </HStack>
+                        </HStack>
+                    )}
                 </Stack>
             </Card.Body>
         </Card.Root>

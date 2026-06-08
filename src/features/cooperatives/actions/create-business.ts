@@ -5,8 +5,7 @@ import { z } from "zod";
 import { CoopRole } from "@/generated/prisma/enums";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
-import { commandCenterPagePath } from "@/paths";
-import { signInPagePath } from "@/paths";
+import { commandCenterPagePath, signInPagePath } from "@/paths";
 
 const schema = z.object({
     name: z.string().trim().min(2).max(60),
@@ -14,6 +13,8 @@ const schema = z.object({
     salesDate: z.string().optional(),
     roles: z.string().optional(),
 });
+
+const rolesSchema = z.array(z.nativeEnum(CoopRole));
 
 const slugify = (value: string) => {
     return value
@@ -42,15 +43,14 @@ const createBusinessAction = async (formData: FormData): Promise<void> => {
     }
 
     const { name, description } = parsed.data;
-    const roles = parsed.data.roles ? parsed.data.roles.split(",").filter(Boolean) : [];
-    const selectedRoles = new Set<CoopRole>();
-    
-    roles.forEach((role) => {
-        if (Object.values(CoopRole).includes(role as CoopRole)) {
-            selectedRoles.add(role as CoopRole);
-        }
-    });
 
+    let roles: CoopRole[] = [];
+
+    if (parsed.data.roles) {
+        roles = rolesSchema.parse(JSON.parse(parsed.data.roles));
+    }
+
+    const selectedRoles = new Set<CoopRole>(roles);
     selectedRoles.add(CoopRole.BOARD_OF_DIRECTORS);
 
     const baseSlug = slugify(name);

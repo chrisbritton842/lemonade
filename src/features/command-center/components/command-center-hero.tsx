@@ -6,15 +6,11 @@ import {
     Stack,
     Text,
 } from "@chakra-ui/react";
+import type { CommandCenterCoop, CommandCenterMembership } from "@/features/command-center/types";
 
 type CommandCenterHeroProps = {
-    coop: {
-        name: string;
-        description: string | null;
-    };
-    roles: {
-        role: string;
-    }[];
+    coop: CommandCenterCoop;
+    roles: CommandCenterMembership["roles"];
 };
 
 const roleLabels: Record<string, string> = {

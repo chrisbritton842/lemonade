@@ -1,12 +1,8 @@
 import { Badge, Card, HStack, Stack, Text } from "@chakra-ui/react";
+import type { CommandCenterEvent } from "@/features/command-center/types";
 
 type NextEventBannerProps = {
-    event: {
-        title: string;
-        startsAtLabel: string;
-        location?: string | null;
-        status?: "CONFIRMED" | "PROPOSED" | "NEEDS_APPROVAL";
-    } | null;
+    event: CommandCenterEvent | null;
 };
 
 const statusLabels = {

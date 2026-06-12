@@ -72,6 +72,7 @@ model Cooperative {
 
   tasks    Task[]
   payments Payment[]
+  events   Event[]
 
   @@index([createdById])
 }
@@ -171,4 +172,46 @@ model AuthAuditLog {
   createdAt DateTime @default(now())
 
   @@index([userId])
+}
+
+model Event {
+  id          String @id @default(cuid())
+  coopId      String
+  createdById String
+
+  title       String
+  description String?
+  location    String?
+
+  startsAt    DateTime
+  endsAt      DateTime?
+
+  status      EventStatus @default(PROPOSED)
+  type        EventType
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  coop        Cooperative @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+  @@index([coopId])
+  @@index([createdById])
+  @@index([startsAt])
+}
+
+enum EventStatus {
+  PROPOSED
+  CONFIRMED
+  NEEDS_APPROVAL
+  CANCELLED
+}
+
+enum EventType {
+  SALES_DAY
+  MEETING
+  SUPPLY_RUN
+  PREP_WORK
+  MARKETING_OUTREACH
+  BOARD_MEETING
+  OTHER
 }

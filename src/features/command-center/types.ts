@@ -13,10 +13,11 @@ export type CommandCenterMembership = {
 }
 
 export type CommandCenterEvent = {
+    id: string;
     title: string;
     startsAtLabel: string;
     location?: string | null;
-    status?: "CONFIRMED" | "PROPOSED" | "NEEDS_APPROVAL";
+    status?: "CONFIRMED" | "PROPOSED" | "NEEDS_APPROVAL" | "CANCELLED";
 };
 
 export type CommandCenterTask = {

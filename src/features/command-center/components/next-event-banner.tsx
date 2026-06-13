@@ -9,6 +9,7 @@ const statusLabels = {
     CONFIRMED: "Confirmed",
     PROPOSED: "Proposed",
     NEEDS_APPROVAL: "Needs Approval",
+    CANCELLED: "Cancelled",
 };
 
 const NextEventBanner = ({ event }: NextEventBannerProps) => {

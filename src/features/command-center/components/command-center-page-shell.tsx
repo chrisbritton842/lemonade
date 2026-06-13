@@ -23,7 +23,6 @@ const CommandCenterPageShell = ({
     return (
         <Stack gap={6}>
             <NextEventBanner event={nextEvent} />
-
             <CommandCenterHero coop={coop} roles={membership.roles} />
         </Stack>
     );

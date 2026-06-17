@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { CoopRole } from "@/generated/prisma/enums";
+import { CoopRole, EventStatus, EventType } from "@/generated/prisma/enums";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
 import { commandCenterPagePath, signInPagePath } from "@/paths";
@@ -24,6 +24,11 @@ const slugify = (value: string) => {
         .replace(/^-+|-+$/g, "");
 }
 
+const createSalesDayDateTime = (dateString: string, hour: number) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    return new Date(year, month - 1, day, hour, 0, 0);
+}
+
 const createBusinessAction = async (formData: FormData): Promise<void> => {
     const user = await getCurrentUser();
 
@@ -42,7 +47,7 @@ const createBusinessAction = async (formData: FormData): Promise<void> => {
         throw new Error("Invalid business information. Please check your input and try again.");
     }
 
-    const { name, description } = parsed.data;
+    const { name, description, salesDate } = parsed.data;
 
     let roles: CoopRole[] = [];
 
@@ -55,6 +60,20 @@ const createBusinessAction = async (formData: FormData): Promise<void> => {
 
     const baseSlug = slugify(name);
     const slug = `${baseSlug}-${crypto.randomUUID().slice(0, 8)}`;
+
+    const eventCreate = salesDate
+        ? {
+            create: {
+                createdById: user.user.id,
+                title: "First Sales Day",
+                description: "The first planned lemonade stand sales day.",
+                startsAt: createSalesDayDateTime(salesDate, 10),
+                endsAt: createSalesDayDateTime(salesDate, 12),
+                status: EventStatus.PROPOSED,
+                type: EventType.SALES_DAY,
+            },
+        }
+    : undefined;
 
     const coop = await prisma.cooperative.create({
         data: {
@@ -72,6 +91,7 @@ const createBusinessAction = async (formData: FormData): Promise<void> => {
                     },
                 },
             },
+            events: eventCreate,
         },
     });
 

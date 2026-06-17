@@ -14,7 +14,7 @@ type CommandCenterHeroProps = {
 };
 
 const roleLabels: Record<string, string> = {
-    BOARD_OF_DIRECTORS: "Board",
+    BOARD_OF_DIRECTORS: "Board of Directors",
     PRODUCTION: "Production",
     CUSTOMER_SERVICE: "Customer Service",
     INVENTORY: "Inventory",

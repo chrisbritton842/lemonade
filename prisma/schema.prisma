@@ -122,15 +122,30 @@ model Task {
 
   title        String
   description  String?
+
   assignedToId String?
   assignedTo   User?     @relation("AssignedTasks", fields: [assignedToId], references: [id], onDelete: SetNull)
+
   points       Int       @default(1)
-  completed    Boolean   @default(false)
+  status       TaskStatus @default(AVAILABLE)
+
+  submittedAt  DateTime?
+  verifiedAt   DateTime?
+
   createdAt    DateTime  @default(now())
   dueDate      DateTime?
 
   @@index([coopId])
   @@index([assignedToId])
+  @@index([status])
+}
+
+enum TaskStatus {
+  AVAILABLE
+  ASSIGNED
+  NEEDS_REVIEW
+  COMPLETE
+  CANCELLED
 }
 
 model Payment {

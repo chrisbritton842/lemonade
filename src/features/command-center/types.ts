@@ -20,11 +20,15 @@ export type CommandCenterEvent = {
     status?: "CONFIRMED" | "PROPOSED" | "NEEDS_APPROVAL" | "CANCELLED";
 };
 
+export type CommandCenterTaskStatus = "AVAILABLE" | "ASSIGNED" | "NEEDS_REVIEW" | "COMPLETE" | "CANCELLED";
+
 export type CommandCenterTask = {
     id: string;
     title: string;
-    role: string;
-    status?: string;
+    description: string | null;
+    points: number;
+    status: CommandCenterTaskStatus;
+    dueDateLabel: string | null;
 };
 
 export type CommandCenterProposal = {

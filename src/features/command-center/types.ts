@@ -22,10 +22,13 @@ export type CommandCenterEvent = {
 
 export type CommandCenterTaskStatus = "AVAILABLE" | "ASSIGNED" | "NEEDS_REVIEW" | "COMPLETE" | "CANCELLED";
 
+export type CommandCenterRoleName = "MEMBER" | "BOARD_OF_DIRECTORS" | "PRODUCTION" | "CUSTOMER_SERVICE" | "INVENTORY" | "MARKETING" | "ACCOUNTING";
+
 export type CommandCenterTask = {
     id: string;
     title: string;
     description: string | null;
+    role: CommandCenterRoleName | null;
     points: number;
     status: CommandCenterTaskStatus;
     dueDateLabel: string | null;

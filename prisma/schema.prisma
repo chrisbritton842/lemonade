@@ -126,6 +126,7 @@ model Task {
   assignedToId String?
   assignedTo   User?     @relation("AssignedTasks", fields: [assignedToId], references: [id], onDelete: SetNull)
 
+  role         CoopRole?
   points       Int       @default(1)
   status       TaskStatus @default(AVAILABLE)
 
@@ -138,6 +139,7 @@ model Task {
   @@index([coopId])
   @@index([assignedToId])
   @@index([status])
+  @@index([role])
 }
 
 enum TaskStatus {

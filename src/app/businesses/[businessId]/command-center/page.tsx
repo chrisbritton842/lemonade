@@ -112,6 +112,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         id: task.id,
         title: task.title,
         description: task.description,
+        role: task.role,
         points: task.points,
         status: task.status,
         dueDateLabel: formatDate(task.dueDate),

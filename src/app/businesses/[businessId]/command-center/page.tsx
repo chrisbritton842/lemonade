@@ -118,6 +118,31 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         dueDateLabel: formatDate(task.dueDate),
     }));
 
+    const availableTasks = await prisma.task.findMany({
+        where: {
+            coopId: coop.id,
+            status: "AVAILABLE",
+        },
+        orderBy: [
+            {
+                dueDate: "asc",
+            },
+            {
+                createdAt: "desc",
+            },
+        ],
+    });
+
+    const availableTaskItems = availableTasks.map((task) => ({
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        role: task.role,
+        points: task.points,
+        status: task.status,
+        dueDateLabel: formatDate(task.dueDate),
+    }));
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -132,6 +157,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             }}
             nextEvent={nextEvent}
             tasks={myTaskItems}
+            availableTasks={availableTaskItems}
         />
     );
 };

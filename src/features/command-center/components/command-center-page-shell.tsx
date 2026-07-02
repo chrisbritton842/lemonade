@@ -10,12 +10,14 @@ import type {
 import { CommandCenterHero } from "./command-center-hero";
 import { MyJobsPanel } from "./my-jobs-panel";
 import { NextEventBanner } from "./next-event-banner";
+import { RoleTaskBoard } from "./role-task-board";
 
 type CommandCenterPageShellProps = {
     coop: CommandCenterCoop;
     membership: CommandCenterMembership;
     nextEvent: CommandCenterEvent | null;
     tasks: CommandCenterTask[];
+    availableTasks: CommandCenterTask[];
 };
 
 const CommandCenterPageShell = ({
@@ -23,12 +25,14 @@ const CommandCenterPageShell = ({
     membership,
     nextEvent,
     tasks,
+    availableTasks,
 }: CommandCenterPageShellProps) => {
     return (
         <Stack gap={6}>
             <NextEventBanner event={nextEvent} />
             <CommandCenterHero coop={coop} roles={membership.roles} />
-            < MyJobsPanel coopId={coop.id} tasks={tasks} />
+            <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
+            <MyJobsPanel coopId={coop.id} tasks={tasks} />
         </Stack>
     );
 };

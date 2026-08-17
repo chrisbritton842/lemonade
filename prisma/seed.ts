@@ -1,4 +1,4 @@
-import { TaskStatus } from "../src/generated/prisma/enums";
+import { CoopRole,TaskStatus } from "../src/generated/prisma/enums";
 import { prisma } from "../src/lib/prisma";
 
 const main = async () => {
@@ -62,6 +62,7 @@ const main = async () => {
                 title: "Buy lemons",
                 description: "Get lemons before the sales day.",
                 assignedToId: null,
+                role: CoopRole.INVENTORY,
                 points: 2,
                 status: TaskStatus.AVAILABLE,
             },
@@ -70,6 +71,34 @@ const main = async () => {
                 title: "Count starting cash",
                 description: "Check how much change the stand has before selling.",
                 assignedToId: null,
+                role: CoopRole.ACCOUNTING,
+                points: 2,
+                status: TaskStatus.AVAILABLE,
+            },
+            {
+                coopId: coop.id,
+                title: "Make posters",
+                description: "Create signs for the stand.",
+                assignedToId: null,
+                role: CoopRole.MARKETING,
+                points: 2,
+                status: TaskStatus.AVAILABLE,
+            },
+            {
+                coopId: coop.id,
+                title: "Make social media post",
+                description: "Create a post for social media to promote the stand.",
+                assignedToId: null,
+                role: CoopRole.MARKETING,
+                points: 1,
+                status: TaskStatus.AVAILABLE,
+            },
+            {
+                coopId: coop.id,
+                title: "Mix lemonade",
+                description: "Mix the lemonade for the stand.",
+                assignedToId: null,
+                role: CoopRole.PRODUCTION,
                 points: 2,
                 status: TaskStatus.AVAILABLE,
             },

@@ -1,4 +1,4 @@
-import { CoopRole,TaskStatus } from "../src/generated/prisma/enums";
+import { CoopRole, TaskStatus } from "../src/generated/prisma/enums";
 import { prisma } from "../src/lib/prisma";
 
 const main = async () => {

@@ -34,12 +34,6 @@ export type CommandCenterTask = {
     dueDateLabel: string | null;
 };
 
-export type CommandCenterProposal = {
-    id: string;
-    title: string;
-    status: string;
-};
-
 export type CommandCenterProduct = {
     id: string;
     name: string;
@@ -57,4 +51,45 @@ export type CommandCenterMessage = {
     authorName: string;
     body: string;
     createdAtLabel: string;
+};
+
+export type CommandCenterVoteChoice = "YES" | "NO" | "ABSTAIN";
+
+export type CommandCenterProposalStatus =
+    | "OPEN"
+    | "PASSED"
+    | "FAILED"
+    | "NEEDS_REVIEW"
+    | "APPROVED"
+    | "REJECTED"
+    | "CANCELLED";
+
+export type CommandCenterProposalType =
+    | "GENERAL"
+    | "UPDATE_SALES_DAY_TIME"
+    | "UPDATE_SALES_DAY_LOCATION"
+    | "CREATE_TASK"
+    | "CREATE_PRODUCT"
+    | "UPDATE_PRODUCT"
+    | "DELETE_PRODUCT"
+    | "CREATE_RULE"
+    | "UPDATE_RULE"
+    | "DELETE_RULE"
+    | "UPDATE_NAME"
+    | "UPDATE_LOGO"
+    | "HIRE_MEMBER"
+    | "REMOVE_MEMBER";
+
+export type CommandCenterProposal = {
+    id: string;
+    title: string;
+    description: string | null;
+    type: CommandCenterProposalType;
+    status: CommandCenterProposalStatus;
+    createdByName: string;
+    createdAtLabel: string;
+    yesVotes: number;
+    noVotes: number;
+    abstainVotes: number;
+    currentUserVote: CommandCenterVoteChoice | null;
 };

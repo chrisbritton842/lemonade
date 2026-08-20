@@ -143,6 +143,51 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         dueDateLabel: formatDate(task.dueDate),
     }));
 
+    const proposals = await prisma.proposal.findMany({
+        where: {
+            coopId: coop.id,
+        },
+        include: {
+            createdBy: true,
+            votes: true,
+        },
+        orderBy: [
+            {
+                createdAt: "desc",
+            },
+        ],
+    });
+
+    const proposalItems = proposals.map((proposal) => {
+        const yesVotes = proposal.votes.filter((vote) => vote.choice === "YES").length;
+        const noVotes = proposal.votes.filter((vote) => vote.choice === "NO").length;
+        const abstainVotes = proposal.votes.filter((vote) => vote.choice === "ABSTAIN").length;
+        
+        const currentUserVote = proposal.votes.find(
+            (vote) => vote.userId === currentUser.user.id
+        )?.choice ?? null;
+
+        return {
+            id: proposal.id,
+            title: proposal.title,
+            description: proposal.description,
+            type: proposal.type,
+            status: proposal.status,
+            createdByName:
+                proposal.createdBy?.displayName ??
+                proposal.createdBy?.username ??
+                "A member",
+            createdAtLabel: proposal.createdAt.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+            }),
+            yesVotes,
+            noVotes,
+            abstainVotes,
+            currentUserVote,
+        };
+    });
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -158,6 +203,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             nextEvent={nextEvent}
             tasks={myTaskItems}
             availableTasks={availableTaskItems}
+            proposals={proposalItems}
         />
     );
 };

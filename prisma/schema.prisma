@@ -226,7 +226,8 @@ model Proposal {
   coopId      String
   createdById String?
 
-  comment     String?
+  title       String
+  description String?
   type        ProposalType
   status      ProposalStatus @default(OPEN)
   threshold   ProposalThreshold @default(SIMPLE_MAJORITY)

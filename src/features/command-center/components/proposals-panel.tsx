@@ -12,6 +12,7 @@ import type {
     CommandCenterProposal,
     CommandCenterVoteChoice,
 } from "@/features/command-center/types";
+import { NewProposalDialog } from "./proposals/new-proposal-dialog";
 
 type ProposalsPanelProps = {
     coopId: string;
@@ -67,9 +68,7 @@ const ProposalsPanel = ({ coopId, proposals }: ProposalsPanelProps) => {
                             </Text>
                         </Stack>
 
-                        <Button size="sm" colorPalette="yellow">
-                            New Proposal
-                        </Button>
+                        <NewProposalDialog coopId={coopId} />
                     </HStack>
 
                     {proposals.length === 0 && (

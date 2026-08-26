@@ -60,16 +60,16 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                     </HStack>
 
                     <HStack gap={3} wrap="wrap">
-                        {coop.isMember ? (
+                        <Button asChild colorPalette="yellow" size="sm">
+                            <NextLink href={businessPagePath(coop.id)}>
+                                View Business
+                            </NextLink>
+                        </Button>
+
+                        {coop.isMember && (
                             <Button asChild colorPalette="yellow" size="sm">
                                 <NextLink href={commandCenterPagePath(coop.id)}>
                                     Open Command Center
-                                </NextLink>
-                            </Button>
-                        ) : (
-                            <Button asChild colorPalette="yellow" size="sm">
-                                <NextLink href={businessPagePath(coop.id)}>
-                                    View Business
                                 </NextLink>
                             </Button>
                         )}

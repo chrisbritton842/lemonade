@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { CommandCenterProposalType } from "@/features/command-center/types";
+import { CreateProductProposalForm } from "./forms/create-product-proposal-form";
 import { CreateTaskProposalForm } from "./forms/create-task-proposal-form";
 import { GeneralProposalForm } from "./forms/general-proposal-form";
 import { ProposalTypePicker } from "./proposal-type-picker";
@@ -91,6 +92,14 @@ const NewProposalDialog = ({ coopId }: NewProposalDialogProps) => {
 
                             {selectedType === "CREATE_TASK" && (
                                 <CreateTaskProposalForm
+                                    coopId={coopId}
+                                    onBack={() => setSelectedType(null)}
+                                    onSuccess={closeDialog}
+                                />
+                            )}
+
+                            {selectedType === "CREATE_PRODUCT" && (
+                                <CreateProductProposalForm
                                     coopId={coopId}
                                     onBack={() => setSelectedType(null)}
                                     onSuccess={closeDialog}

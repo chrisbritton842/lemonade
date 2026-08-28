@@ -138,6 +138,9 @@ model Task {
   submittedAt  DateTime?
   verifiedAt   DateTime?
 
+  sourceProposalId String? @unique
+  sourceProposal   Proposal? @relation("ProposalCreatedTask", fields: [sourceProposalId], references: [id], onDelete: SetNull)
+
   createdAt    DateTime  @default(now())
   dueDate      DateTime?
 
@@ -235,6 +238,7 @@ model Proposal {
   payload     Json?
 
   createdProduct Product? @relation("ProposalCreatedProduct")
+  createdTask    Task? @relation("ProposalCreatedTask")
 
   appliedAt   DateTime?
   createdAt   DateTime @default(now())

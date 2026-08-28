@@ -5,7 +5,6 @@ import {
 } from "@/generated/prisma/enums";
 import { applyCreateProductProposal } from "./apply-create-product-proposal";
 import { applyCreateTaskProposal } from "./apply-create-task-proposal";
-import { applyUpdateNameProposal } from "./apply-update-name-proposal";
 
 type TransactionClient = Prisma.TransactionClient;
 
@@ -49,11 +48,6 @@ const applyPassedProposal = async ({
 
     if (proposal.type === ProposalType.CREATE_PRODUCT) {
         await applyCreateProductProposal({ tx, proposal });
-        return;
-    }
-
-    if (proposal.type === ProposalType.UPDATE_NAME) {
-        await applyUpdateNameProposal({ tx, proposal });
         return;
     }
 };

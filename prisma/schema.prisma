@@ -39,6 +39,7 @@ model User {
   childConsents     ParentConsent[] @relation("ChildConsents")
   parentConsents    ParentConsent[] @relation("ParentConsents")
   auditLogs         AuthAuditLog[]
+  jobApplications   JobApplication[]
 }
 
 model Session {
@@ -73,11 +74,12 @@ model Cooperative {
 
   memberships Membership[]
 
-  tasks      Task[]
-  payments   Payment[]
-  events     Event[]
-  proposals  Proposal[]
-  products   Product[]
+  tasks       Task[]
+  payments    Payment[]
+  events      Event[]
+  proposals   Proposal[]
+  products    Product[]
+  jobOpenings JobOpening[]
 
   @@index([createdById])
 }
@@ -239,6 +241,8 @@ model Proposal {
 
   createdProduct Product? @relation("ProposalCreatedProduct")
   createdTask    Task? @relation("ProposalCreatedTask")
+  createdJobOpening JobOpening? @relation("ProposalCreatedJobOpening")
+  hireApplication JobApplication? @relation("ApplicationHireProposal")
 
   appliedAt   DateTime?
   createdAt   DateTime @default(now())
@@ -293,6 +297,53 @@ model Product {
   @@index([isActive])
 }
 
+model JobOpening {
+  id          String @id @default(cuid())
+  coopId      String
+
+  title       String
+  description String?
+  role        CoopRole?
+  status      JobOpeningStatus @default(OPEN)
+
+  sourceProposalId String? @unique
+  sourceProposal   Proposal? @relation("ProposalCreatedJobOpening", fields: [sourceProposalId], references: [id], onDelete: SetNull)
+
+  applications JobApplication[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  coop        Cooperative @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+  @@index([coopId])
+  @@index([status])
+  @@index([role])
+}
+
+model JobApplication {
+  id          String @id @default(cuid())
+  jobOpeningId String
+  applicantId  String
+
+  response     String
+  status       JobApplicationStatus @default(PENDING)
+
+  hireProposalId String? @unique
+  hireProposal Proposal? @relation("ApplicationHireProposal", fields: [hireProposalId], references: [id], onDelete: SetNull)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  jobOpening   JobOpening @relation(fields: [jobOpeningId], references: [id], onDelete: Cascade)
+  applicant    User       @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+
+  @@unique([jobOpeningId, applicantId])
+  @@index([jobOpeningId])
+  @@index([applicantId])
+  @@index([status])
+}
+
 enum EventStatus {
   PROPOSED
   CONFIRMED
@@ -323,7 +374,8 @@ enum ProposalType {
   DELETE_RULE
   UPDATE_NAME
   UPDATE_LOGO
-  HIRE_MEMBER
+  CREATE_JOB_OPENING
+  HIRE_APPLICANT
   REMOVE_MEMBER
 }
 
@@ -349,3 +401,17 @@ enum VoteChoice {
   NO
   ABSTAIN
 }
+
+enum JobOpeningStatus {
+  OPEN
+  CLOSED
+  FILLED
+}
+
+enum JobApplicationStatus {
+  PENDING
+  HIRED
+  REJECTED
+}
+
+

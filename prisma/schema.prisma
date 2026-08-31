@@ -303,7 +303,7 @@ model JobOpening {
 
   title       String
   description String?
-  role        CoopRole?
+  role        CoopRole
   status      JobOpeningStatus @default(OPEN)
 
   sourceProposalId String? @unique

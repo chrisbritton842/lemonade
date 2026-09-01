@@ -77,7 +77,8 @@ export type CommandCenterProposalType =
     | "DELETE_RULE"
     | "UPDATE_NAME"
     | "UPDATE_LOGO"
-    | "HIRE_MEMBER"
+    | "CREATE_JOB_OPENING"
+    | "HIRE_APPLICANT"
     | "REMOVE_MEMBER";
 
 export type CommandCenterProposal = {

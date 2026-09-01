@@ -42,6 +42,11 @@ const proposalTypes: {
         label: "Change Business Name",
         description: "Propose a change to the business name."
     },
+    {
+        type: "CREATE_JOB_OPENING",
+        label: "Create Job Opening",
+        description: "Propose a new job opening."
+    }
 ];
 
 const ProposalTypePicker = ({ onSelectType }: ProposalTypePickerProps) => {

@@ -3,6 +3,7 @@ import {
     ProposalStatus,
     ProposalType,
 } from "@/generated/prisma/enums";
+import { applyCreateJobOpeningProposal } from "./apply-create-job-opening-proposal";
 import { applyCreateProductProposal } from "./apply-create-product-proposal";
 import { applyCreateTaskProposal } from "./apply-create-task-proposal";
 
@@ -48,6 +49,11 @@ const applyPassedProposal = async ({
 
     if (proposal.type === ProposalType.CREATE_PRODUCT) {
         await applyCreateProductProposal({ tx, proposal });
+        return;
+    }
+
+    if (proposal.type === ProposalType.CREATE_JOB_OPENING) {
+        await applyCreateJobOpeningProposal({ tx, proposal });
         return;
     }
 };

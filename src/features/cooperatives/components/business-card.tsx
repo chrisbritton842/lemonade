@@ -7,24 +7,20 @@ import {
     Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import type { BusinessCardCoop } from "@/features/cooperatives/types";
 import {
     businessPagePath,
     commandCenterPagePath,
 } from "@/paths";
+import { ApplyJobOpeningDialog } from "./apply-job-opening-dialog";
 
 type BusinessCardProps = {
-    coop: {
-        id: string;
-        name: string;
-        description: string | null;
-        memberCount: number;
-        taskCount: number;
-        eventCount: number;
-        isMember: boolean;
-    };
+    coop: BusinessCardCoop;
 };
 
 const BusinessCard = ({ coop }: BusinessCardProps) => {
+    const hasOpenJobOpenings = coop.jobOpenings.length > 0;
+
     return (
         <Card.Root>
             <Card.Body>
@@ -35,9 +31,17 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                                 {coop.name}
                             </Text>
 
-                            {coop.isMember && (
-                                <Badge colorPalette="yellow">Member</Badge>
-                            )}
+                            <HStack gap={2} wrap="wrap" justify="end">
+                                {coop.isMember && (
+                                    <Badge colorPalette="yellow">Member</Badge>
+                                )}
+
+                                {hasOpenJobOpenings && (
+                                    <Badge colorPalette="green" variant="subtle">
+                                        Now Hiring!
+                                    </Badge>
+                                )}
+                            </HStack> 
                         </HStack>
 
                         <Text color="gray.600" fontSize="sm">
@@ -57,6 +61,13 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                         <Badge variant="outline">
                             {coop.eventCount} event{coop.eventCount === 1 ? "" : "s"}
                         </Badge>
+
+                        {hasOpenJobOpenings && (
+                            <Badge variant="outline">
+                                {coop.jobOpenings.length} opening
+                                {coop.jobOpenings.length === 1 ? "" : "s"}
+                            </Badge>
+                        )}
                     </HStack>
 
                     <HStack gap={3} wrap="wrap">
@@ -72,6 +83,14 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                                     Open Command Center
                                 </NextLink>
                             </Button>
+                        )}
+
+                        {!coop.isMember && hasOpenJobOpenings && (
+                            <ApplyJobOpeningDialog
+                                coopId={coop.id}
+                                coopName={coop.name}
+                                jobOpenings={coop.jobOpenings}
+                            />
                         )}
                     </HStack>
                 </Stack>

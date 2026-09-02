@@ -18,6 +18,19 @@ const BusinessesPage = async () => {
                     userId: true,
                 },
             },
+            jobOpenings: {
+                where: {
+                    status: "OPEN",
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                select: {
+                    id: true,
+                    title: true,
+                    role: true,
+                },
+            },
             _count: {
                 select: {
                     memberships: true,
@@ -58,6 +71,7 @@ const BusinessesPage = async () => {
                                         id: coop.id,
                                         name: coop.name,
                                         description: coop.description,
+                                        jobOpenings: coop.jobOpenings,
                                         memberCount: coop._count.memberships,
                                         taskCount: coop._count.tasks,
                                         eventCount: coop._count.events,

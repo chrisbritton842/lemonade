@@ -1,4 +1,4 @@
-"use cllient";
+"use client";
 
 import {
     Badge,
@@ -9,9 +9,9 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { ApplyJobOpeningDialog } from "@/features/cooperatives/components/apply-job-opening-dialog";
 import { roleLabels } from "@/features/cooperatives/lib/role-labels";
 import type { BusinessCardJobOpening } from "@/features/cooperatives/types";
-import { ApplyJobOpeningDialog } from "./apply-job-opening-dialog";
 
 type BusinessCardJobOpeningsProps = {
     coopId: string;

@@ -12,7 +12,7 @@ import {
     businessPagePath,
     commandCenterPagePath,
 } from "@/paths";
-import { ApplyJobOpeningDialog } from "./apply-job-opening-dialog";
+import { BusinessCardJobOpenings } from "./business-card-job-openings";
 
 type BusinessCardProps = {
     coop: BusinessCardCoop;
@@ -70,6 +70,14 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                         )}
                     </HStack>
 
+                    {!coop.isMember && coop.jobOpenings.length > 0 && (
+                        <BusinessCardJobOpenings
+                            coopId={coop.id}
+                            coopName={coop.name}
+                            jobOpenings={coop.jobOpenings}
+                        />
+                    )}
+
                     <HStack gap={3} wrap="wrap">
                         <Button asChild colorPalette="yellow" size="sm">
                             <NextLink href={businessPagePath(coop.id)}>
@@ -83,14 +91,6 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                                     Open Command Center
                                 </NextLink>
                             </Button>
-                        )}
-
-                        {!coop.isMember && hasOpenJobOpenings && (
-                            <ApplyJobOpeningDialog
-                                coopId={coop.id}
-                                coopName={coop.name}
-                                jobOpenings={coop.jobOpenings}
-                            />
                         )}
                     </HStack>
                 </Stack>

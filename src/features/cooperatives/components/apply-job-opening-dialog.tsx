@@ -15,8 +15,8 @@ import {
     applyJobOpeningAction,
     type ApplyJobOpeningState,
 } from "@/features/cooperatives/actions/apply-job-opening";
-import type { BusinessCardJobOpening } from "@/features/cooperatives/types";
 import { roleLabels } from "@/features/cooperatives/lib/role-labels";
+import type { BusinessCardJobOpening } from "@/features/cooperatives/types";
 
 type ApplyJobOpeningDialogProps = {
     coopId: string;

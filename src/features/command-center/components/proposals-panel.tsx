@@ -13,10 +13,12 @@ import type {
     CommandCenterVoteChoice,
 } from "@/features/command-center/types";
 import { NewProposalDialog } from "./proposals/new-proposal-dialog";
+import { approveHireApplicantProposalAction } from "@/features/command-center/actions/approve-hire-applicant-proposal";
 
 type ProposalsPanelProps = {
     coopId: string;
     proposals: CommandCenterProposal[];
+    currentUserIsBoardMember: boolean;
 };
 
 const proposalTypeLabels: Record<string, string> = {
@@ -32,6 +34,7 @@ const proposalTypeLabels: Record<string, string> = {
     DELETE_RULE: "Remove Rule",
     UPDATE_NAME: "Change Business Name",
     UPDATE_LOGO: "Change Logo",
+    CREATE_JOB_OPENING: "Create Job Opening",
     HIRE_APPLICANT: "Hire New Member",
     REMOVE_MEMBER: "Remove Member",
 };
@@ -46,7 +49,7 @@ const proposalStatusLabels: Record<string, string> = {
     CANCELLED: "Cancelled",
 };
 
-const ProposalsPanel = ({ coopId, proposals }: ProposalsPanelProps) => {
+const ProposalsPanel = ({ coopId, proposals, currentUserIsBoardMember }: ProposalsPanelProps) => {
     const openProposals = proposals.filter(
         (proposal) => proposal.status === "OPEN"
     );
@@ -86,6 +89,7 @@ const ProposalsPanel = ({ coopId, proposals }: ProposalsPanelProps) => {
                                     key={proposal.id}
                                     coopId={coopId}
                                     proposal={proposal}
+                                    currentUserIsBoardMember={currentUserIsBoardMember}
                                 />
                             ))}
                         </Stack>
@@ -100,6 +104,7 @@ const ProposalsPanel = ({ coopId, proposals }: ProposalsPanelProps) => {
                                     key={proposal.id}
                                     coopId={coopId}
                                     proposal={proposal}
+                                    currentUserIsBoardMember={currentUserIsBoardMember}
                                 />
                             ))}
                         </Stack>
@@ -113,10 +118,16 @@ const ProposalsPanel = ({ coopId, proposals }: ProposalsPanelProps) => {
 type ProposalCardProps = {
     coopId: string;
     proposal: CommandCenterProposal;
+    currentUserIsBoardMember: boolean;
 };
 
-const ProposalCard = ({ coopId, proposal }: ProposalCardProps) => {
+const ProposalCard = ({ coopId, proposal, currentUserIsBoardMember }: ProposalCardProps) => {
     const isOpen = proposal.status === "OPEN";
+
+    const canApproveHireApplicant =
+        currentUserIsBoardMember &&
+        proposal.type === "HIRE_APPLICANT" &&
+        proposal.status === "NEEDS_REVIEW";
 
     return (
         <Card.Root variant="subtle">
@@ -179,6 +190,17 @@ const ProposalCard = ({ coopId, proposal }: ProposalCardProps) => {
                                 label="Abstain"
                             />
                         </HStack>
+                    )}
+
+                    {canApproveHireApplicant && (
+                        <form action={approveHireApplicantProposalAction}>
+                            <input type="hidden" name="coopId" value={coopId} />
+                            <input type="hidden" name="proposalId" value={proposal.id} />
+
+                            <Button type="submit" colorPalette="green" size="sm">
+                                Approve Hire
+                            </Button>
+                        </form>
                     )}
                 </Stack>
             </Card.Body>

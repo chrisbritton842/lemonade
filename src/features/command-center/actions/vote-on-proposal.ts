@@ -10,6 +10,7 @@ import {
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
 import { commandCenterPagePath, signInPagePath } from "@/paths";
+import { applyPassedProposal } from "../lib/proposals/apply-passed-proposal";
 
 const voteOnProposalAction = async (formData: FormData): Promise<void> => {
     const user = await getCurrentUser();
@@ -118,6 +119,13 @@ const voteOnProposalAction = async (formData: FormData): Promise<void> => {
                     status: nextStatus,
                 },
             });
+
+            if (nextStatus === ProposalStatus.PASSED) {
+                await applyPassedProposal({
+                    tx,
+                    proposalId: proposal.id,
+                });
+            }
         }
     });
 

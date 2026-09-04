@@ -32,7 +32,7 @@ const proposalTypeLabels: Record<string, string> = {
     DELETE_RULE: "Remove Rule",
     UPDATE_NAME: "Change Business Name",
     UPDATE_LOGO: "Change Logo",
-    HIRE_MEMBER: "Hire New Member",
+    HIRE_APPLICANT: "Hire New Member",
     REMOVE_MEMBER: "Remove Member",
 };
 

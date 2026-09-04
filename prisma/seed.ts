@@ -1,5 +1,6 @@
 import {
     CoopRole,
+    JobOpeningStatus,
     ProposalStatus,
     ProposalThreshold,
     ProposalType,
@@ -75,7 +76,27 @@ const main = async () => {
         },
     });
 
+    await prisma.jobApplication.deleteMany({
+        where: {
+            jobOpening: {
+                coopId: coop.id,
+            },
+        },
+    });
+
+    await prisma.jobOpening.deleteMany({
+        where: {  
+            coopId: coop.id,
+        },
+    });
+
     await prisma.task.deleteMany({
+        where: {
+            coopId: coop.id,
+        },
+    });
+
+    await prisma.proposal.deleteMany({
         where: {
             coopId: coop.id,
         },
@@ -157,10 +178,30 @@ const main = async () => {
         ],
     });
 
-    await prisma.proposal.deleteMany({
-        where: {
-            coopId: coop.id,
-        },
+    await prisma.jobOpening.createMany({
+        data: [
+            {
+                coopId: coop.id,
+                title: "Social Media Manager",
+                role: CoopRole.MARKETING,
+                description: "Manage our social media accounts and create posts to promote our lemonade stand.",
+                status: JobOpeningStatus.OPEN,
+            },
+            {
+                coopId: coop.id,
+                title: "Lemonade Mixer",
+                role: CoopRole.PRODUCTION,
+                description: "Mix the lemonade for the stand.",
+                status: JobOpeningStatus.OPEN,
+            },
+            {
+                coopId: coop.id,
+                title: "Saturday Cashier",
+                role: CoopRole.CUSTOMER_SERVICE,
+                description: "Handle cash and make change for customers.",
+                status: JobOpeningStatus.OPEN,
+            },
+        ],
     });
 
     await prisma.proposal.create({
@@ -172,6 +213,11 @@ const main = async () => {
             status: ProposalStatus.OPEN,
             threshold: ProposalThreshold.SIMPLE_MAJORITY,
             createdById: user.id,
+            payload: {
+                productName: "Strawberry Lemonade",
+                productDescription: "A refreshing blend of lemonade and strawberry flavor.",
+                priceCents: 200,
+            },
             votes: {
                 create: [
                     {
@@ -232,6 +278,38 @@ const main = async () => {
             status: ProposalStatus.OPEN,
             threshold: ProposalThreshold.SIMPLE_MAJORITY,
             createdById: demoMember.id,
+            payload: {
+                taskTitle: "Create social media posts",
+                taskDescription: "Design and schedule posts for our social media accounts to promote the lemonade stand.",
+                role: CoopRole.MARKETING,
+                points: 2,
+                dueDate: null,
+            },
+        },
+    });
+
+    await prisma.proposal.create({
+        data: {
+            coopId: coop.id,
+            title: "Create cashier job opening",
+            description: "We need to hire a new cashier for the lemonade stand.",
+            type: ProposalType.CREATE_JOB_OPENING,
+            status: ProposalStatus.OPEN,
+            threshold: ProposalThreshold.TWO_THIRDS,
+            createdById: demoMember.id,
+            payload: {
+                jobTitle: "Saturday Cashier",
+                role: CoopRole.CUSTOMER_SERVICE,
+                jobDescription: "Handle cash and make change for customers on Saturdays.",
+            },
+            votes: {
+                create: [
+                    {
+                        userId: demoMember.id,
+                        choice: VoteChoice.YES,
+                    },
+                ],
+            },
         },
     });
 
@@ -259,7 +337,7 @@ const main = async () => {
         },
     });
 
-    console.log(`Seeded tasks for ${coop.name}.`);
+    console.log(`Seeded tasks, job openings, and proposals for ${coop.name}.`);
 };
 
 main()

@@ -22,6 +22,7 @@ type CommandCenterPageShellProps = {
     tasks: CommandCenterTask[];
     availableTasks: CommandCenterTask[];
     proposals: CommandCenterProposal[];
+    currentUserIsBoardMember: boolean;
 };
 
 const CommandCenterPageShell = ({
@@ -31,6 +32,7 @@ const CommandCenterPageShell = ({
     tasks,
     availableTasks,
     proposals,
+    currentUserIsBoardMember,
 }: CommandCenterPageShellProps) => {
     return (
         <Stack gap={6}>
@@ -40,7 +42,7 @@ const CommandCenterPageShell = ({
             <SimpleGrid columns={{ base: 1, xl: 4}} gap={6}>
                 <Stack gap={6} gridColumn={{ base: "auto", xl: "span 3" }}>
                     <MyJobsPanel coopId={coop.id} tasks={tasks} />
-                    <ProposalsPanel coopId={coop.id} proposals={proposals} />
+                    <ProposalsPanel coopId={coop.id} proposals={proposals} currentUserIsBoardMember={currentUserIsBoardMember}/>
                     <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
                 </Stack>
             </SimpleGrid>

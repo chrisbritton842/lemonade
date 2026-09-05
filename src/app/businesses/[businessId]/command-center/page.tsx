@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { CommandCenterPageShell } from "@/features/command-center/components/command-center-page-shell";
+import { CoopRole } from "@/generated/prisma/enums";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
 import { homePagePath, signInPagePath } from "@/paths";
@@ -188,6 +189,10 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         };
     });
 
+    const currentUserIsBoardMember = membership.roles.some(
+        (membershipRole) => membershipRole.role === CoopRole.BOARD_OF_DIRECTORS
+    );
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -204,6 +209,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             tasks={myTaskItems}
             availableTasks={availableTaskItems}
             proposals={proposalItems}
+            currentUserIsBoardMember={currentUserIsBoardMember}
         />
     );
 };

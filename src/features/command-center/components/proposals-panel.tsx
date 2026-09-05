@@ -7,13 +7,13 @@ import {
     Stack,
     Text,
 } from "@chakra-ui/react";
+import { approveHireApplicantProposalAction } from "@/features/command-center/actions/approve-hire-applicant-proposal";
 import { voteOnProposalAction } from "@/features/command-center/actions/vote-on-proposal";
 import type {
     CommandCenterProposal,
     CommandCenterVoteChoice,
 } from "@/features/command-center/types";
 import { NewProposalDialog } from "./proposals/new-proposal-dialog";
-import { approveHireApplicantProposalAction } from "@/features/command-center/actions/approve-hire-applicant-proposal";
 
 type ProposalsPanelProps = {
     coopId: string;

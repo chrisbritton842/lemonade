@@ -222,6 +222,9 @@ model Event {
   coop        Cooperative @relation(fields: [coopId], references: [id], onDelete: Cascade)
   createdBy   User?       @relation("CreatedEvents", fields: [createdById], references: [id], onDelete: SetNull)
 
+  sourceProposalId String? @unique
+  sourceProposal   Proposal? @relation("ProposalCreatedEvent", fields: [sourceProposalId], references: [id], onDelete: SetNull)
+
   @@index([coopId])
   @@index([createdById])
   @@index([startsAt])
@@ -243,6 +246,7 @@ model Proposal {
   createdTask    Task? @relation("ProposalCreatedTask")
   createdJobOpening JobOpening? @relation("ProposalCreatedJobOpening")
   hireApplication JobApplication? @relation("ApplicationHireProposal")
+  createdEvent   Event? @relation("ProposalCreatedEvent")
 
   appliedAt   DateTime?
   createdAt   DateTime @default(now())

@@ -28,14 +28,9 @@ const proposalTypes: {
         description: "Propose a new product to sell."
     },
     {
-        type: "UPDATE_SALES_DAY_TIME",
-        label: "Change Sales Day Time",
-        description: "Propose a different sales day time."
-    },
-    {
-        type: "UPDATE_SALES_DAY_LOCATION",
-        label: "Change Sales Day Location",
-        description: "Propose a different sales day location."
+        type: "UPDATE_EVENT",
+        label: "Change Event Details",
+        description: "Propose changes to an event."
     },
     {
         type: "UPDATE_NAME",

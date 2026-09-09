@@ -23,8 +23,8 @@ type ProposalsPanelProps = {
 
 const proposalTypeLabels: Record<string, string> = {
     GENERAL: "Propose Idea",
-    UPDATE_SALES_DAY_TIME: "Change Sales Day Time",
-    UPDATE_SALES_DAY_LOCATION: "Change Sales Day Location",
+    CREATE_EVENT: "Create Event",
+    UPDATE_EVENT: "Update Event",
     CREATE_TASK: "Create Task",
     CREATE_PRODUCT: "Add New Product",
     UPDATE_PRODUCT: "Update Product",

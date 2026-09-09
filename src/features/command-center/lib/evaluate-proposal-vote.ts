@@ -14,7 +14,6 @@ type EvaluateProposalVoteInput = {
 };
 
 const reviewRequiredTypes = new Set<ProposalType>([
-    ProposalType.UPDATE_SALES_DAY_LOCATION,
     ProposalType.UPDATE_LOGO,
     ProposalType.HIRE_APPLICANT,
     ProposalType.REMOVE_MEMBER,

@@ -66,8 +66,8 @@ export type CommandCenterProposalStatus =
 
 export type CommandCenterProposalType =
     | "GENERAL"
-    | "UPDATE_SALES_DAY_TIME"
-    | "UPDATE_SALES_DAY_LOCATION"
+    | "CREATE_EVENT"
+    | "UPDATE_EVENT"
     | "CREATE_TASK"
     | "CREATE_PRODUCT"
     | "UPDATE_PRODUCT"

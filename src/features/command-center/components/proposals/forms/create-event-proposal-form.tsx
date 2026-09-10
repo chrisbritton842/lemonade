@@ -91,7 +91,72 @@ const CreateEventProposalForm = ({
                     <Input name="eventDate" type="date" disabled={pending} />
                     <Field.ErrorText>{state.errors.eventDate?.[0]}</Field.ErrorText>
                 </Field.Root>
+
+                <HStack gap={3} align="start">
+                    <Field.Root invalid={Boolean(state.errors.startTime?.[0])} required>
+                        <Field.Label>Start Time</Field.Label>
+                        <Input name="startTime" type="time" disabled={pending} />
+                        <Field.ErrorText>{state.errors.startTime?.[0]}</Field.ErrorText>
+                    </Field.Root>
+
+                    <Field.Root invalid={Boolean(state.errors.endTime?.[0])}>
+                        <Field.Label>End Time</Field.Label>
+                        <Input name="endTime" type="time" disabled={pending} />
+                        <Field.ErrorText>{state.errors.endTime?.[0]}</Field.ErrorText>
+                    </Field.Root>
+                </HStack>
+
+                <Field.Root invalid={Boolean(state.errors.location?.[0])}>
+                    <Field.Label>Location</Field.Label>
+                    <Input
+                        name="location"
+                        placeholder="Spring Lake Park"
+                        disabled={pending}
+                    />
+                    <Field.ErrorText>{state.errors.location?.[0]}</Field.ErrorText>
+                </Field.Root>
+
+                <Field.Root invalid={Boolean(state.errors.eventDescription?.[0])}>
+                    <Field.Label>Event Description</Field.Label>
+                    <Textarea
+                        name="eventDescription"
+                        placeholder="Describe what will happen at this event."
+                        rows={3}
+                        disabled={pending}
+                    />
+                    <Field.ErrorText>
+                        {state.errors.eventDescription?.[0]}
+                    </Field.ErrorText>
+                </Field.Root>
+
+                <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
+                    <Field.Label>Reason</Field.Label>
+                    <Textarea
+                        name="reason"
+                        placeholder="Explain why this event would help the business."
+                        rows={3}
+                        disabled={pending}
+                    />
+                    <Field.ErrorText>{state.errors.reason?.[0]}</Field.ErrorText>
+                </Field.Root>
+
+                <HStack justify="space-between">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={onBack}
+                        disabled={pending}
+                    >
+                        Back
+                    </Button>
+
+                    <Button type="submit" colorPalette="yellow" loading={pending}>
+                        Create Proposal
+                    </Button>
+                </HStack>
             </Stack>
         </form>
-    )
-}
+    );
+};
+
+export { CreateEventProposalForm };

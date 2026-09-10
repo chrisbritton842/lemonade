@@ -28,6 +28,11 @@ const proposalTypes: {
         description: "Propose a new product to sell."
     },
     {
+        type: "CREATE_EVENT",
+        label: "Create Event",
+        description: "Propose a sales day, meeting, supply run, or other event.",
+    },
+    {
         type: "UPDATE_EVENT",
         label: "Change Event Details",
         description: "Propose changes to an event."

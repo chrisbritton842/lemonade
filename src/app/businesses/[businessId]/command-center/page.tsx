@@ -11,14 +11,72 @@ type CommandCenterPageProps = {
     }>;
 };
 
+const APP_TIME_ZONE = "America/Los_Angeles";
+
 const formatEventDate = (date: Date) => {
     return date.toLocaleString("en-US", {
+        timeZone: APP_TIME_ZONE,
         weekday: "long",
         month: "long",
         day: "numeric",
         hour: "numeric",
         minute: "2-digit",
     });
+};
+
+const formatDate = (date: Date | null) => {
+    if (!date) return null;
+
+    return date.toLocaleDateString("en-US", {
+        timeZone: APP_TIME_ZONE,
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+    });
+};
+
+const formatDateKey = (date: Date) => {
+    const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: APP_TIME_ZONE,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    }).formatToParts(date);
+
+    const valueByType = new Map(parts.map((part) => [part.type, part.value]));
+
+    return `${valueByType.get("year")}-${valueByType.get(
+        "month"
+    )}-${valueByType.get("day")}`;
+};
+
+const formatDateLabel = (date: Date) => {
+    return date.toLocaleDateString("en-US", {
+        timeZone: APP_TIME_ZONE,
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+    });
+};
+
+const formatTimeLabel = (startsAt: Date, endsAt: Date | null) => {
+    const startLabel = startsAt.toLocaleTimeString("en-US", {
+        timeZone: APP_TIME_ZONE,
+        hour: "numeric",
+        minute: "2-digit",
+    });
+
+    if (!endsAt) {
+        return startLabel;
+    }
+
+    const endLabel = endsAt.toLocaleTimeString("en-US", {
+        timeZone: APP_TIME_ZONE,
+        hour: "numeric",
+        minute: "2-digit",
+    });
+
+    return `${startLabel} - ${endLabel}`;
 };
 
 const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
@@ -98,16 +156,6 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             },
         ],
     });
-
-    const formatDate = (date: Date | null) => {
-        if (!date) return null;
-
-        return date.toLocaleDateString("en-US", {
-            weekday: "short",
-            month: "short",
-            day: "numeric",
-        });
-    };
 
     const myTaskItems = myTasks.map((task) => ({
         id: task.id,
@@ -193,6 +241,18 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         (membershipRole) => membershipRole.role === CoopRole.BOARD_OF_DIRECTORS
     );
 
+    const calendarEvents = coop.events.map((event) => ({
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        location: event.location,
+        type: event.type,
+        status: event.status,
+        dateKey: formatDateKey(event.startsAt),
+        dateLabel: formatDateLabel(event.startsAt),
+        timeLabel: formatTimeLabel(event.startsAt, event.endsAt),
+    }));
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -209,6 +269,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             tasks={myTaskItems}
             availableTasks={availableTaskItems}
             proposals={proposalItems}
+            events={calendarEvents}
             currentUserIsBoardMember={currentUserIsBoardMember}
         />
     );

@@ -20,6 +20,33 @@ export type CommandCenterEvent = {
     status?: "CONFIRMED" | "PROPOSED" | "NEEDS_APPROVAL" | "CANCELLED";
 };
 
+export type CommandCenterEventType =
+    | "SALES_DAY"
+    | "MEETING"
+    | "SUPPLY_RUN"
+    | "PREP_WORK"
+    | "BOARD_MEETING"
+    | "MARKETING_OUTREACH"
+    | "OTHER";
+
+export type CommandCenterEventStatus =
+    | "PROPOSED"
+    | "CONFIRMED"
+    | "NEEDS_APPROVAL"
+    | "CANCELLED";
+
+export type CommandCenterCalendarEvent = {
+    id: string;
+    title: string;
+    description: string | null;
+    location: string | null;
+    type: CommandCenterEventType;
+    status: CommandCenterEventStatus;
+    dateKey: string;
+    dateLabel: string;
+    timeLabel: string;
+};
+
 export type CommandCenterTaskStatus = "AVAILABLE" | "ASSIGNED" | "NEEDS_REVIEW" | "COMPLETE" | "CANCELLED";
 
 export type CommandCenterRoleName = "MEMBER" | "BOARD_OF_DIRECTORS" | "PRODUCTION" | "CUSTOMER_SERVICE" | "INVENTORY" | "MARKETING" | "ACCOUNTING";

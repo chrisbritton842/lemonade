@@ -233,7 +233,7 @@ model Event {
 model Proposal {
   id          String @id @default(cuid())
   coopId      String
-  createdById String?
+  createdById String
 
   title       String
   description String?
@@ -254,7 +254,7 @@ model Proposal {
   closesAt    DateTime?
 
   coop        Cooperative @relation(fields: [coopId], references: [id], onDelete: Cascade)
-  createdBy   User?       @relation("CreatedProposals", fields: [createdById], references: [id], onDelete: SetNull)
+  createdBy   User        @relation("CreatedProposals", fields: [createdById], references: [id], onDelete: Restrict)
   votes       ProposalVote[]
 
   @@index([coopId])

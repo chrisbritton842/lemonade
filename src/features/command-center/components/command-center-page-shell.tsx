@@ -3,6 +3,7 @@ import {
     Stack,
 } from "@chakra-ui/react";
 import type {
+    CommandCenterCalendarEvent,
     CommandCenterCoop,
     CommandCenterEvent,
     CommandCenterMembership,
@@ -10,6 +11,7 @@ import type {
     CommandCenterTask,
 } from "@/features/command-center/types";
 import { CommandCenterHero } from "./command-center-hero";
+import { CoopCalendar } from "./coop-calendar";
 import { MyJobsPanel } from "./my-jobs-panel";
 import { NextEventBanner } from "./next-event-banner";
 import { ProposalsPanel } from "./proposals-panel";
@@ -23,6 +25,7 @@ type CommandCenterPageShellProps = {
     availableTasks: CommandCenterTask[];
     proposals: CommandCenterProposal[];
     currentUserIsBoardMember: boolean;
+    events: CommandCenterCalendarEvent[];
 };
 
 const CommandCenterPageShell = ({
@@ -33,6 +36,7 @@ const CommandCenterPageShell = ({
     availableTasks,
     proposals,
     currentUserIsBoardMember,
+    events,
 }: CommandCenterPageShellProps) => {
     return (
         <Stack gap={6}>
@@ -44,6 +48,7 @@ const CommandCenterPageShell = ({
                     <MyJobsPanel coopId={coop.id} tasks={tasks} />
                     <ProposalsPanel coopId={coop.id} proposals={proposals} currentUserIsBoardMember={currentUserIsBoardMember}/>
                     <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
+                    <CoopCalendar events={events} />
                 </Stack>
             </SimpleGrid>
         </Stack>

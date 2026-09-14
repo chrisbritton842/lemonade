@@ -115,6 +115,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
                 orderBy: {
                     startsAt: "asc",
                 },
+                take: 10,
             },
         },
     });

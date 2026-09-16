@@ -117,6 +117,23 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
                 },
                 take: 10,
             },
+            chatMessages: {
+                where: {
+                    status: "VISIBLE",
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                take: 25,
+                include: {
+                    author: {
+                        select: {
+                            username: true,
+                            displayName: true,
+                        },
+                    },
+                },
+            },
         },
     });
 
@@ -254,6 +271,20 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         timeLabel: formatTimeLabel(event.startsAt, event.endsAt),
     }));
 
+    const chatMessages = [...coop.chatMessages]
+        .reverse()
+        .map((message) => ({
+            id: message.id,
+            content: message.content,
+            authorName:
+                message.author.displayName ?? message.author.username ?? "A member",
+            createdAtLabel: message.createdAt.toLocaleTimeString("en-US", {
+                timeZone: "America/Los_Angeles",
+                hour: "numeric",
+                minute: "2-digit",
+            }),
+        }));
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -271,6 +302,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             availableTasks={availableTaskItems}
             proposals={proposalItems}
             events={calendarEvents}
+            messages={chatMessages}
             currentUserIsBoardMember={currentUserIsBoardMember}
         />
     );

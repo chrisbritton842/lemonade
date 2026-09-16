@@ -121,3 +121,10 @@ export type CommandCenterProposal = {
     abstainVotes: number;
     currentUserVote: CommandCenterVoteChoice | null;
 };
+
+export type CommandCenterChatMessage = {
+    id: string;
+    content: string;
+    authorName: string;
+    createdAtLabel: string;
+};

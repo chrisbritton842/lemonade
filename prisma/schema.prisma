@@ -40,6 +40,7 @@ model User {
   parentConsents    ParentConsent[] @relation("ParentConsents")
   auditLogs         AuthAuditLog[]
   jobApplications   JobApplication[]
+  chatMessages      ChatMessage[]   @relation("UserChatMessages")
 }
 
 model Session {
@@ -80,6 +81,7 @@ model Cooperative {
   proposals   Proposal[]
   products    Product[]
   jobOpenings JobOpening[]
+  chatMessages ChatMessage[]
 
   @@index([createdById])
 }
@@ -348,6 +350,26 @@ model JobApplication {
   @@index([status])
 }
 
+model ChatMessage {
+  id           String @id @default(cuid())
+  coopId       String
+  authorId     String
+
+  content      String
+  status       ChatMessageStatus @default(VISIBLE)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  coop         Cooperative @relation(fields: [coopId], references: [id], onDelete: Cascade)
+  author       User        @relation("UserChatMessages", fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@index([coopId])
+  @@index([authorId])
+  @@index([createdAt])
+  @@index([status])
+}
+
 enum EventStatus {
   PROPOSED
   CONFIRMED
@@ -416,6 +438,12 @@ enum JobApplicationStatus {
   PENDING
   HIRED
   REJECTED
+}
+
+enum ChatMessageStatus {
+  VISIBLE
+  HIDDEN
+  FLAGGED
 }
 
 

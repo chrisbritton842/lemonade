@@ -142,6 +142,14 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
                     createdAt: "asc",
                 },
             },
+            rules: {
+                where: {
+                    isActive: true,
+                },
+                orderBy: {
+                    createdAt: "asc",
+                },
+            },
         },
     });
 
@@ -301,6 +309,12 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         isActive: product.isActive,
     }));
 
+    const ruleItems = coop.rules.map((rule) => ({
+        id: rule.id,
+        text: rule.text,
+        isActive: rule.isActive,
+    }));
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -320,6 +334,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             events={calendarEvents}
             messages={chatMessages}
             products={productItems}
+            rules={ruleItems}
             currentUserIsBoardMember={currentUserIsBoardMember}
         />
     );

@@ -10,6 +10,7 @@ import type {
     CommandCenterMembership,
     CommandCenterProduct,
     CommandCenterProposal,
+    CommandCenterRule,
     CommandCenterTask,
 } from "@/features/command-center/types";
 import { CommandCenterHero } from "./command-center-hero";
@@ -19,6 +20,7 @@ import { NextEventBanner } from "./next-event-banner";
 import { ProductsPanel } from "./products-panel";
 import { ProposalsPanel } from "./proposals-panel";
 import { RoleTaskBoard } from "./role-task-board";
+import { RulesPanel } from "./rules-panel";
 import { TeamChatPanel } from "./team-chat-panel";
 
 type CommandCenterPageShellProps = {
@@ -32,6 +34,7 @@ type CommandCenterPageShellProps = {
     events: CommandCenterCalendarEvent[];
     messages: CommandCenterChatMessage[];
     products: CommandCenterProduct[];
+    rules: CommandCenterRule[];
 };
 
 const CommandCenterPageShell = ({
@@ -45,6 +48,7 @@ const CommandCenterPageShell = ({
     events,
     messages,
     products,
+    rules,
 }: CommandCenterPageShellProps) => {
     return (
         <Stack gap={6}>
@@ -60,6 +64,7 @@ const CommandCenterPageShell = ({
                 </Stack>
 
                 <Stack gap={6}>
+                    <RulesPanel rules={rules} />
                     <TeamChatPanel coopId={coop.id} messages={messages} />
                     <ProductsPanel products={products} />
                 </Stack>

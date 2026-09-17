@@ -71,8 +71,8 @@ export type CommandCenterProduct = {
 
 export type CommandCenterRule = {
     id: string;
-    title: string;
-    description: string;
+    text: string;
+    isActive: boolean;
 };
 
 export type CommandCenterMessage = {

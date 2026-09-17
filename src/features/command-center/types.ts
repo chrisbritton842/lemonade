@@ -64,7 +64,9 @@ export type CommandCenterTask = {
 export type CommandCenterProduct = {
     id: string;
     name: string;
+    description: string | null;
     priceCents: number;
+    isActive: boolean;
 };
 
 export type CommandCenterRule = {

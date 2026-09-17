@@ -82,6 +82,7 @@ model Cooperative {
   products    Product[]
   jobOpenings JobOpening[]
   chatMessages ChatMessage[]
+  rules       Rule[]
 
   @@index([createdById])
 }
@@ -249,6 +250,7 @@ model Proposal {
   createdJobOpening JobOpening? @relation("ProposalCreatedJobOpening")
   hireApplication JobApplication? @relation("ApplicationHireProposal")
   createdEvent   Event? @relation("ProposalCreatedEvent")
+  createdRule    Rule? @relation("ProposalCreatedRule")
 
   appliedAt   DateTime?
   createdAt   DateTime @default(now())
@@ -368,6 +370,25 @@ model ChatMessage {
   @@index([authorId])
   @@index([createdAt])
   @@index([status])
+}
+
+model Rule {
+  id           String @id @default(cuid())
+  coopId       String
+
+  text         String
+  isActive     Boolean @default(true)
+
+  sourceProposalId String? @unique
+  sourceProposal Proposal? @relation("ProposalCreatedRule", fields: [sourceProposalId], references: [id], onDelete: SetNull)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  coop         Cooperative @relation(fields: [coopId], references: [id], onDelete: Cascade)
+
+  @@index([coopId])
+  @@index([isActive])
 }
 
 enum EventStatus {

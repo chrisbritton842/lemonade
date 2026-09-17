@@ -134,6 +134,14 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
                     },
                 },
             },
+            products: {
+                where: {
+                    isActive: true,
+                },
+                orderBy: {
+                    createdAt: "asc",
+                },
+            },
         },
     });
 
@@ -285,6 +293,14 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             }),
         }));
 
+    const productItems = coop.products.map((product) => ({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        priceCents: product.priceCents,
+        isActive: product.isActive,
+    }));
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -303,6 +319,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             proposals={proposalItems}
             events={calendarEvents}
             messages={chatMessages}
+            products={productItems}
             currentUserIsBoardMember={currentUserIsBoardMember}
         />
     );

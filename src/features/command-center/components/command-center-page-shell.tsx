@@ -8,6 +8,7 @@ import type {
     CommandCenterCoop,
     CommandCenterEvent,
     CommandCenterMembership,
+    CommandCenterProduct,
     CommandCenterProposal,
     CommandCenterTask,
 } from "@/features/command-center/types";
@@ -15,6 +16,7 @@ import { CommandCenterHero } from "./command-center-hero";
 import { CoopCalendar } from "./coop-calendar";
 import { MyJobsPanel } from "./my-jobs-panel";
 import { NextEventBanner } from "./next-event-banner";
+import { ProductsPanel } from "./products-panel";
 import { ProposalsPanel } from "./proposals-panel";
 import { RoleTaskBoard } from "./role-task-board";
 import { TeamChatPanel } from "./team-chat-panel";
@@ -29,6 +31,7 @@ type CommandCenterPageShellProps = {
     currentUserIsBoardMember: boolean;
     events: CommandCenterCalendarEvent[];
     messages: CommandCenterChatMessage[];
+    products: CommandCenterProduct[];
 };
 
 const CommandCenterPageShell = ({
@@ -41,6 +44,7 @@ const CommandCenterPageShell = ({
     currentUserIsBoardMember,
     events,
     messages,
+    products,
 }: CommandCenterPageShellProps) => {
     return (
         <Stack gap={6}>
@@ -57,6 +61,7 @@ const CommandCenterPageShell = ({
 
                 <Stack gap={6}>
                     <TeamChatPanel coopId={coop.id} messages={messages} />
+                    <ProductsPanel products={products} />
                 </Stack>
             </SimpleGrid>
         </Stack>

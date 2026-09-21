@@ -13,6 +13,7 @@ import { CommandCenterProposalType } from "@/features/command-center/types";
 import { CreateEventProposalForm } from "./forms/create-event-proposal-form";
 import { CreateJobOpeningProposalForm } from "./forms/create-job-opening-proposal-form";
 import { CreateProductProposalForm } from "./forms/create-product-proposal-form";
+import { CreateRuleProposalForm } from "./forms/create-rule-proposal-form";
 import { CreateTaskProposalForm } from "./forms/create-task-proposal-form";
 import { GeneralProposalForm } from "./forms/general-proposal-form";
 import { ProposalTypePicker } from "./proposal-type-picker";
@@ -118,6 +119,14 @@ const NewProposalDialog = ({ coopId }: NewProposalDialogProps) => {
 
                             {selectedType === "CREATE_EVENT" && (
                                 <CreateEventProposalForm
+                                    coopId={coopId}
+                                    onBack={() => setSelectedType(null)}
+                                    onSuccess={closeDialog}
+                                />
+                            )}
+
+                            {selectedType === "CREATE_RULE" && (
+                                <CreateRuleProposalForm
                                     coopId={coopId}
                                     onBack={() => setSelectedType(null)}
                                     onSuccess={closeDialog}

@@ -46,6 +46,11 @@ const proposalTypes: {
         type: "CREATE_JOB_OPENING",
         label: "Create Job Opening",
         description: "Propose a new job opening."
+    },
+    {
+        type: "CREATE_RULE",
+        label: "Create Rule",
+        description: "Propose a new rule."
     }
 ];
 

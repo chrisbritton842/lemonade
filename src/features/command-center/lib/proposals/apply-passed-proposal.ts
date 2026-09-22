@@ -6,6 +6,7 @@ import {
 import { applyCreateEventProposal } from "./apply-create-event-proposal";
 import { applyCreateJobOpeningProposal } from "./apply-create-job-opening-proposal";
 import { applyCreateProductProposal } from "./apply-create-product-proposal";
+import { applyCreateRuleProposal } from "./apply-create-rule-proposal";
 import { applyCreateTaskProposal } from "./apply-create-task-proposal";
 
 type TransactionClient = Prisma.TransactionClient;
@@ -61,6 +62,11 @@ const applyPassedProposal = async ({
 
     if (proposal.type === ProposalType.CREATE_EVENT) {
         await applyCreateEventProposal({ tx, proposal });
+        return;
+    }
+
+    if (proposal.type === ProposalType.CREATE_RULE) {
+        await applyCreateRuleProposal({ tx, proposal });
         return;
     }
 };

@@ -93,6 +93,7 @@ model Membership {
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   coopId      String
   cooperative Cooperative @relation(fields: [coopId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
 
   roles         MembershipRole[]
   joinDate      DateTime @default(now())

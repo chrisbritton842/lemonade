@@ -30,6 +30,9 @@ const HomePage = async () => {
     where: {
       userId: currentUser.user.id,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       roles: true,
       cooperative: {

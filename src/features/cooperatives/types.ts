@@ -16,3 +16,10 @@ export type BusinessCardCoop = {
     jobOpenings: BusinessCardJobOpening[];
     isMember: boolean;
 };
+
+export type BusinessPageJobOpening = {
+    id: string;
+    title: string;
+    description: string | null;
+    role: CoopRole;
+};

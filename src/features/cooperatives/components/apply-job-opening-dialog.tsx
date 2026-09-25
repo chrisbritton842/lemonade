@@ -16,12 +16,12 @@ import {
     type ApplyJobOpeningState,
 } from "@/features/cooperatives/actions/apply-job-opening";
 import { roleLabels } from "@/features/cooperatives/lib/role-labels";
-import type { BusinessCardJobOpening } from "@/features/cooperatives/types";
+import type { JobOpeningApplicationTarget } from "@/features/cooperatives/types";
 
 type ApplyJobOpeningDialogProps = {
     coopId: string;
     coopName: string;
-    jobOpening: BusinessCardJobOpening | null;
+    jobOpening: JobOpeningApplicationTarget | null;
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };

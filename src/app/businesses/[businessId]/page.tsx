@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
+import { BusinessPageJobOpenings } from "@/features/cooperatives/components/business-page-job-openings";
 import { EventStatus, EventType, JobOpeningStatus } from "@/generated/prisma/enums";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
@@ -256,45 +257,17 @@ const BusinessPage = async ({ params }: BusinessPageProps) => {
                     )}
                 </Stack>
 
-                <Stack gap={4}>
-                    <Heading size="lg">Job Openings</Heading>
-
-                    {business.jobOpenings.length === 0 ? (
-                        <Card.Root>
-                            <Card.Body>
-                                <Text color="gray.600">
-                                    There are no job openings at this time.
-                                </Text>
-                            </Card.Body>
-                        </Card.Root>
-                    ) : (
-                        <Stack gap={3}>
-                            {business.jobOpenings.map((jobOpening) => (
-                                <Card.Root key={jobOpening.id}>
-                                    <Card.Body>
-                                        <Stack gap={2}>
-                                            <HStack justify="space-between" align="start" gap={3}>
-                                                <Stack gap={1}>
-                                                    <Heading size="sm">{jobOpening.title}</Heading>
-
-                                                    {jobOpening.description && (
-                                                        <Text color="gray.600" fontSize="sm">
-                                                            {jobOpening.description}
-                                                        </Text>
-                                                    )}
-                                                </Stack>
-
-                                                <Badge colorPalette="blue" variant="subtle">
-                                                    {jobOpening.role}
-                                                </Badge>
-                                            </HStack>
-                                        </Stack>
-                                    </Card.Body>
-                                </Card.Root>
-                            ))}
-                        </Stack>
-                    )}
-                </Stack>
+                <BusinessPageJobOpenings
+                    coopId={business.id}
+                    coopName={business.name}
+                    jobOpenings={business.jobOpenings.map((jobOpening) => ({
+                        id: jobOpening.id,
+                        title: jobOpening.title,
+                        description: jobOpening.description,
+                        role: jobOpening.role,
+                    }))}
+                    isMember={isMember}
+                />
             </Stack>
         </Container>
     );

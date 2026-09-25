@@ -1,10 +1,12 @@
 import type { CoopRole } from "@/generated/prisma/enums";
 
-export type BusinessCardJobOpening = {
+export type JobOpeningApplicationTarget = {
     id: string;
     title: string;
     role: CoopRole;
 };
+
+export type BusinessCardJobOpening = JobOpeningApplicationTarget;
 
 export type BusinessCardCoop = {
     id: string;
@@ -17,9 +19,6 @@ export type BusinessCardCoop = {
     isMember: boolean;
 };
 
-export type BusinessPageJobOpening = {
-    id: string;
-    title: string;
+export type BusinessPageJobOpening = JobOpeningApplicationTarget & {
     description: string | null;
-    role: CoopRole;
 };

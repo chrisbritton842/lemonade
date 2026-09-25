@@ -57,9 +57,9 @@ const CommandCenterPageShell = ({
 
             <SimpleGrid columns={{ base: 1, xl: 4}} gap={6}>
                 <Stack gap={6} gridColumn={{ base: "auto", xl: "span 3" }}>
+                    <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
                     <MyJobsPanel coopId={coop.id} tasks={tasks} />
                     <ProposalsPanel coopId={coop.id} proposals={proposals} currentUserIsBoardMember={currentUserIsBoardMember}/>
-                    <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
                     <CoopCalendar events={events} />
                 </Stack>
 

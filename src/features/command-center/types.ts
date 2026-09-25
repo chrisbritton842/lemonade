@@ -1,3 +1,5 @@
+import type { EventType } from "@/generated/prisma/enums";
+
 export type CommandCenterRole = {
     role: string;
 };
@@ -129,4 +131,15 @@ export type CommandCenterChatMessage = {
     content: string;
     authorName: string;
     createdAtLabel: string;
+};
+
+export type CommandCenterEditableEvent = {
+    id: string;
+    title: string;
+    description: string | null;
+    type: EventType;
+    date: string;
+    startTime: string;
+    endTime: string;
+    location: string | null;
 };

@@ -60,13 +60,13 @@ const CommandCenterPageShell = ({
                     <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
                     <MyJobsPanel coopId={coop.id} tasks={tasks} />
                     <ProposalsPanel coopId={coop.id} proposals={proposals} currentUserIsBoardMember={currentUserIsBoardMember}/>
-                    <CoopCalendar events={events} />
+                    <ProductsPanel products={products} />
                 </Stack>
 
                 <Stack gap={6}>
                     <RulesPanel rules={rules} />
                     <TeamChatPanel coopId={coop.id} messages={messages} />
-                    <ProductsPanel products={products} />
+                    <CoopCalendar events={events} />
                 </Stack>
             </SimpleGrid>
         </Stack>

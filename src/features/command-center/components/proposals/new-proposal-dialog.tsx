@@ -9,20 +9,22 @@ import {
     Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { CommandCenterProposalType } from "@/features/command-center/types";
+import type { CommandCenterEditableEvent,CommandCenterProposalType } from "@/features/command-center/types";
 import { CreateEventProposalForm } from "./forms/create-event-proposal-form";
 import { CreateJobOpeningProposalForm } from "./forms/create-job-opening-proposal-form";
 import { CreateProductProposalForm } from "./forms/create-product-proposal-form";
 import { CreateRuleProposalForm } from "./forms/create-rule-proposal-form";
 import { CreateTaskProposalForm } from "./forms/create-task-proposal-form";
 import { GeneralProposalForm } from "./forms/general-proposal-form";
+import { UpdateEventProposalForm } from "./forms/update-event-proposal-form";
 import { ProposalTypePicker } from "./proposal-type-picker";
 
 type NewProposalDialogProps = {
     coopId: string;
+    editableEvents: CommandCenterEditableEvent[];
 };
 
-const NewProposalDialog = ({ coopId }: NewProposalDialogProps) => {
+const NewProposalDialog = ({ coopId, editableEvents }: NewProposalDialogProps) => {
     const [open, setOpen] = useState(false);
     const [selectedType, setSelectedType] =
         useState<CommandCenterProposalType | null>(null);
@@ -128,6 +130,15 @@ const NewProposalDialog = ({ coopId }: NewProposalDialogProps) => {
                             {selectedType === "CREATE_RULE" && (
                                 <CreateRuleProposalForm
                                     coopId={coopId}
+                                    onBack={() => setSelectedType(null)}
+                                    onSuccess={closeDialog}
+                                />
+                            )}
+
+                            {selectedType === "UPDATE_EVENT" && (
+                                <UpdateEventProposalForm
+                                    coopId={coopId}
+                                    events={editableEvents}
                                     onBack={() => setSelectedType(null)}
                                     onSuccess={closeDialog}
                                 />

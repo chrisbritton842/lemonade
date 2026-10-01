@@ -79,6 +79,32 @@ const formatTimeLabel = (startsAt: Date, endsAt: Date | null) => {
     return `${startLabel} - ${endLabel}`;
 };
 
+const formatDateInput = (date: Date) => {
+    return new Intl.DateTimeFormat("en-CA", {
+        timeZone: APP_TIME_ZONE,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    }).format(date);
+};
+
+const formatTimeInput = (date: Date | null) => {
+    if (!date) {
+        return "";
+    }
+
+    const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: APP_TIME_ZONE,
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23",
+    }).formatToParts(date);
+
+    const valueByType = new Map(parts.map((part) => [part.type, part.value]));
+
+    return `${valueByType.get("hour")}:${valueByType.get("minute")}`;
+};
+
 const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
     const { businessId } = await params;
 
@@ -315,6 +341,17 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
         isActive: rule.isActive,
     }));
 
+    const editableEvents = coop.events.map((event) => ({
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        location: event.location,
+        type: event.type,
+        date: formatDateInput(event.startsAt),
+        startTime: formatTimeInput(event.startsAt),
+        endTime: formatTimeInput(event.endsAt),
+    }));
+
     return (
         <CommandCenterPageShell
             coop={{
@@ -332,6 +369,7 @@ const CommandCenterPage = async ({ params }: CommandCenterPageProps) => {
             availableTasks={availableTaskItems}
             proposals={proposalItems}
             events={calendarEvents}
+            editableEvents={editableEvents}
             messages={chatMessages}
             products={productItems}
             rules={ruleItems}

@@ -20,6 +20,8 @@ import { EventType } from "@/generated/prisma/enums";
 type UpdateEventProposalFormProps = {
     coopId: string;
     events: CommandCenterEditableEvent[];
+    onBack: () => void;
+    onSuccess: () => void;
 };
 
 type EventDraft = {
@@ -60,6 +62,8 @@ const emptyDraft: EventDraft = {
 const UpdateEventProposalForm = ({
     coopId,
     events,
+    onBack,
+    onSuccess,
 }: UpdateEventProposalFormProps) => {
     const [state, action, pending] = useActionState(
         updateEventProposalAction,
@@ -68,6 +72,12 @@ const UpdateEventProposalForm = ({
 
     const [selectedEventId, setSelectedEventId] = useState("");
     const [draft, setDraft] = useState<EventDraft>(emptyDraft);
+
+    useEffect(() => {
+        if (state.success) {
+            onSuccess();
+        }
+    }, [state.success, onSuccess]);
 
     const selectedEvent = useMemo(() => {
         return events.find((event) => event.id === selectedEventId) ?? null;
@@ -278,15 +288,25 @@ const UpdateEventProposalForm = ({
                     <Field.ErrorText>{state.errors.reason?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <Button
-                    type="submit"
-                    colorPalette="yellow"
-                    loading={pending}
-                    disabled={!selectedEvent}
-                    alignSelf="start"
-                >
-                    Propose Event Update
-                </Button>
+                <Stack direction="row" justify="space-between" gap={3}>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        disabled={pending}
+                        onClick={onBack}
+                    >
+                        Back
+                    </Button>
+
+                    <Button
+                        type="submit"
+                        colorPalette="yellow"
+                        loading={pending}
+                        disabled={!selectedEvent}
+                    >
+                        Propose Event Update
+                    </Button>
+                </Stack>
             </Stack>
         </form>
     );

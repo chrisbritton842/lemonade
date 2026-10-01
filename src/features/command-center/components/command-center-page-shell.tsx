@@ -6,6 +6,7 @@ import type {
     CommandCenterCalendarEvent,
     CommandCenterChatMessage,
     CommandCenterCoop,
+    CommandCenterEditableEvent,
     CommandCenterEvent,
     CommandCenterMembership,
     CommandCenterProduct,
@@ -35,6 +36,7 @@ type CommandCenterPageShellProps = {
     messages: CommandCenterChatMessage[];
     products: CommandCenterProduct[];
     rules: CommandCenterRule[];
+    editableEvents: CommandCenterEditableEvent[];
 };
 
 const CommandCenterPageShell = ({
@@ -49,6 +51,7 @@ const CommandCenterPageShell = ({
     messages,
     products,
     rules,
+    editableEvents,
 }: CommandCenterPageShellProps) => {
     return (
         <Stack gap={6}>
@@ -59,7 +62,7 @@ const CommandCenterPageShell = ({
                 <Stack gap={6} gridColumn={{ base: "auto", xl: "span 3" }}>
                     <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
                     <MyJobsPanel coopId={coop.id} tasks={tasks} />
-                    <ProposalsPanel coopId={coop.id} proposals={proposals} currentUserIsBoardMember={currentUserIsBoardMember}/>
+                    <ProposalsPanel coopId={coop.id} proposals={proposals} editableEvents={editableEvents} currentUserIsBoardMember={currentUserIsBoardMember}/>
                     <ProductsPanel products={products} />
                 </Stack>
 

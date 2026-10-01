@@ -10,6 +10,7 @@ import {
 import { approveHireApplicantProposalAction } from "@/features/command-center/actions/approve-hire-applicant-proposal";
 import { voteOnProposalAction } from "@/features/command-center/actions/vote-on-proposal";
 import type {
+    CommandCenterEditableEvent,
     CommandCenterProposal,
     CommandCenterVoteChoice,
 } from "@/features/command-center/types";
@@ -18,6 +19,7 @@ import { NewProposalDialog } from "./proposals/new-proposal-dialog";
 type ProposalsPanelProps = {
     coopId: string;
     proposals: CommandCenterProposal[];
+    editableEvents: CommandCenterEditableEvent[];
     currentUserIsBoardMember: boolean;
 };
 
@@ -49,7 +51,7 @@ const proposalStatusLabels: Record<string, string> = {
     CANCELLED: "Cancelled",
 };
 
-const ProposalsPanel = ({ coopId, proposals, currentUserIsBoardMember }: ProposalsPanelProps) => {
+const ProposalsPanel = ({ coopId, proposals, editableEvents, currentUserIsBoardMember }: ProposalsPanelProps) => {
     const openProposals = proposals.filter(
         (proposal) => proposal.status === "OPEN"
     );
@@ -71,7 +73,7 @@ const ProposalsPanel = ({ coopId, proposals, currentUserIsBoardMember }: Proposa
                             </Text>
                         </Stack>
 
-                        <NewProposalDialog coopId={coopId} />
+                        <NewProposalDialog coopId={coopId} editableEvents={editableEvents} />
                     </HStack>
 
                     {proposals.length === 0 && (

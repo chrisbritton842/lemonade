@@ -112,9 +112,21 @@ const UpdateEventProposalForm = ({
 
     if (events.length === 0) {
         return (
-            <Text color="gray.600" fontSize="sm">
-                There are no upcoming events to update yet.
-            </Text>
+            <Stack gap={4}>
+                <Text color="gray.600" fontSize="sm">
+                    There are no upcoming events to update yet.
+                </Text>
+
+                <Button
+                    type="button"
+                    variant="outline"
+                    disabled={pending}
+                    onClick={onBack}
+                    alignSelf="start"
+                >
+                    Back
+                </Button>
+            </Stack>
         );
     }
 

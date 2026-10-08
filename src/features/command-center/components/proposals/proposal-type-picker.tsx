@@ -38,9 +38,9 @@ const proposalTypes: {
         description: "Propose changes to an event."
     },
     {
-        type: "UPDATE_NAME",
-        label: "Change Business Name",
-        description: "Propose a change to the business name."
+        type: "UPDATE_BUSINESS",
+        label: "Change Business Details",
+        description: "Propose a change to the business name or description."
     },
     {
         type: "CREATE_JOB_OPENING",

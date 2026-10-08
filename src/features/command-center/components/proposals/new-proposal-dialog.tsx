@@ -16,15 +16,18 @@ import { CreateProductProposalForm } from "./forms/create-product-proposal-form"
 import { CreateRuleProposalForm } from "./forms/create-rule-proposal-form";
 import { CreateTaskProposalForm } from "./forms/create-task-proposal-form";
 import { GeneralProposalForm } from "./forms/general-proposal-form";
+import { UpdateBusinessProposalForm } from "./forms/update-business-proposal-form";
 import { UpdateEventProposalForm } from "./forms/update-event-proposal-form";
 import { ProposalTypePicker } from "./proposal-type-picker";
 
 type NewProposalDialogProps = {
     coopId: string;
     editableEvents: CommandCenterEditableEvent[];
+    currentBusinessName: string;
+    currentBusinessDescription: string | null;
 };
 
-const NewProposalDialog = ({ coopId, editableEvents }: NewProposalDialogProps) => {
+const NewProposalDialog = ({ coopId, editableEvents, currentBusinessName, currentBusinessDescription }: NewProposalDialogProps) => {
     const [open, setOpen] = useState(false);
     const [selectedType, setSelectedType] =
         useState<CommandCenterProposalType | null>(null);
@@ -139,6 +142,16 @@ const NewProposalDialog = ({ coopId, editableEvents }: NewProposalDialogProps) =
                                 <UpdateEventProposalForm
                                     coopId={coopId}
                                     events={editableEvents}
+                                    onBack={() => setSelectedType(null)}
+                                    onSuccess={closeDialog}
+                                />
+                            )}
+
+                            {selectedType === "UPDATE_BUSINESS" && (
+                                <UpdateBusinessProposalForm
+                                    coopId={coopId}
+                                    currentName={currentBusinessName}
+                                    currentDescription={currentBusinessDescription}
                                     onBack={() => setSelectedType(null)}
                                     onSuccess={closeDialog}
                                 />

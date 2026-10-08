@@ -62,7 +62,7 @@ const CommandCenterPageShell = ({
                 <Stack gap={6} gridColumn={{ base: "auto", xl: "span 3" }}>
                     <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
                     <MyJobsPanel coopId={coop.id} tasks={tasks} />
-                    <ProposalsPanel coopId={coop.id} proposals={proposals} editableEvents={editableEvents} currentUserIsBoardMember={currentUserIsBoardMember}/>
+                    <ProposalsPanel coopId={coop.id} coopName={coop.name} coopDescription={coop.description} proposals={proposals} editableEvents={editableEvents} currentUserIsBoardMember={currentUserIsBoardMember}/>
                     <ProductsPanel products={products} />
                 </Stack>
 

@@ -18,6 +18,8 @@ import { NewProposalDialog } from "./proposals/new-proposal-dialog";
 
 type ProposalsPanelProps = {
     coopId: string;
+    coopName: string;
+    coopDescription: string | null;
     proposals: CommandCenterProposal[];
     editableEvents: CommandCenterEditableEvent[];
     currentUserIsBoardMember: boolean;
@@ -34,7 +36,7 @@ const proposalTypeLabels: Record<string, string> = {
     CREATE_RULE: "Add New Rule",
     UPDATE_RULE: "Update Rule",
     DELETE_RULE: "Remove Rule",
-    UPDATE_NAME: "Change Business Name",
+    UPDATE_BUSINESS: "Update Business",
     UPDATE_LOGO: "Change Logo",
     CREATE_JOB_OPENING: "Create Job Opening",
     HIRE_APPLICANT: "Hire New Member",
@@ -51,7 +53,7 @@ const proposalStatusLabels: Record<string, string> = {
     CANCELLED: "Cancelled",
 };
 
-const ProposalsPanel = ({ coopId, proposals, editableEvents, currentUserIsBoardMember }: ProposalsPanelProps) => {
+const ProposalsPanel = ({ coopId, coopName, coopDescription, proposals, editableEvents, currentUserIsBoardMember }: ProposalsPanelProps) => {
     const openProposals = proposals.filter(
         (proposal) => proposal.status === "OPEN"
     );
@@ -73,7 +75,7 @@ const ProposalsPanel = ({ coopId, proposals, editableEvents, currentUserIsBoardM
                             </Text>
                         </Stack>
 
-                        <NewProposalDialog coopId={coopId} editableEvents={editableEvents} />
+                        <NewProposalDialog coopId={coopId} editableEvents={editableEvents} currentBusinessName={coopName} currentBusinessDescription={coopDescription}/>
                     </HStack>
 
                     {proposals.length === 0 && (

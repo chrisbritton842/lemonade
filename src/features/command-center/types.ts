@@ -106,7 +106,7 @@ export type CommandCenterProposalType =
     | "CREATE_RULE"
     | "UPDATE_RULE"
     | "DELETE_RULE"
-    | "UPDATE_NAME"
+    | "UPDATE_BUSINESS"
     | "UPDATE_LOGO"
     | "CREATE_JOB_OPENING"
     | "HIRE_APPLICANT"

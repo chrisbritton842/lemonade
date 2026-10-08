@@ -289,7 +289,7 @@ const UpdateEventProposalForm = ({
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
-                    <Field.Label>Why should this event be updated?</Field.Label>
+                    <Field.Label>Reason</Field.Label>
 
                     <Textarea
                         name="reason"

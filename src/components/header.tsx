@@ -43,7 +43,7 @@ const Header = async () => {
                 href={homePagePath()}
                 _hover={{ textDecoration: "none" }}
               >
-                <Button variant="ghost" colorPalette="teal">
+                <Button colorPalette="teal">
                   Home
                 </Button>
               </Link>

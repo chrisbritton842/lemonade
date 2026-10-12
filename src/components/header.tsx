@@ -1,10 +1,18 @@
-"use client";
-
 import { Box, Button, Flex, HStack, Link, Spacer,Text } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { landingPagePath, signInPagePath, signUpPagePath } from "@/paths";
+import { getCurrentUser } from "@/lib/auth/get-current-user";
+import {
+  businessesPagePath,
+  homePagePath,
+  landingPagePath,
+  signInPagePath,
+  signUpPagePath
+} from "@/paths";
 
-const Header = () => {
+const Header = async () => {
+  const currentUser = await getCurrentUser();
+  const isSignedIn = Boolean(currentUser);
+
   return (
     <Box
       bg="white"
@@ -15,7 +23,6 @@ const Header = () => {
       borderColor="gray.100"
     >
       <Flex align="center">
-        {/* Brand */}
         <Link
           as={NextLink}
           href={landingPagePath()}
@@ -28,15 +35,50 @@ const Header = () => {
 
         <Spacer />
 
-        {/* Navigation Buttons */}
         <HStack gap={4}>
-          <Link as={NextLink} href={signUpPagePath()} _hover={{ textDecoration: "none" }}>
-            <Button colorScheme="teal">Sign Up</Button>
-          </Link>
+          {isSignedIn ? (
+            <>
+              <Link
+                as={NextLink}
+                href={homePagePath()}
+                _hover={{ textDecoration: "none" }}
+              >
+                <Button variant="ghost" colorPalette="teal">
+                  Home
+                </Button>
+              </Link>
 
-          <Link as={NextLink} href={signInPagePath()} _hover={{ textDecoration: "none" }}>
-            <Button variant="outline" colorScheme="gray">Sign In</Button>
-          </Link>
+              <Link
+                as={NextLink}
+                href={businessesPagePath()}
+                _hover={{ textDecoration: "none" }}
+              >
+                <Button variant="outline" colorPalette="teal">
+                  Businesses
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                as={NextLink}
+                href={signUpPagePath()}
+                _hover={{ textDecoration: "none" }}
+              >
+                <Button colorPalette="teal">Sign Up</Button>
+              </Link>
+
+              <Link
+                as={NextLink}
+                href={signInPagePath()}
+                _hover={{ textDecoration: "none" }}
+              >
+                <Button variant="outline" colorPalette="gray">
+                  Sign In
+                </Button>
+              </Link>
+            </>
+          )}
         </HStack>
       </Flex>
     </Box>

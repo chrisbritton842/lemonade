@@ -8,6 +8,7 @@ import {
     ProposalStatus,
     ProposalThreshold,
     ProposalType,
+    VoteChoice,
 } from "@/generated/prisma/enums";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { prisma } from "@/lib/prisma";
@@ -184,6 +185,12 @@ const createEventProposalAction = async (
                 startTime,
                 endTime: endTime || null,
                 location: location || null,
+            },
+            votes: {
+                create: {
+                    userId: user.user.id,
+                    choice: VoteChoice.YES,
+                },
             },
         },
     });

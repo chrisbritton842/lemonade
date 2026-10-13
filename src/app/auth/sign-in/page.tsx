@@ -13,8 +13,8 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useActionState } from "react";
+import type { SignInState } from "@/features/auth/actions/sign-in";
 import { signInAction } from "@/features/auth/actions/sign-in";
-import { SignInState } from "@/features/auth/actions/sign-in";
 import { signUpPagePath } from "@/paths";
 
 const initialState: SignInState = {
@@ -29,13 +29,13 @@ const SignInPage = () => {
   );
 
   return (
-    <Center minH="100vh" bg="gray.50" px={4}>
-      <Card.Root maxW="420px" w="full" shadow="lg" borderRadius="xl">
+    <Center minH="100vh" bg="app.bg" color="app.text" px={4}>
+      <Card.Root maxW="420px" w="full" bg="app.surface" borderColor="app.border" shadow="lg" borderRadius="xl">
         <Card.Body>
           <Stack gap={6}>
             <Stack gap={2} textAlign="center">
-              <Heading size="lg">Sign In</Heading>
-              <Text color="gray.600">
+              <Heading size="lg" color="app.text">Sign In</Heading>
+              <Text color="app.mutedText">
                 Welcome back to Lemonade!
               </Text>
             </Stack>
@@ -79,16 +79,16 @@ const SignInPage = () => {
                   type="submit"
                   loading={pending}
                   size="lg"
-                  colorPalette="yellow"
+                  colorPalette="brand"
                 >
                   Sign In
                 </Button>
               </Stack>
             </form>
 
-            <Text textAlign="center" fontSize="sm">
+            <Text textAlign="center" fontSize="sm" color="app.mutedText">
               Don&apos;t have an account?{" "}
-              <Link as={NextLink} href={signUpPagePath()} color="yellow.500">
+              <Link as={NextLink} href={signUpPagePath()} color="brand.fg" fontWeight="semibold">
                 Sign up
               </Link>
             </Text>

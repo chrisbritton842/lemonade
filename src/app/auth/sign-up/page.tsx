@@ -26,29 +26,30 @@ const SignUpPage = () => {
     const errors = state.errors ?? {};
 
     return (
-        <Center minH="100vh" bg="gray.50" px={4}>
-            <Card.Root maxW="420px" w="full" shadow="lg" borderRadius="xl">
+        <Center minH="100vh" bg="app.bg" color="app.text" px={4}>
+            <Card.Root maxW="420px" w="full" bg="app.surface" borderColor="app.border" shadow="lg" borderRadius="xl">
                 <Card.Body>
                     <Stack gap={6}>
-
-                        {/* Header */}
                         <Stack gap={2} textAlign="center">
-                            <Heading size="lg">Create Account</Heading>
-                            <Text color="gray.600">
+                            <Heading size="lg" color="app.text">Create Account</Heading>
+                            <Text color="app.mutedText">
                                 Sign up to start your business!
                             </Text>
                         </Stack>
 
-                        {/* Form */}
                         <form action={action}>
                             <Stack gap={5}>
-
-                                {/* Username */}
+                                {errors.general?.[0] && (
+                                    <Text color="red.500" fontSize="sm" textAlign="center">
+                                        {errors.general[0]}
+                                    </Text>
+                                )}
                                 <Field.Root invalid={Boolean(errors.username)}>
                                     <Field.Label>Username</Field.Label>
                                     <Input
                                         name="username"
                                         placeholder="Enter your username"
+                                        autoComplete="username"
                                         required
                                     />
                                     <Field.ErrorText>
@@ -56,13 +57,13 @@ const SignUpPage = () => {
                                     </Field.ErrorText>
                                 </Field.Root>
 
-                                {/* Password */}
                                 <Field.Root invalid={Boolean(errors.password)}>
                                     <Field.Label>Password</Field.Label>
                                     <Input
                                         type="password"
                                         name="password"
                                         placeholder="Enter your password"
+                                        autoComplete="new-password"
                                         required
                                     />
                                     <Field.ErrorText>
@@ -70,31 +71,28 @@ const SignUpPage = () => {
                                     </Field.ErrorText>
                                 </Field.Root>
 
-                                {/* Submit */}
                                 <Button
                                     type="submit"
                                     loading={pending}
                                     size="lg"
-                                    colorPalette="yellow"
+                                    colorPalette="brand"
                                 >
                                     Sign Up
                                 </Button>
-
                             </Stack>
                         </form>
 
-                        {/* Footer */}
-                        <Text textAlign="center" fontSize="sm">
+                        <Text textAlign="center" fontSize="sm" color="app.mutedText">
                             Already have an account?{" "}
                             <Link
                                 as={NextLink}
                                 href={signInPagePath()}
-                                color="yellow.500"
+                                color="brand.fg"
+                                fontWeight="semibold"
                             >
                                 Sign In
                             </Link>
                         </Text>
-
                     </Stack>
                 </Card.Body>
             </Card.Root>

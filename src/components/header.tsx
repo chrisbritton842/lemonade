@@ -20,7 +20,8 @@ const Header = async () => {
       py={4}
       boxShadow="sm"
       borderBottom="1px solid"
-      borderColor="lemon.100"
+      borderColor="app.border"
+      color="app.text"
     >
       <Flex align="center">
         <Link

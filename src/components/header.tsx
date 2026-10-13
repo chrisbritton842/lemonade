@@ -15,20 +15,20 @@ const Header = async () => {
 
   return (
     <Box
-      bg="white"
+      bg="app.surface"
       px={6}
       py={4}
       boxShadow="sm"
       borderBottom="1px solid"
-      borderColor="gray.100"
+      borderColor="lemon.100"
     >
       <Flex align="center">
         <Link
           as={NextLink}
           href={landingPagePath()}
-          _hover={{ textDecoration: "none", color: "teal.600" }}
+          _hover={{ textDecoration: "none", color: "brand.fg" }}
         >
-          <Text fontSize="xl" fontWeight="bold" color="teal.500">
+          <Text fontSize="xl" fontWeight="bold" color="brand.fg">
             Lemonade
           </Text>
         </Link>
@@ -43,7 +43,7 @@ const Header = async () => {
                 href={homePagePath()}
                 _hover={{ textDecoration: "none" }}
               >
-                <Button colorPalette="teal">
+                <Button colorPalette="brand">
                   Home
                 </Button>
               </Link>
@@ -53,7 +53,7 @@ const Header = async () => {
                 href={businessesPagePath()}
                 _hover={{ textDecoration: "none" }}
               >
-                <Button variant="outline" colorPalette="teal">
+                <Button variant="outline" colorPalette="brand">
                   Businesses
                 </Button>
               </Link>
@@ -65,7 +65,7 @@ const Header = async () => {
                 href={signUpPagePath()}
                 _hover={{ textDecoration: "none" }}
               >
-                <Button colorPalette="teal">Sign Up</Button>
+                <Button colorPalette="brand">Sign Up</Button>
               </Link>
 
               <Link
@@ -73,7 +73,7 @@ const Header = async () => {
                 href={signInPagePath()}
                 _hover={{ textDecoration: "none" }}
               >
-                <Button variant="outline" colorPalette="gray">
+                <Button variant="outline" colorPalette="brand">
                   Sign In
                 </Button>
               </Link>

@@ -145,146 +145,146 @@ const BusinessPage = async ({ params }: BusinessPageProps) => {
                                     <Stack gap={2}>
                                         <Heading size="xl" color="app.text">{business.name}</Heading>
 
-                                    {business.description ? (
-                                        <Text color="app.mutedText">{business.description}</Text>
-                                    ) : (
-                                        <Text color="app.mutedText">
-                                            This business has not added a description yet.
-                                        </Text>
-                                    )}
-                                </Stack>
-
-                                {isMember && (
-                                    <Badge colorPalette="brand" variant="subtle">
-                                        Member
-                                    </Badge>
-                                )}
-                            </HStack>
-
-                            <Text color="app.mutedText" fontSize="sm">
-                                {business._count.memberships} member
-                                {business._count.memberships === 1 ? "" : "s"}
-                            </Text>
-
-                            {isMember && (
-                                <Button asChild colorPalette="brand" alignSelf="start">
-                                    <NextLink href={commandCenterPagePath(business.id)}>
-                                        Open Command Center
-                                    </NextLink>
-                                </Button>
-                            )}
-                        </Stack>
-                    </Card.Body>
-                </Card.Root>
-
-                <Stack gap={4}>
-                    <Heading size="lg" color="app.text">Upcoming Events</Heading>
-
-                    {business.events.length === 0 ? (
-                        <Card.Root
-                            bg="app.surface"
-                            borderColor="app.border"
-                        >
-                            <Card.Body>
-                                <Text color="app.mutedText">
-                                    There are no events yet.
-                                </Text>
-                            </Card.Body>
-                        </Card.Root>
-                    ) : (
-                        <Stack gap={3}>
-                            {business.events.map((event) => (
-                            <Card.Root key={event.id} bg="app.surface" borderColor="app.border">
-                                <Card.Body>
-                                    <Stack gap={2}>
-                                        <HStack justify="space-between" align="start" gap={3}>
-                                            <Stack gap={1}>
-                                                <Heading size="sm" color="app.text">{event.title}</Heading>
-                                                <Text color="app.mutedText" fontSize="sm">
-                                                    {formatEventDate(event.startsAt)} -{" "}
-                                                    {formatEventTime(event.startsAt, event.endsAt)}
-                                                </Text>
-                                            </Stack>
-
-                                            <Badge colorPalette="brand" variant="subtle">
-                                                Sales Day
-                                            </Badge>
-                                        </HStack>
-
-                                        {event.location && (
-                                            <Text color="app.mutedText" fontSize="sm">
-                                                {event.location}
-                                            </Text>
-                                        )}
-
-                                        {event.description && (
-                                            <Text color="app.text" fontSize="sm">
-                                                {event.description}
+                                        {business.description ? (
+                                            <Text color="app.mutedText">{business.description}</Text>
+                                        ) : (
+                                            <Text color="app.mutedText">
+                                                This business has not added a description yet.
                                             </Text>
                                         )}
                                     </Stack>
+
+                                    {isMember && (
+                                        <Badge colorPalette="brand" variant="subtle">
+                                            Member
+                                        </Badge>
+                                    )}
+                                </HStack>
+
+                                <Text color="app.mutedText" fontSize="sm">
+                                    {business._count.memberships} member
+                                    {business._count.memberships === 1 ? "" : "s"}
+                                </Text>
+
+                                {isMember && (
+                                    <Button asChild colorPalette="brand" alignSelf="start">
+                                        <NextLink href={commandCenterPagePath(business.id)}>
+                                            Open Command Center
+                                        </NextLink>
+                                    </Button>
+                                )}
+                            </Stack>
+                        </Card.Body>
+                    </Card.Root>
+
+                    <Stack gap={4}>
+                        <Heading size="lg" color="app.text">Upcoming Events</Heading>
+
+                        {business.events.length === 0 ? (
+                            <Card.Root
+                                bg="app.surface"
+                                borderColor="app.border"
+                            >
+                                <Card.Body>
+                                    <Text color="app.mutedText">
+                                        There are no events yet.
+                                    </Text>
                                 </Card.Body>
                             </Card.Root>
-                            ))}
-                        </Stack>
-                    )}
-                </Stack>
-
-                <Stack gap={4}>
-                    <Heading size="lg" color="app.text">Products</Heading>
-
-                    {business.products.length === 0 ? (
-                        <Card.Root
-                            bg="app.surface"
-                            borderColor="app.border"
-                        >
-                            <Card.Body>
-                                <Text color="app.mutedText">
-                                    This business has not added products yet.
-                                </Text>
-                            </Card.Body>
-                        </Card.Root>
-                    ) : (
-                        <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
-                            {business.products.map((product) => (
-                                <Card.Root key={product.id} bg="app.surface" borderColor="app.border">
-                                    <Card.Body>
-                                        <Stack gap={3}>
-                                            <HStack justify="space-between" align="start" gap={3}>
-                                                <Stack gap={1}>
-                                                    <Heading size="sm" color="app.text">{product.name}</Heading>
-
-                                                    {product.description && (
+                        ) : (
+                            <Stack gap={3}>
+                                {business.events.map((event) => (
+                                    <Card.Root key={event.id} bg="app.surface" borderColor="app.border">
+                                        <Card.Body>
+                                            <Stack gap={2}>
+                                                <HStack justify="space-between" align="start" gap={3}>
+                                                    <Stack gap={1}>
+                                                        <Heading size="sm" color="app.text">{event.title}</Heading>
                                                         <Text color="app.mutedText" fontSize="sm">
-                                                            {product.description}
+                                                            {formatEventDate(event.startsAt)} -{" "}
+                                                            {formatEventTime(event.startsAt, event.endsAt)}
                                                         </Text>
-                                                    )}
-                                                </Stack>
-                                                <Badge colorPalette="brand" variant="subtle">
-                                                    {formatPrice(product.priceCents)}
-                                                </Badge>
-                                            </HStack>
-                                        </Stack>
-                                    </Card.Body>
-                                </Card.Root>
-                            ))}
-                        </SimpleGrid>
-                    )}
-                </Stack>
+                                                    </Stack>
 
-                <BusinessPageJobOpenings
-                    coopId={business.id}
-                    coopName={business.name}
-                    jobOpenings={business.jobOpenings.map((jobOpening) => ({
-                        id: jobOpening.id,
-                        title: jobOpening.title,
-                        description: jobOpening.description,
-                        role: jobOpening.role,
-                    }))}
-                    isMember={isMember}
-                />
-            </Stack>
-        </Container>
+                                                    <Badge colorPalette="brand" variant="subtle">
+                                                        Sales Day
+                                                    </Badge>
+                                                </HStack>
+
+                                                {event.location && (
+                                                    <Text color="app.mutedText" fontSize="sm">
+                                                        {event.location}
+                                                    </Text>
+                                                )}
+
+                                                {event.description && (
+                                                    <Text color="app.text" fontSize="sm">
+                                                        {event.description}
+                                                    </Text>
+                                                )}
+                                            </Stack>
+                                        </Card.Body>
+                                    </Card.Root>
+                                ))}
+                            </Stack>
+                        )}
+                    </Stack>
+
+                    <Stack gap={4}>
+                        <Heading size="lg" color="app.text">Products</Heading>
+
+                        {business.products.length === 0 ? (
+                            <Card.Root
+                                bg="app.surface"
+                                borderColor="app.border"
+                            >
+                                <Card.Body>
+                                    <Text color="app.mutedText">
+                                        This business has not added products yet.
+                                    </Text>
+                                </Card.Body>
+                            </Card.Root>
+                        ) : (
+                            <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
+                                {business.products.map((product) => (
+                                    <Card.Root key={product.id} bg="app.surface" borderColor="app.border">
+                                        <Card.Body>
+                                            <Stack gap={3}>
+                                                <HStack justify="space-between" align="start" gap={3}>
+                                                    <Stack gap={1}>
+                                                        <Heading size="sm" color="app.text">{product.name}</Heading>
+
+                                                        {product.description && (
+                                                            <Text color="app.mutedText" fontSize="sm">
+                                                                {product.description}
+                                                            </Text>
+                                                        )}
+                                                    </Stack>
+                                                    <Badge colorPalette="brand" variant="subtle">
+                                                        {formatPrice(product.priceCents)}
+                                                    </Badge>
+                                                </HStack>
+                                            </Stack>
+                                        </Card.Body>
+                                    </Card.Root>
+                                ))}
+                            </SimpleGrid>
+                        )}
+                    </Stack>
+
+                    <BusinessPageJobOpenings
+                        coopId={business.id}
+                        coopName={business.name}
+                        jobOpenings={business.jobOpenings.map((jobOpening) => ({
+                            id: jobOpening.id,
+                            title: jobOpening.title,
+                            description: jobOpening.description,
+                            role: jobOpening.role,
+                        }))}
+                        isMember={isMember}
+                    />
+                </Stack>
+            </Container>
         </Box>
     );
 };

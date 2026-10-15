@@ -1,5 +1,6 @@
 import {
   Badge,
+  Box,
   Button,
   Card,
   Container,
@@ -53,86 +54,95 @@ const HomePage = async () => {
   });
 
   return (
-    <Container maxW="4xl" py={8}>
-      <Stack gap={8}>
-        <Heading size="lg">Your Businesses</Heading>
+    <Box
+      bg="app.bg"
+      color="app.text"
+      minH="calc(100vh - 80px)"
+    >
+      <Container maxW="4xl" py={8}>
+        <Stack gap={8}>
+          <Heading size="lg" color="app.text">Your Businesses</Heading>
 
-        {memberships.length === 0 ? (
-          <Card.Root>
-            <Card.Body>
-              <Stack gap={4}>
-                <Stack gap={1}>
-                  <Heading size="md">No businesses yet</Heading>
-                  <Text color="gray.600">
-                    Start a new lemonade business or join an existing one.
-                  </Text>
+          {memberships.length === 0 ? (
+            <Card.Root
+              bg="app.surface"
+              borderColor="app.border"
+            >
+              <Card.Body>
+                <Stack gap={4}>
+                  <Stack gap={1}>
+                    <Heading size="md" color="app.text">No businesses yet</Heading>
+                    <Text color="app.mutedText">
+                      Start a new lemonade business or join an existing one.
+                    </Text>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </Card.Body>
-          </Card.Root>
-        ) : (
-          <Stack gap={4}>
-            {memberships.map((membership) => (
-              <Card.Root key={membership.id}>
-                <Card.Body>
-                  <Stack gap={4}>
-                    <Stack gap={2}>
-                      <HStack justify="space-between" align="start" gap={4}>
-                        <Stack gap={1}>
-                          <Heading size="md">{membership.cooperative.name}</Heading>
+              </Card.Body>
+            </Card.Root>
+          ) : (
+            <Stack gap={4}>
+              {memberships.map((membership) => (
+                <Card.Root key={membership.id} bg="app.surface" borderColor="app.border">
+                  <Card.Body>
+                    <Stack gap={4}>
+                      <Stack gap={2}>
+                        <HStack justify="space-between" align="start" gap={4}>
+                          <Stack gap={1}>
+                            <Heading size="md" color="app.text">{membership.cooperative.name}</Heading>
 
-                          {membership.cooperative.description && (
-                            <Text color="gray.600">
-                              {membership.cooperative.description}
-                            </Text>
-                          )}
-                        </Stack>
-                      </HStack>
-
-                      {membership.roles.length > 0 && (
-                        <HStack gap={2} wrap="wrap">
-                          {membership.roles.map((membershipRole) => (
-                            <Badge
-                              key={membershipRole.id}
-                              colorPalette="blue"
-                              variant="subtle"
-                            >
-                              {membershipRole.role}
-                            </Badge>
-                          ))}
+                            {membership.cooperative.description && (
+                              <Text color="app.mutedText">
+                                {membership.cooperative.description}
+                              </Text>
+                            )}
+                          </Stack>
                         </HStack>
-                      )} 
-                    </Stack>
 
-                    <Button asChild colorPalette="yellow" alignSelf="start">
-                      <NextLink
-                        href={commandCenterPagePath(membership.cooperative.id)}
+                        {membership.roles.length > 0 && (
+                          <HStack gap={2} wrap="wrap">
+                            {membership.roles.map((membershipRole) => (
+                              <Badge
+                                key={membershipRole.id}
+                                colorPalette="brand"
+                                variant="subtle"
+                              >
+                                {membershipRole.role}
+                              </Badge>
+                            ))}
+                          </HStack>
+                        )} 
+                      </Stack>
+
+                      <Button asChild colorPalette="brand" alignSelf="start">
+                        <NextLink
+                          href={commandCenterPagePath(membership.cooperative.id)}
                         >
                           Open Command Center
                         </NextLink>
-                    </Button>
-                  </Stack>
-                </Card.Body>
-              </Card.Root>
-            ))}
-          </Stack>
-        )}
+                      </Button>
+                    </Stack>
+                  </Card.Body>
+                </Card.Root>
+              ))}
+            </Stack>
+          )}
 
-        <HStack gap={3} wrap="wrap">
-          <Button asChild colorPalette="yellow">
-            <NextLink href={newBusinessPagePath()}>
-              Start New Business
-            </NextLink>
-          </Button>
+          <HStack gap={3} wrap="wrap">
+            <Button asChild colorPalette="brand">
+              <NextLink href={newBusinessPagePath()}>
+                Start New Business
+              </NextLink>
+            </Button>
 
-          <Button asChild variant="outline">
-            <NextLink href={businessesPagePath()}>
-              Join New Business
-            </NextLink>
-          </Button>
-        </HStack>
-      </Stack>
-    </Container>
+            <Button asChild variant="outline" colorPalette="brand">
+              <NextLink href={businessesPagePath()}>
+                Join New Business
+              </NextLink>
+            </Button>
+          </HStack>
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 

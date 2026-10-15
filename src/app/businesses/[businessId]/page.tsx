@@ -1,5 +1,6 @@
 import {
     Badge,
+    Box,
     Button,
     Card,
     Container,
@@ -127,38 +128,46 @@ const BusinessPage = async ({ params }: BusinessPageProps) => {
     const isMember = currentUser ? business.memberships.length > 0 : false;
 
     return (
-        <Container maxW="5xl" py={8}>
-            <Stack gap={8}>
-                <Card.Root>
-                    <Card.Body>
-                        <Stack gap={4}>
-                            <HStack justify="space-between" align="start" gap={4}>
-                                <Stack gap={2}>
-                                    <Heading size="xl">{business.name}</Heading>
+        <Box
+            bg="app.bg"
+            color="app.text"
+            minH="calc(100vh - 80px)"
+        >
+            <Container maxW="5xl" py={8}>
+                <Stack gap={8}>
+                    <Card.Root
+                        bg="app.surface"
+                        borderColor="app.border"
+                    >
+                        <Card.Body>
+                            <Stack gap={4}>
+                                <HStack justify="space-between" align="start" gap={4}>
+                                    <Stack gap={2}>
+                                        <Heading size="xl" color="app.text">{business.name}</Heading>
 
                                     {business.description ? (
-                                        <Text color="gray.600">{business.description}</Text>
+                                        <Text color="app.mutedText">{business.description}</Text>
                                     ) : (
-                                        <Text color="gray.600">
+                                        <Text color="app.mutedText">
                                             This business has not added a description yet.
                                         </Text>
                                     )}
                                 </Stack>
 
                                 {isMember && (
-                                    <Badge colorPalette="yellow" variant="subtle">
+                                    <Badge colorPalette="brand" variant="subtle">
                                         Member
                                     </Badge>
                                 )}
                             </HStack>
 
-                            <Text color="gray.600" fontSize="sm">
+                            <Text color="app.mutedText" fontSize="sm">
                                 {business._count.memberships} member
                                 {business._count.memberships === 1 ? "" : "s"}
                             </Text>
 
                             {isMember && (
-                                <Button asChild colorPalette="yellow" alignSelf="start">
+                                <Button asChild colorPalette="brand" alignSelf="start">
                                     <NextLink href={commandCenterPagePath(business.id)}>
                                         Open Command Center
                                     </NextLink>
@@ -169,12 +178,15 @@ const BusinessPage = async ({ params }: BusinessPageProps) => {
                 </Card.Root>
 
                 <Stack gap={4}>
-                    <Heading size="lg">Upcoming Events</Heading>
+                    <Heading size="lg" color="app.text">Upcoming Events</Heading>
 
                     {business.events.length === 0 ? (
-                        <Card.Root>
+                        <Card.Root
+                            bg="app.surface"
+                            borderColor="app.border"
+                        >
                             <Card.Body>
-                                <Text color="gray.600">
+                                <Text color="app.mutedText">
                                     There are no events yet.
                                 </Text>
                             </Card.Body>
@@ -182,31 +194,31 @@ const BusinessPage = async ({ params }: BusinessPageProps) => {
                     ) : (
                         <Stack gap={3}>
                             {business.events.map((event) => (
-                            <Card.Root key={event.id}>
+                            <Card.Root key={event.id} bg="app.surface" borderColor="app.border">
                                 <Card.Body>
                                     <Stack gap={2}>
                                         <HStack justify="space-between" align="start" gap={3}>
                                             <Stack gap={1}>
-                                                <Heading size="sm">{event.title}</Heading>
-                                                <Text color="gray.600" fontSize="sm">
+                                                <Heading size="sm" color="app.text">{event.title}</Heading>
+                                                <Text color="app.mutedText" fontSize="sm">
                                                     {formatEventDate(event.startsAt)} -{" "}
                                                     {formatEventTime(event.startsAt, event.endsAt)}
                                                 </Text>
                                             </Stack>
 
-                                            <Badge colorPalette="green" variant="subtle">
+                                            <Badge colorPalette="brand" variant="subtle">
                                                 Sales Day
                                             </Badge>
                                         </HStack>
 
                                         {event.location && (
-                                            <Text color="gray.600" fontSize="sm">
+                                            <Text color="app.mutedText" fontSize="sm">
                                                 {event.location}
                                             </Text>
                                         )}
 
                                         {event.description && (
-                                            <Text color="gray.700" fontSize="sm">
+                                            <Text color="app.text" fontSize="sm">
                                                 {event.description}
                                             </Text>
                                         )}
@@ -219,33 +231,36 @@ const BusinessPage = async ({ params }: BusinessPageProps) => {
                 </Stack>
 
                 <Stack gap={4}>
-                    <Heading size="lg">Products</Heading>
+                    <Heading size="lg" color="app.text">Products</Heading>
 
                     {business.products.length === 0 ? (
-                        <Card.Root>
+                        <Card.Root
+                            bg="app.surface"
+                            borderColor="app.border"
+                        >
                             <Card.Body>
-                                <Text color="gray.600">
-                                This business has not added products yet.
+                                <Text color="app.mutedText">
+                                    This business has not added products yet.
                                 </Text>
                             </Card.Body>
                         </Card.Root>
                     ) : (
                         <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
                             {business.products.map((product) => (
-                                <Card.Root key={product.id}>
+                                <Card.Root key={product.id} bg="app.surface" borderColor="app.border">
                                     <Card.Body>
                                         <Stack gap={3}>
                                             <HStack justify="space-between" align="start" gap={3}>
                                                 <Stack gap={1}>
-                                                    <Heading size="sm">{product.name}</Heading>
+                                                    <Heading size="sm" color="app.text">{product.name}</Heading>
 
                                                     {product.description && (
-                                                        <Text color="gray.600" fontSize="sm">
+                                                        <Text color="app.mutedText" fontSize="sm">
                                                             {product.description}
                                                         </Text>
                                                     )}
                                                 </Stack>
-                                                <Badge colorPalette="green">
+                                                <Badge colorPalette="brand" variant="subtle">
                                                     {formatPrice(product.priceCents)}
                                                 </Badge>
                                             </HStack>
@@ -270,6 +285,7 @@ const BusinessPage = async ({ params }: BusinessPageProps) => {
                 />
             </Stack>
         </Container>
+        </Box>
     );
 };
 

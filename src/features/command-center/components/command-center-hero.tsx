@@ -24,28 +24,31 @@ const roleLabels: Record<string, string> = {
 
 const CommandCenterHero = ({ coop, roles }: CommandCenterHeroProps) => {
     return (
-        <Card.Root>
+        <Card.Root
+            bg="app.surface"
+            borderColor="app.border"
+        >
             <Card.Body>
                 <Stack gap={4}>
                     <Stack gap={1}>
-                        <Heading size="xl">{coop.name}</Heading>
+                        <Heading size="xl" color="app.text">{coop.name}</Heading>
 
                         {coop.description && (
-                            <Text color="gray.600">{coop.description}</Text>
+                            <Text color="app.mutedText">{coop.description}</Text>
                         )}
                     </Stack>
 
                     <HStack gap={2} wrap="wrap">
-                        <Text fontWeight="medium">Your Roles:</Text>
+                        <Text fontWeight="medium" color="app.text">Your Roles:</Text>
 
                         {roles.length > 0 ? (
                             roles.map((r) => (
-                                <Badge key={r.role} colorPalette="yellow">
+                                <Badge key={r.role} colorPalette="brand" variant="subtle">
                                     {roleLabels[r.role] ?? r.role}
                                 </Badge>
                             ))
                         ) : (
-                            <Text color="gray.500">No roles assigned</Text>
+                            <Text color="app.mutedText">No roles assigned</Text>
                         )}
                     </HStack>
                 </Stack>

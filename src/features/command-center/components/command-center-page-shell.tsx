@@ -5,7 +5,6 @@ import {
     GridItem,
     Stack,
 } from "@chakra-ui/react";
-import { Box } from "lucide-react";
 import type {
     CommandCenterCalendarEvent,
     CommandCenterChatMessage,

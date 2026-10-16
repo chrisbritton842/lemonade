@@ -58,38 +58,41 @@ const CoopCalendar = ({ events }: CoopCalendarProps) => {
     const eventGroups = groupEventsByDate(events);
 
     return (
-        <Card.Root>
+        <Card.Root
+            bg="app.surface"
+            borderColor="app.border"
+        >
             <Card.Body>
                 <Stack gap={5}>
                     <Stack gap={1}>
-                        <Heading size="md">Calendar</Heading>
-                        <Text color="gray.600" fontSize="sm">
+                        <Heading size="md" color="app.text">Calendar</Heading>
+                        <Text color="app.mutedText" fontSize="sm">
                             Upcoming sales days, meetings, supply runs, and prep work.
                         </Text>
                     </Stack>
 
                     {events.length === 0 ? (
-                        <Text color="gray.600" fontSize="sm">
+                        <Text color="app.mutedText" fontSize="sm">
                             There are no upcoming events yet.
                         </Text>
                     ) : (
                         <Stack gap={5}>
                             {eventGroups.map((group) => (
                                 <Stack key={group.dateKey} gap={3}>
-                                    <Heading size="sm">{group.dateLabel}</Heading>
+                                    <Heading size="sm" color="app.text">{group.dateLabel}</Heading>
 
                                     <Stack gap={3}>
                                         {group.events.map((event) => (
-                                            <Card.Root key={event.id} variant="subtle">
+                                            <Card.Root key={event.id} bg="app.subtleSurface" borderColor="app.border">
                                                 <Card.Body>
                                                     <Stack gap={3}>
-                                                        <HStack justify="space-between" align="start" gap={3}>
-                                                            <Stack gap={1}>
-                                                                <Text fontWeight="semibold">
+                                                        <HStack justify="space-between" align="start" gap={3} wrap="wrap">
+                                                            <Stack gap={1} minW={0}>
+                                                                <Text fontWeight="semibold" color="app.text">
                                                                     {event.title}
                                                                 </Text>
 
-                                                                <Text color="gray.600" fontSize="sm">
+                                                                <Text color="app.mutedText" fontSize="sm">
                                                                     {event.timeLabel}
                                                                     {event.location
                                                                         ? ` at ${event.location}`
@@ -97,19 +100,23 @@ const CoopCalendar = ({ events }: CoopCalendarProps) => {
                                                                 </Text>
                                                             </Stack>
 
-                                                            <Badge colorPalette="yellow">
+                                                            <Badge colorPalette="brand" variant="subtle">
                                                                 {eventTypeLabels[event.type] ?? event.type}
                                                             </Badge>
                                                         </HStack>
 
                                                         {event.description && (
-                                                            <Text color="gray.600" fontSize="sm">
+                                                            <Text color="app.mutedText" fontSize="sm">
                                                                 {event.description}
                                                             </Text>
                                                         )}
 
-                                                        <HStack gap={2} wrap="warp">
-                                                            <Badge variant="outline">
+                                                        <HStack gap={2} wrap="wrap">
+                                                            <Badge
+                                                                variant="outline"
+                                                                color="app.mutedText"
+                                                                borderColor="app.border"
+                                                            >
                                                                 {eventStatusLabels[event.status] ?? event.status}
                                                             </Badge>
                                                         </HStack>

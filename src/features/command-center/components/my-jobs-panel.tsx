@@ -20,46 +20,46 @@ const MyJobsPanel = ({ coopId, tasks }: MyJobsPanelProps) => {
     const reviewTasks = tasks.filter((task) => task.status === "NEEDS_REVIEW");
 
     return (
-        <Card.Root>
+        <Card.Root bg="app.surface" borderColor="app.border">
             <Card.Body>
                 <Stack gap={5}>
                     <Stack gap={1}>
-                        <Heading size="md">My Jobs</Heading>
-                        <Text color="gray.600" fontSize="sm">
+                        <Heading size="md" color="app.text">My Jobs</Heading>
+                        <Text color="app.mutedText" fontSize="sm">
                             These are tasks that have been assigned to you.
                         </Text>
                     </Stack>
 
                     {activeTasks.length === 0 && reviewTasks.length === 0 && (
-                        <Text color="gray.500">You do not have any jobs right now.</Text>
+                        <Text color="app.mutedText">You do not have any jobs right now.</Text>
                     )}
 
                     {activeTasks.length > 0 && (
                         <Stack gap={3}>
-                            <Heading size="sm">To Do</Heading>
+                            <Heading size="sm" color="app.text">To Do</Heading>
 
                             {activeTasks.map((task) => (
-                                <Card.Root key={task.id} variant="subtle">
+                                <Card.Root key={task.id} bg="app.subtleSurface" borderColor="app.border">
                                     <Card.Body>
                                         <Stack gap={3}>
-                                            <HStack justify="space-between" align="start" gap={3}>
-                                                <Stack gap={1}>
-                                                    <Text fontWeight="semibold">{task.title}</Text>
+                                            <HStack justify="space-between" align="start" gap={3} wrap="wrap">
+                                                <Stack gap={1} minW={0}>
+                                                    <Text fontWeight="semibold" color="app.text">{task.title}</Text>
 
                                                     {task.description && (
-                                                        <Text color="gray.600" fontSize="sm">
+                                                        <Text color="app.mutedText" fontSize="sm">
                                                             {task.description}
                                                         </Text>
                                                     )}
 
                                                     {task.dueDateLabel && (
-                                                        <Text color="gray.500" fontSize="xs">
+                                                        <Text color="app.mutedText" fontSize="xs">
                                                             Due: {task.dueDateLabel}
                                                         </Text>
                                                     )}
                                                 </Stack>
 
-                                                <Badge colorPalette="yellow">
+                                                <Badge colorPalette="brand" variant="subtle">
                                                     {task.points} point{task.points === 1 ? "" : "s"}
                                                 </Badge>
                                             </HStack>
@@ -71,7 +71,7 @@ const MyJobsPanel = ({ coopId, tasks }: MyJobsPanelProps) => {
                                                 <Button
                                                   type="submit"
                                                   size="sm"
-                                                  colorPalette="yellow"
+                                                  colorPalette="brand"
                                                 >
                                                     I&apos;m done!
                                                 </Button>
@@ -85,23 +85,23 @@ const MyJobsPanel = ({ coopId, tasks }: MyJobsPanelProps) => {
 
                     {reviewTasks.length > 0 && (
                         <Stack gap={3}>
-                          <Heading size="sm">Waiting for Check</Heading>
+                          <Heading size="sm" color="app.text">Waiting for Check</Heading>
 
                           {reviewTasks.map((task) => (
-                            <Card.Root key={task.id} variant="subtle">
+                            <Card.Root key={task.id} bg="app.subtleSurface" borderColor="app.border">
                               <Card.Body>
-                                <HStack justify="space-between" align="start" gap={3}>
-                                  <Stack gap={1}>
-                                    <Text fontWeight="semibold">{task.title}</Text>
+                                <HStack justify="space-between" align="start" gap={3} wrap="wrap">
+                                  <Stack gap={1} minW={0}>
+                                    <Text fontWeight="semibold" color="app.text">{task.title}</Text>
 
                                     {task.description && (
-                                        <Text color="gray.600" fontSize="sm">
+                                        <Text color="app.mutedText" fontSize="sm">
                                             {task.description}
                                         </Text>
                                     )}
                                   </Stack>
 
-                                  <Badge colorPalette="orange">Needs Review</Badge>
+                                  <Badge colorPalette="indigo" variant="subtle">Needs Review</Badge>
                                 </HStack>
                               </Card.Body>
                             </Card.Root>

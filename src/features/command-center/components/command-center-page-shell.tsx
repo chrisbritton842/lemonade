@@ -1,7 +1,11 @@
 import {
-    SimpleGrid,
+    Box,
+    Container,
+    Grid,
+    GridItem,
     Stack,
 } from "@chakra-ui/react";
+import { Box } from "lucide-react";
 import type {
     CommandCenterCalendarEvent,
     CommandCenterChatMessage,
@@ -54,25 +58,45 @@ const CommandCenterPageShell = ({
     editableEvents,
 }: CommandCenterPageShellProps) => {
     return (
-        <Stack gap={6}>
-            <NextEventBanner event={nextEvent} />
-            <CommandCenterHero coop={coop} roles={membership.roles} />
-
-            <SimpleGrid columns={{ base: 1, xl: 4}} gap={6}>
-                <Stack gap={6} gridColumn={{ base: "auto", xl: "span 3" }}>
-                    <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
-                    <MyJobsPanel coopId={coop.id} tasks={tasks} />
-                    <ProposalsPanel coopId={coop.id} coopName={coop.name} coopDescription={coop.description} proposals={proposals} editableEvents={editableEvents} currentUserIsBoardMember={currentUserIsBoardMember}/>
-                    <ProductsPanel products={products} />
-                </Stack>
-
+        <Box
+            bg="app.bg"
+            color="app.text"
+            minH="calc(100vh - 80px)"
+        >
+            <Container maxW="7xl" py={8}>
                 <Stack gap={6}>
-                    <RulesPanel rules={rules} />
-                    <TeamChatPanel coopId={coop.id} messages={messages} />
-                    <CoopCalendar events={events} />
+                    <NextEventBanner event={nextEvent} />
+
+                    <CommandCenterHero coop={coop} roles={membership.roles} />
+
+                    <Grid
+                        templateColumns={{
+                            base: "minmax(0, 1fr)",
+                            xl: "minmax(0, 3fr) minmax(280px, 1fr)",
+                        }}
+                        gap={6}
+                        alignItems="start"
+                    >
+                        <GridItem minW={0}>
+                            <Stack gap={6}>
+                                <RoleTaskBoard coopId={coop.id} tasks={availableTasks} />
+                                <MyJobsPanel coopId={coop.id} tasks={tasks} />
+                                <ProposalsPanel coopId={coop.id} coopName={coop.name} coopDescription={coop.description} proposals={proposals} editableEvents={editableEvents} currentUserIsBoardMember={currentUserIsBoardMember}/>
+                                <ProductsPanel products={products} />
+                            </Stack>
+                        </GridItem>
+                        
+                        <GridItem minW={0}>
+                            <Stack gap={6}>
+                                <RulesPanel rules={rules} />
+                                <TeamChatPanel coopId={coop.id} messages={messages} />
+                                <CoopCalendar events={events} />
+                            </Stack>
+                        </GridItem>
+                    </Grid>
                 </Stack>
-            </SimpleGrid>
-        </Stack>
+            </Container>
+        </Box>
     );
 };
 

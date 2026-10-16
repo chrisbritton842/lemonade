@@ -63,13 +63,13 @@ const ProposalsPanel = ({ coopId, coopName, coopDescription, proposals, editable
     );
 
     return (
-        <Card.Root>
+        <Card.Root bg="app.surface" borderColor="app.border">
             <Card.Body>
                 <Stack gap={5}>
-                    <HStack justify="space-between" align="start">
+                    <HStack justify="space-between" align="start" gap={4} wrap="wrap">
                         <Stack gap={1}>
-                            <Heading size="md">Proposals</Heading>
-                            <Text color="gray.600" fontSize="sm">
+                            <Heading size="md" color="app.text">Proposals</Heading>
+                            <Text color="app.mutedText" fontSize="sm">
                                 Proposals are ideas that members can vote on to
                                 make decisions for the business.
                             </Text>
@@ -79,14 +79,14 @@ const ProposalsPanel = ({ coopId, coopName, coopDescription, proposals, editable
                     </HStack>
 
                     {proposals.length === 0 && (
-                        <Text color="gray.600" fontSize="sm">
+                        <Text color="app.mutedText" fontSize="sm">
                             There are no proposals yet.
                         </Text>
                     )}
 
                     {openProposals.length > 0 && (
                         <Stack gap={3}>
-                            <Heading size="sm">Open Proposals</Heading>
+                            <Heading size="sm" color="app.text">Open Proposals</Heading>
 
                             {openProposals.map((proposal) => (
                                 <ProposalCard
@@ -101,7 +101,7 @@ const ProposalsPanel = ({ coopId, coopName, coopDescription, proposals, editable
 
                     {closedProposals.length > 0 && (
                         <Stack gap={3}>
-                            <Heading size="sm">Closed Proposals</Heading>
+                            <Heading size="sm" color="app.text">Closed Proposals</Heading>
 
                             {closedProposals.map((proposal) => (
                                 <ProposalCard
@@ -134,41 +134,44 @@ const ProposalCard = ({ coopId, proposal, currentUserIsBoardMember }: ProposalCa
         proposal.status === "NEEDS_REVIEW";
 
     return (
-        <Card.Root variant="subtle">
+        <Card.Root
+            bg="app.subtleSurface"
+            borderColor="app.border"
+        >
             <Card.Body>
                 <Stack gap={4}>
-                    <HStack justify="space-between" align="start" gap={3}>
-                        <Stack gap={1}>
+                    <HStack justify="space-between" align="start" gap={3} wrap="wrap">
+                        <Stack gap={1} minW={0}>
                             <HStack gap={2} wrap="wrap">
-                                <Text fontWeight="semibold">{proposal.title}</Text>
+                                <Text fontWeight="semibold" color="app.text">{proposal.title}</Text>
 
-                                <Badge colorPalette="yellow">
+                                <Badge colorPalette="brand" variant="subtle">
                                     {proposalTypeLabels[proposal.type] ?? proposal.type}
                                 </Badge>
 
-                                <Badge variant="outline">
+                                <Badge variant="outline" color="app.mutedText" borderColor="app.border">
                                     {proposalStatusLabels[proposal.status] ?? proposal.status}
                                 </Badge>
                             </HStack>
 
-                            <Text color="gray.600" fontSize="sm">
+                            <Text color="app.mutedText" fontSize="sm">
                                 {proposal.description}
                             </Text>
 
-                            <Text color="gray.500" fontSize="xs">
+                            <Text color="app.mutedText" fontSize="xs">
                                 Proposed by {proposal.createdByName} on {proposal.createdAtLabel}
                             </Text>
                         </Stack>
                     </HStack>
 
                     <HStack gap={3} wrap="wrap">
-                        <Badge colorPalette="green">Yes: {proposal.yesVotes}</Badge>
-                        <Badge colorPalette="red">No: {proposal.noVotes}</Badge>
-                        <Badge colorPalette="gray">Abstain: {proposal.abstainVotes}</Badge>
+                        <Badge colorPalette="brand" variant="subtle">Yes: {proposal.yesVotes}</Badge>
+                        <Badge colorPalette="indigo" variant="subtle">No: {proposal.noVotes}</Badge>
+                        <Badge bg="slate.100" color="slate.700">Abstain: {proposal.abstainVotes}</Badge>
                     </HStack>
 
                     {proposal.currentUserVote && (
-                        <Text color="gray.600" fontSize="sm">
+                        <Text color="app.mutedText" fontSize="sm">
                             Your vote: {formatVoteChoice(proposal.currentUserVote)}
                         </Text>
                     )}
@@ -201,7 +204,7 @@ const ProposalCard = ({ coopId, proposal, currentUserIsBoardMember }: ProposalCa
                             <input type="hidden" name="coopId" value={coopId} />
                             <input type="hidden" name="proposalId" value={proposal.id} />
 
-                            <Button type="submit" colorPalette="green" size="sm">
+                            <Button type="submit" colorPalette="brand" size="sm">
                                 Approve Hire
                             </Button>
                         </form>
@@ -225,7 +228,7 @@ const VoteButton = ({ coopId, proposalId, choice, label }: VoteButtonProps) => {
             <input type="hidden" name="coopId" value={coopId} />
             <input type="hidden" name="proposalId" value={proposalId} />
             <input type="hidden" name="choice" value={choice} />
-            <Button type="submit" size="sm" variant="outline">
+            <Button type="submit" size="sm" variant="outline" colorPalette="brand">
                 {label}
             </Button>
         </form>

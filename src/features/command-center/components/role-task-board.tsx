@@ -42,12 +42,12 @@ const RoleTaskBoard = ({ coopId, tasks }: RoleTaskBoardProps) => {
     const availableTasks = tasks.filter((task) => task.status === "AVAILABLE");
 
     return (
-        <Card.Root>
+        <Card.Root bg="app.surface" borderColor="app.border">
             <Card.Body>
                 <Stack gap={5}>
                     <Stack gap={1}>
-                        <Heading size="md">Task Board</Heading>
-                        <Text color="gray.600" fontSize="sm">
+                        <Heading size="md" color="app.text">Task Board</Heading>
+                        <Text color="app.mutedText" fontSize="sm">
                             Choose tasks from your business role below.
                         </Text>
                     </Stack>
@@ -59,13 +59,13 @@ const RoleTaskBoard = ({ coopId, tasks }: RoleTaskBoardProps) => {
                             );
 
                             return (
-                                <Card.Root key={role} variant="outline">
+                                <Card.Root key={role} bg="slate.50" borderColor="app.border">
                                     <Card.Body>
                                         <Stack gap={3}>
-                                            <Heading size="sm">{roleLabels[role]}</Heading>
+                                            <Heading size="sm" color="app.text">{roleLabels[role]}</Heading>
 
                                             {roleTasks.length === 0 ? (
-                                                <Text color="gray.500" fontSize="sm">
+                                                <Text color="app.mutedText" fontSize="sm">
                                                     No jobs available.
                                                 </Text>
                                             ) : (
@@ -92,27 +92,27 @@ type TaskCardProps = {
 
 const TaskCard = ({ coopId, task }: TaskCardProps) => {
     return (
-        <Card.Root variant="subtle">
+        <Card.Root bg="app.subtleSurface" borderColor="app.border">
             <Card.Body>
                 <Stack gap={3}>
-                    <HStack justify="space-between" align="start" gap={3}>
-                        <Stack gap={1}>
-                            <Text fontWeight="semibold">{task.title}</Text>
+                    <HStack justify="space-between" align="start" gap={3} wrap="wrap">
+                        <Stack gap={1} minW={0}>
+                            <Text fontWeight="semibold" color="app.text">{task.title}</Text>
 
                             {task.description && (
-                                <Text color="gray.600" fontSize="sm">
+                                <Text color="app.mutedText" fontSize="sm">
                                     {task.description}
                                 </Text>
                             )}
 
                             {task.dueDateLabel && (
-                                <Text color="gray.500" fontSize="xs">
+                                <Text color="app.mutedText" fontSize="xs">
                                     Due: {task.dueDateLabel}
                                 </Text>
                             )}
                         </Stack>
 
-                        <Badge colorPalette="yellow">
+                        <Badge colorPalette="brand" variant="subtle">
                             {task.points} point{task.points === 1 ? "" : "s"}
                         </Badge>
                     </HStack>
@@ -121,7 +121,7 @@ const TaskCard = ({ coopId, task }: TaskCardProps) => {
                         <input type="hidden" name="taskId" value={task.id} />
                         <input type="hidden" name="coopId" value={coopId} />
 
-                        <Button type="submit" size="sm" colorPalette="yellow">
+                        <Button type="submit" size="sm" colorPalette="brand">
                             Take job
                         </Button>
                     </form>

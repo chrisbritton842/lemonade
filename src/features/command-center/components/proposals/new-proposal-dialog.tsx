@@ -2,6 +2,7 @@
 
 import {
     Button,
+    CloseButton,
     Dialog,
     Heading,
     Portal,
@@ -55,7 +56,7 @@ const NewProposalDialog = ({ coopId, editableEvents, currentBusinessName, curren
             placement="center"
         >
             <Dialog.Trigger asChild>
-                <Button colorPalette="yellow" size="sm">
+                <Button colorPalette="brand" size="sm">
                     New Proposal
                 </Button>
             </Dialog.Trigger>
@@ -63,19 +64,26 @@ const NewProposalDialog = ({ coopId, editableEvents, currentBusinessName, curren
             <Portal>
                 <Dialog.Backdrop />
 
-                <Dialog.Positioner>
-                    <Dialog.Content>
-                        <Dialog.Header>
+                <Dialog.Positioner p={4}>
+                    <Dialog.Content
+                        bg="app.surface"
+                        color="app.text"
+                        borderColor="app.border"
+                        borderWidth="1px"
+                        borderRadius="xl"
+                        maxH="calc(100dvh - 2rem)"
+                    >
+                        <Dialog.Header pr={12}>
                             <Stack gap={1}>
                                 <Dialog.Title asChild>
-                                    <Heading size="md">
+                                    <Heading size="md" color="app.text">
                                         {selectedType
                                             ? "Create Proposal"
                                             : "Select Proposal Type"}
                                     </Heading>
                                 </Dialog.Title>
 
-                                <Text color="gray.600" fontSize="sm">
+                                <Text color="app.mutedText" fontSize="sm">
                                     {selectedType
                                         ? "Fill out the form below to create a new proposal."
                                         : "Select the type of proposal you want to create."}
@@ -83,7 +91,7 @@ const NewProposalDialog = ({ coopId, editableEvents, currentBusinessName, curren
                             </Stack>
                         </Dialog.Header>
 
-                        <Dialog.Body>
+                        <Dialog.Body overflowY="auto">
                             {!selectedType && (
                                 <ProposalTypePicker
                                     onSelectType={setSelectedType}
@@ -158,7 +166,19 @@ const NewProposalDialog = ({ coopId, editableEvents, currentBusinessName, curren
                             )}
                         </Dialog.Body>
 
-                        <Dialog.CloseTrigger />
+                        <Dialog.CloseTrigger asChild>
+                            <CloseButton
+                                size="sm"
+                                position="absolute"
+                                top={3}
+                                right={3}
+                                color="app.mutedText"
+                                _hover={{
+                                    bg: "brand.subtle",
+                                    color: "brand.fg",
+                                }}
+                            />
+                        </Dialog.CloseTrigger>
                     </Dialog.Content>
                 </Dialog.Positioner>
             </Portal>

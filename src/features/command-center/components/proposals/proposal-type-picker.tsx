@@ -62,15 +62,35 @@ const ProposalTypePicker = ({ onSelectType }: ProposalTypePickerProps) => {
                     key={proposalType.type}
                     type="button"
                     variant="outline"
-                    justifyContent="start"
+                    colorPalette="brand"
+                    bg="app.surface"
+                    color="app.text"
+                    borderColor="app.border"
+                    borderRadius="lg"
+                    justifyContent="flex-start"
                     h="auto"
+                    minH="90px"
+                    w="full"
+                    px={4}
                     py={4}
                     whiteSpace="normal"
+                    textAlign="left"
+                    transition="background-color 0.2s, border-color 0.2s"
+                    _hover={{
+                        bg: "brand.subtle",
+                        borderColor: "brand.emphasized",
+                    }}
+                    _focusVisible={{
+                        outlineColor: "brand.focusRing",
+                        outlineWidth: "2px",
+                        outlineStyle: "solid",
+                        outlineOffset: "2px",
+                    }}
                     onClick={() => onSelectType(proposalType.type)}
                 >
-                    <Stack gap={1} align="start">
-                        <Text fontWeight="semibold">{proposalType.label}</Text>
-                        <Text fontSize="xs" color="gray.600" textAlign="left">
+                    <Stack gap={1} align="start" w="full">
+                        <Text fontWeight="semibold" color="app.text">{proposalType.label}</Text>
+                        <Text fontSize="xs" color="app.mutedText" textAlign="left">
                             {proposalType.description}
                         </Text>
                     </Stack>

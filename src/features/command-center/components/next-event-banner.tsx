@@ -1,4 +1,10 @@
-import { Badge, Card, HStack, Stack, Text } from "@chakra-ui/react";
+import {
+    Badge,
+    Card,
+    HStack,
+    Stack,
+    Text,
+} from "@chakra-ui/react";
 import type { CommandCenterEvent } from "@/features/command-center/types";
 
 type NextEventBannerProps = {
@@ -18,22 +24,25 @@ const NextEventBanner = ({ event }: NextEventBannerProps) => {
     }
 
     return (
-        <Card.Root bg="yellow.50" borderColor="yellow.200" borderWidth="1px">
+        <Card.Root bg="app.subtleSurface" borderColor="brand.emphasized" borderWidth="1px">
             <Card.Body py={3}>
                 <Stack gap={1}>
-                    <HStack justify="space-between" gap={3} wrap="wrap">
-                        <Text fontWeight="bold">
+                    <HStack justify="space-between" align="center" gap={3} wrap="wrap">
+                        <Text fontWeight="bold" color="app.text">
                             Next Event: {event.title}
                         </Text>
 
                         {event.status && (
-                            <Badge colorPalette="yellow">
+                            <Badge 
+                                colorPalette="brand"
+                                variant="subtle"
+                            >
                                 {statusLabels[event.status]}
                             </Badge>
                         )}
                     </HStack>
 
-                    <Text fontSize="sm" color="gray.700">
+                    <Text fontSize="sm" color="app.mutedText">
                         {event.startsAtLabel}
                         {event.location ? ` - ${event.location}` : ""}
                     </Text>

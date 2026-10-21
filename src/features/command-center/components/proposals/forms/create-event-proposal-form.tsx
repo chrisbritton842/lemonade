@@ -27,6 +27,16 @@ const initialState: CreateEventProposalState = {
     errors: {},
 };
 
+const inputStyles = {
+    bg: "app.surface",
+    color: "app.text",
+    borderColor: "app.border",
+    focusRingColor: "brand.focusRing",
+    _placeholder: {
+        color: "app.mutedText",
+    },
+} as const;
+
 const CreateEventProposalForm = ({
     coopId,
     onBack,
@@ -55,20 +65,21 @@ const CreateEventProposalForm = ({
                 <input type="hidden" name="coopId" value={coopId} />
 
                 <Field.Root invalid={Boolean(state.errors.eventTitle?.[0])} required>
-                    <Field.Label>Event Title</Field.Label>
+                    <Field.Label color="app.text">Event Title</Field.Label>
                     <Input
                         name="eventTitle"
                         placeholder="Lemonade sale at soccer game"
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.eventTitle?.[0]}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.eventType?.[0])} required>
-                    <Field.Label>Event Type</Field.Label>
+                    <Field.Label color="app.text">Event Type</Field.Label>
 
                     <NativeSelect.Root disabled={pending}>
-                        <NativeSelect.Field name="eventType" defaultValue="">
+                        <NativeSelect.Field name="eventType" defaultValue="" {...inputStyles}>
                             <option value="" disabled>
                                 Choose an event type
                             </option>
@@ -80,7 +91,7 @@ const CreateEventProposalForm = ({
                             <option value="MARKETING_OUTREACH">Marketing/Outreach</option>
                             <option value="OTHER">Other</option>
                         </NativeSelect.Field>
-                        <NativeSelect.Indicator />
+                        <NativeSelect.Indicator color="app.mutedText" />
                     </NativeSelect.Root>
 
                     <Field.ErrorText>{state.errors.eventType?.[0]}</Field.ErrorText>
@@ -88,30 +99,31 @@ const CreateEventProposalForm = ({
 
                 <Field.Root invalid={Boolean(state.errors.eventDate?.[0])} required>
                     <Field.Label>Date</Field.Label>
-                    <Input name="eventDate" type="date" disabled={pending} />
+                    <Input name="eventDate" type="date" disabled={pending} {...inputStyles} />
                     <Field.ErrorText>{state.errors.eventDate?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <HStack gap={3} align="start">
-                    <Field.Root invalid={Boolean(state.errors.startTime?.[0])} required>
-                        <Field.Label>Start Time</Field.Label>
-                        <Input name="startTime" type="time" disabled={pending} />
+                <Stack direction={{ base: "column", sm: "row" }} gap={3} align="start">
+                    <Field.Root invalid={Boolean(state.errors.startTime?.[0])} required flex={1} minW={0}>
+                        <Field.Label color="app.text">Start Time</Field.Label>
+                        <Input name="startTime" type="time" disabled={pending} {...inputStyles} />
                         <Field.ErrorText>{state.errors.startTime?.[0]}</Field.ErrorText>
                     </Field.Root>
 
-                    <Field.Root invalid={Boolean(state.errors.endTime?.[0])}>
-                        <Field.Label>End Time</Field.Label>
-                        <Input name="endTime" type="time" disabled={pending} />
+                    <Field.Root invalid={Boolean(state.errors.endTime?.[0])} flex={1} minW={0}>
+                        <Field.Label color="app.text">End Time</Field.Label>
+                        <Input name="endTime" type="time" disabled={pending} {...inputStyles}/>
                         <Field.ErrorText>{state.errors.endTime?.[0]}</Field.ErrorText>
                     </Field.Root>
-                </HStack>
+                </Stack>
 
                 <Field.Root invalid={Boolean(state.errors.location?.[0])}>
-                    <Field.Label>Location</Field.Label>
+                    <Field.Label color="app.text">Location</Field.Label>
                     <Input
                         name="location"
                         placeholder="Spring Lake Park"
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.location?.[0]}</Field.ErrorText>
                 </Field.Root>
@@ -123,6 +135,7 @@ const CreateEventProposalForm = ({
                         placeholder="Describe what will happen at this event."
                         rows={3}
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>
                         {state.errors.eventDescription?.[0]}
@@ -130,27 +143,29 @@ const CreateEventProposalForm = ({
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
-                    <Field.Label>Reason</Field.Label>
+                    <Field.Label color="app.text">Reason</Field.Label>
                     <Textarea
                         name="reason"
                         placeholder="Explain why this event would help the business."
                         rows={3}
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.reason?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <HStack justify="space-between">
+                <HStack justify="space-between" gap={3}>
                     <Button
                         type="button"
                         variant="outline"
+                        colorPalette="brand"
                         onClick={onBack}
                         disabled={pending}
                     >
                         Back
                     </Button>
 
-                    <Button type="submit" colorPalette="yellow" loading={pending}>
+                    <Button type="submit" colorPalette="brand" loading={pending}>
                         Create Proposal
                     </Button>
                 </HStack>

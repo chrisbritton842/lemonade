@@ -26,6 +26,16 @@ const initialState: CreateProductProposalState = {
     errors: {},
 };
 
+const inputStyles = {
+    bg: "app.surface",
+    color: "app.text",
+    borderColor: "app.border",
+    focusRingColor: "brand.focusRing",
+    _placeholder: {
+        color: "app.mutedText",
+    },
+} as const;
+
 const CreateProductProposalForm = ({
     coopId,
     onBack,
@@ -54,22 +64,24 @@ const CreateProductProposalForm = ({
                 <input type="hidden" name="coopId" value={coopId} />
 
                 <Field.Root invalid={Boolean(state.errors.productName?.[0])} required>
-                    <Field.Label>Product Name</Field.Label>
+                    <Field.Label color="app.text">Product Name</Field.Label>
                     <Input
                         name="productName"
                         placeholder="Strawberry Lemonade"
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.productName?.[0]}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.productDescription?.[0])}>
-                    <Field.Label>Product Description</Field.Label>
+                    <Field.Label color="app.text">Product Description</Field.Label>
                     <Textarea
                         name="productDescription"
                         placeholder="Describe the product."
                         disabled={pending}
                         rows={3}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>
                         {state.errors.productDescription?.[0]}
@@ -77,40 +89,43 @@ const CreateProductProposalForm = ({
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.priceDollars?.[0])} required>
-                    <Field.Label>Price</Field.Label>
+                    <Field.Label color="app.text">Price</Field.Label>
                     <Input
                         name="priceDollars"
                         type="text"
                         inputMode="decimal"
                         placeholder="1.50"
                         disabled={pending}
+                        {...inputStyles}
                     />
-                    <Field.HelperText>Enter the price in dollars.</Field.HelperText>
+                    <Field.HelperText color="app.mutedText">Enter the price in dollars.</Field.HelperText>
                     <Field.ErrorText>{state.errors.priceDollars?.[0]}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
-                    <Field.Label>Reason</Field.Label>
+                    <Field.Label color="app.text">Reason</Field.Label>
                     <Textarea
                         name="reason"
                         placeholder="Explain why this product should be sold."
                         disabled={pending}
                         rows={3}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.reason?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <HStack justify="space-between">
+                <HStack justify="space-between" gap={3}>
                     <Button
                         type="button"
                         variant="outline"
+                        colorPalette="brand"
                         onClick={onBack}
                         disabled={pending}
                     >
                         Back
                     </Button>
 
-                    <Button type="submit" colorPalette="yellow" loading={pending}>
+                    <Button type="submit" colorPalette="brand" loading={pending}>
                         Create Proposal
                     </Button>
                 </HStack>

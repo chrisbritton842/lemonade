@@ -25,6 +25,16 @@ const initialState: CreateRuleProposalState = {
     errors: {},
 };
 
+const inputStyles = {
+    bg: "app.surface",
+    color: "app.text",
+    borderColor: "app.border",
+    focusRingColor: "brand.focusRing",
+    _placeholder: {
+        color: "app.mutedText",
+    },
+} as const;
+
 const CreateRuleProposalForm = ({ coopId, onBack, onSuccess }: CreateRuleProposalFormProps) => {
     const [state, action, pending] = useActionState(
         createRuleProposalAction,
@@ -48,39 +58,45 @@ const CreateRuleProposalForm = ({ coopId, onBack, onSuccess }: CreateRuleProposa
                 
                 <input type="hidden" name="coopId" value={coopId} />
 
-                <Field.Root invalid={Boolean(state.errors.ruleText)}>
-                    <Field.Label>Rule</Field.Label>
+                <Field.Root invalid={Boolean(state.errors.ruleText?.[0])} required>
+                    <Field.Label color="app.text">Rule</Field.Label>
                     <Textarea
                         name="ruleText"
                         placeholder="Everyone must wash hands before making lemonade."
                         rows={3}
                         maxLength={200}
+                        disabled={pending}
+                        required
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.ruleText?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <Field.Root invalid={Boolean(state.errors.reason)}>
-                    <Field.Label>Reason</Field.Label>
+                <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
+                    <Field.Label color="app.text">Reason</Field.Label>
                     <Textarea
                         name="reason"
                         placeholder="This keeps our lemonade safe and clean."
                         rows={3}
                         maxLength={300}
+                        disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.reason?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <HStack justify="space-between">
+                <HStack justify="space-between" gap={3}>
                     <Button
                         type="button"
                         variant="outline"
+                        colorPalette="brand"
                         onClick={onBack}
                         disabled={pending}
                     >
                         Back
                     </Button>
 
-                    <Button type="submit" colorPalette="yellow" loading={pending}>
+                    <Button type="submit" colorPalette="brand" loading={pending}>
                         Create Proposal
                     </Button>
                 </HStack>

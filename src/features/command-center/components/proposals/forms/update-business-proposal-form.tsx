@@ -13,6 +13,7 @@ import {
     updateBusinessProposalAction,
     type UpdateBusinessProposalState,
 } from "@/features/command-center/actions/update-business-proposal";
+import { inputStyles } from "./form-styles";
 
 type UpdateBusinessProposalFormProps = {
     coopId: string;
@@ -60,7 +61,7 @@ const UpdateBusinessProposalForm = ({
                 )}
 
                 <Field.Root invalid={Boolean(state.errors.businessName?.[0])} required>
-                    <Field.Label>Business Name</Field.Label>
+                    <Field.Label color="app.text">Business Name</Field.Label>
 
                     <Input
                         name="businessName"
@@ -69,6 +70,8 @@ const UpdateBusinessProposalForm = ({
                         placeholder="Example: Zest Friends Lemonade"
                         disabled={pending}
                         maxLength={80}
+                        required
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>
@@ -79,7 +82,7 @@ const UpdateBusinessProposalForm = ({
                 <Field.Root
                     invalid={Boolean(state.errors.businessDescription?.[0])}
                 >
-                    <Field.Label>Business Description</Field.Label>
+                    <Field.Label color="app.text">Business Description</Field.Label>
 
                     <Textarea
                         name="businessDescription"
@@ -91,6 +94,7 @@ const UpdateBusinessProposalForm = ({
                         rows={4}
                         disabled={pending}
                         maxLength={300}
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>
@@ -99,7 +103,7 @@ const UpdateBusinessProposalForm = ({
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
-                    <Field.Label>Reason</Field.Label>
+                    <Field.Label color="app.text">Reason</Field.Label>
 
                     <Textarea
                         name="reason"
@@ -107,6 +111,7 @@ const UpdateBusinessProposalForm = ({
                         rows={3}
                         disabled={pending}
                         maxLength={300}
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>
@@ -118,13 +123,14 @@ const UpdateBusinessProposalForm = ({
                     <Button
                         type="button"
                         variant="outline"
+                        colorPalette="brand"
                         disabled={pending}
                         onClick={onBack}
                     >
                         Back
                     </Button>
 
-                    <Button type="submit" colorPalette="yellow" loading={pending}>
+                    <Button type="submit" colorPalette="brand" loading={pending}>
                         Propose Business Update
                     </Button>
                 </Stack>

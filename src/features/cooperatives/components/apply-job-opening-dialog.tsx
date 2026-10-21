@@ -2,6 +2,7 @@
 
 import {
     Button,
+    CloseButton,
     Dialog,
     Field,
     HStack,
@@ -31,6 +32,16 @@ const initialState: ApplyJobOpeningState = {
     errors: {},
 };
 
+const inputStyles = {
+    bg: "app.surface",
+    color: "app.text",
+    borderColor: "app.border",
+    focusRingColor: "brand.focusRing",
+    _placeholder: {
+        color: "app.mutedText",
+    },
+} as const;
+
 const ApplyJobOpeningDialog = ({
     coopId,
     coopName,
@@ -56,19 +67,26 @@ const ApplyJobOpeningDialog = ({
             <Portal>
                 <Dialog.Backdrop />
 
-                <Dialog.Positioner>
-                    <Dialog.Content>
-                        <Dialog.Header>
+                <Dialog.Positioner p={4}>
+                    <Dialog.Content
+                        bg="app.surface"
+                        color="app.text"
+                        borderColor="app.border"
+                        borderWidth="1px"
+                        borderRadius="xl"
+                        maxH="calc(100dvh - 2rem)"
+                    >
+                        <Dialog.Header pr={12}>
                             <Stack gap={1}>
-                                <Dialog.Title>Apply for This Job</Dialog.Title>
+                                <Dialog.Title color="app.text">Apply for This Job</Dialog.Title>
 
-                                <Text color="gray.600" fontSize="sm">
+                                <Text color="app.mutedText" fontSize="sm">
                                     Apply to join {coopName}.
                                 </Text>
                             </Stack>
                         </Dialog.Header>
 
-                        <Dialog.Body>
+                        <Dialog.Body overflowY="auto">
                             {jobOpening && (
                                 <form action={action}>
                                     <Stack gap={5}>
@@ -82,11 +100,11 @@ const ApplyJobOpeningDialog = ({
                                         <input type="hidden" name="jobOpeningId" value={jobOpening.id} />
 
                                         <Stack gap={1}>
-                                            <Text fontWeight="semibold">
+                                            <Text fontWeight="semibold" color="brand.fg">
                                                 {roleLabels[jobOpening.role]}
                                             </Text>
 
-                                            <Text color="gray.600" fontSize="sm">
+                                            <Text color="app.mutedText" fontSize="sm">
                                                 {jobOpening.title}
                                             </Text>
                                         </Stack>
@@ -95,7 +113,7 @@ const ApplyJobOpeningDialog = ({
                                             invalid={Boolean(state.errors.response?.[0])}
                                             required
                                         >
-                                            <Field.Label>
+                                            <Field.Label color="app.text">
                                                 Why are you the best candidate for this role?
                                             </Field.Label>
 
@@ -104,6 +122,8 @@ const ApplyJobOpeningDialog = ({
                                                 placeholder="Write your response here..."
                                                 rows={5}
                                                 disabled={pending}
+                                                required
+                                                {...inputStyles}
                                             />
 
                                             <Field.ErrorText>
@@ -111,10 +131,11 @@ const ApplyJobOpeningDialog = ({
                                             </Field.ErrorText>
                                         </Field.Root>
 
-                                        <HStack justify="end" gap={3}>
+                                        <HStack justify="end" gap={3} wrap="wrap">
                                             <Button
                                                 type="button"
                                                 variant="outline"
+                                                colorPalette="brand"
                                                 disabled={pending}
                                                 onClick={() => onOpenChange(false)}
                                             >
@@ -123,7 +144,7 @@ const ApplyJobOpeningDialog = ({
 
                                             <Button
                                                 type="submit"
-                                                colorPalette="green"
+                                                colorPalette="brand"
                                                 loading={pending}
                                             >
                                                 Submit Application
@@ -134,7 +155,20 @@ const ApplyJobOpeningDialog = ({
                             )}
                         </Dialog.Body>
 
-                        <Dialog.CloseTrigger />
+                        <Dialog.CloseTrigger asChild>
+                            <CloseButton
+                                size="sm"
+                                position="absolute"
+                                top={3}
+                                right={3}
+                                color="app.mutedText"
+                                disabled={pending}
+                                _hover={{
+                                    bg: "brand.subtle",
+                                    color: "brand.fg",
+                                }}
+                            />
+                        </Dialog.CloseTrigger>
                     </Dialog.Content>
                 </Dialog.Positioner>
             </Portal>

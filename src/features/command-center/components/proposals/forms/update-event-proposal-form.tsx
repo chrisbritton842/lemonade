@@ -16,6 +16,7 @@ import {
 } from "@/features/command-center/actions/update-event-proposal";
 import type { CommandCenterEditableEvent } from "@/features/command-center/types";
 import { EventType } from "@/generated/prisma/enums";
+import { inputStyles } from "./form-styles";
 
 type UpdateEventProposalFormProps = {
     coopId: string;
@@ -113,13 +114,14 @@ const UpdateEventProposalForm = ({
     if (events.length === 0) {
         return (
             <Stack gap={4}>
-                <Text color="gray.600" fontSize="sm">
+                <Text color="app.mutedText" fontSize="sm">
                     There are no upcoming events to update yet.
                 </Text>
 
                 <Button
                     type="button"
                     variant="outline"
+                    colorPalette="brand"
                     disabled={pending}
                     onClick={onBack}
                     alignSelf="start"
@@ -143,18 +145,19 @@ const UpdateEventProposalForm = ({
                 )}
 
                 {state.success && (
-                    <Text color="green.600" fontSize="sm">
+                    <Text color="green.700" fontSize="sm">
                         Event update proposal created.
                     </Text>
                 )}
 
                 <Field.Root invalid={Boolean(state.errors.eventId?.[0])} required>
-                    <Field.Label>Event to update</Field.Label>
+                    <Field.Label color="app.text">Event to Update</Field.Label>
 
                     <NativeSelect.Root disabled={pending}>
                         <NativeSelect.Field
                             value={selectedEventId}
                             onChange={(event) => setSelectedEventId(event.currentTarget.value)}
+                            {...inputStyles}
                         >
                             <option value="">Choose an event</option>
 
@@ -164,13 +167,13 @@ const UpdateEventProposalForm = ({
                                 </option>
                             ))}
                         </NativeSelect.Field>
-                        <NativeSelect.Indicator />
+                        <NativeSelect.Indicator color="app.mutedText" />
                     </NativeSelect.Root>
                     <Field.ErrorText>{state.errors.eventId?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <Field.Root invalid={Boolean(state.errors.eventTitle?.[0])} required>
-                    <Field.Label>Event title</Field.Label>
+                <Field.Root invalid={Boolean(state.errors.eventTitle?.[0])} required disabled={pending || !selectedEvent}>
+                    <Field.Label color="app.text">Event title</Field.Label>
 
                     <Input
                         name="eventTitle"
@@ -179,14 +182,15 @@ const UpdateEventProposalForm = ({
                             updateDraft("eventTitle", event.currentTarget.value)
                         }
                         placeholder="Example: Saturday Lemonade Sale"
-                        disabled={pending || !selectedEvent}
+                        required
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>{state.errors.eventTitle?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <Field.Root invalid={Boolean(state.errors.eventType?.[0])} required>
-                    <Field.Label>Event type</Field.Label>
+                <Field.Root invalid={Boolean(state.errors.eventType?.[0])} required disabled={pending || !selectedEvent}>
+                    <Field.Label color="app.text">Event type</Field.Label>
 
                     <NativeSelect.Root disabled={pending || !selectedEvent}>
                         <NativeSelect.Field
@@ -194,7 +198,8 @@ const UpdateEventProposalForm = ({
                             value={draft.eventType}
                             onChange={(event) =>
                                 updateDraft("eventType", event.currentTarget.value as EventType)
-                            } 
+                            }
+                            {...inputStyles}
                         >
                             {Object.values(EventType).map((eventType) => (
                                 <option key={eventType} value={eventType}>
@@ -202,14 +207,14 @@ const UpdateEventProposalForm = ({
                                 </option>
                             ))}
                         </NativeSelect.Field>
-                        <NativeSelect.Indicator />
+                        <NativeSelect.Indicator color="app.mutedText" />
                     </NativeSelect.Root>
 
                     <Field.ErrorText>{state.errors.eventType?.[0]}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.eventDate?.[0])} disabled={pending || !selectedEvent} required>
-                    <Field.Label>Date</Field.Label>
+                    <Field.Label color="app.text">Date</Field.Label>
 
                     <Input
                         name="eventDate"
@@ -218,14 +223,16 @@ const UpdateEventProposalForm = ({
                         onChange={(event) =>
                             updateDraft("eventDate", event.currentTarget.value)
                         }
+                        required
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>{state.errors.eventDate?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <Stack direction={{ base: "column", md: "row" }} gap={4}>
-                    <Field.Root invalid={Boolean(state.errors.startTime?.[0])} disabled={pending || !selectedEvent} required>
-                        <Field.Label>Start time</Field.Label>
+                <Stack direction={{ base: "column", md: "row" }} gap={4} align="start">
+                    <Field.Root invalid={Boolean(state.errors.startTime?.[0])} disabled={pending || !selectedEvent} required flex={1} minW={0}>
+                        <Field.Label color="app.text">Start Time</Field.Label>
 
                         <Input
                             name="startTime"
@@ -234,13 +241,15 @@ const UpdateEventProposalForm = ({
                             onChange={(event) => 
                                 updateDraft("startTime", event.currentTarget.value)
                             }
+                            required
+                            {...inputStyles}
                         />
 
                         <Field.ErrorText>{state.errors.startTime?.[0]}</Field.ErrorText>
                     </Field.Root>
 
-                    <Field.Root invalid={Boolean(state.errors.endTime?.[0])} disabled={pending || !selectedEvent}>
-                        <Field.Label>End time</Field.Label>
+                    <Field.Root invalid={Boolean(state.errors.endTime?.[0])} disabled={pending || !selectedEvent} flex={1} minW={0}>
+                        <Field.Label color="app.text">End time</Field.Label>
 
                         <Input
                             name="endTime"
@@ -249,6 +258,7 @@ const UpdateEventProposalForm = ({
                             onChange={(event) =>
                                 updateDraft("endTime", event.currentTarget.value)
                             }
+                            {...inputStyles}
                         />
 
                         <Field.ErrorText>{state.errors.endTime?.[0]}</Field.ErrorText>
@@ -256,7 +266,7 @@ const UpdateEventProposalForm = ({
                 </Stack>
 
                 <Field.Root invalid={Boolean(state.errors.location?.[0])} disabled={pending || !selectedEvent}>
-                    <Field.Label>Location</Field.Label>
+                    <Field.Label color="app.text">Location</Field.Label>
 
                     <Input
                         name="location"
@@ -265,13 +275,14 @@ const UpdateEventProposalForm = ({
                             updateDraft("location", event.currentTarget.value)
                         }
                         placeholder="Example: Main Street Park"
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>{state.errors.location?.[0]}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.eventDescription?.[0])} disabled={pending || !selectedEvent}>
-                    <Field.Label>Description</Field.Label>
+                    <Field.Label color="app.text">Description</Field.Label>
 
                     <Textarea
                         name="eventDescription"
@@ -281,6 +292,7 @@ const UpdateEventProposalForm = ({
                         }
                         placeholder="Describe what will happen at this event."
                         rows={3}
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>
@@ -288,13 +300,14 @@ const UpdateEventProposalForm = ({
                     </Field.ErrorText>
                 </Field.Root>
 
-                <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
-                    <Field.Label>Reason</Field.Label>
+                <Field.Root invalid={Boolean(state.errors.reason?.[0])} disabled={pending}>
+                    <Field.Label color="app.text">Reason</Field.Label>
 
                     <Textarea
                         name="reason"
                         placeholder="Example: We need to move the sale earlier because it gets hot in the afternoon."
                         rows={3}
+                        {...inputStyles}
                     />
 
                     <Field.ErrorText>{state.errors.reason?.[0]}</Field.ErrorText>
@@ -304,6 +317,7 @@ const UpdateEventProposalForm = ({
                     <Button
                         type="button"
                         variant="outline"
+                        colorPalette="brand"
                         disabled={pending}
                         onClick={onBack}
                     >
@@ -312,7 +326,7 @@ const UpdateEventProposalForm = ({
 
                     <Button
                         type="submit"
-                        colorPalette="yellow"
+                        colorPalette="brand"
                         loading={pending}
                         disabled={!selectedEvent}
                     >

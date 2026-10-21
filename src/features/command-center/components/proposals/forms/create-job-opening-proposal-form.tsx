@@ -27,6 +27,16 @@ const initialState: CreateJobOpeningProposalState = {
     errors: {},
 };
 
+const inputStyles = {
+    bg: "app.surface",
+    color: "app.text",
+    borderColor: "app.border",
+    focusRingColor: "brand.focusRing",
+    _placeholder: {
+        color: "app.mutedText",
+    },
+} as const;
+
 const CreateJobOpeningProposalForm = ({
     coopId,
     onBack,
@@ -55,22 +65,24 @@ const CreateJobOpeningProposalForm = ({
                 <input type="hidden" name="coopId" value={coopId} />
 
                 <Field.Root invalid={Boolean(state.errors.jobTitle?.[0])} required>
-                    <Field.Label>Job Opening Title</Field.Label>
+                    <Field.Label color="app.text">Job Opening Title</Field.Label>
                     <Input
                         name="jobTitle"
                         placeholder="Saturday cashier"
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.jobTitle?.[0]}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.jobDescription?.[0])}>
-                    <Field.Label>Job Description</Field.Label>
+                    <Field.Label color="app.text">Job Description</Field.Label>
                     <Textarea
                         name="jobDescription"
                         placeholder="Describe what this person would help with."
                         rows={3}
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>
                         {state.errors.jobDescription?.[0]}
@@ -78,10 +90,10 @@ const CreateJobOpeningProposalForm = ({
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.role?.[0])}>
-                    <Field.Label>Position</Field.Label>
+                    <Field.Label color="app.text">Position</Field.Label>
 
                     <NativeSelect.Root disabled={pending}>
-                        <NativeSelect.Field name="role">
+                        <NativeSelect.Field name="role" {...inputStyles}>
                             <option value="BOARD_OF_DIRECTORS">Board Member</option>
                             <option value="PRODUCTION">Production Coordinator</option>
                             <option value="CUSTOMER_SERVICE">Customer Service Representative</option>
@@ -89,34 +101,36 @@ const CreateJobOpeningProposalForm = ({
                             <option value="MARKETING">Marketing Coordinator</option>
                             <option value="ACCOUNTING">Treasurer</option>
                         </NativeSelect.Field>
-                        <NativeSelect.Indicator />
+                        <NativeSelect.Indicator color="app.mutedText" />
                     </NativeSelect.Root>
 
                     <Field.ErrorText>{state.errors.role?.[0]}</Field.ErrorText>
                 </Field.Root>
 
                 <Field.Root invalid={Boolean(state.errors.reason?.[0])}>
-                    <Field.Label>Reason</Field.Label>
+                    <Field.Label color="app.text">Reason</Field.Label>
                     <Textarea
                         name="reason"
                         placeholder="Explain why the team needs this job opening."
                         rows={3}
                         disabled={pending}
+                        {...inputStyles}
                     />
                     <Field.ErrorText>{state.errors.reason?.[0]}</Field.ErrorText>
                 </Field.Root>
 
-                <HStack justify="space-between">
+                <HStack justify="space-between" gap={3}>
                     <Button
                         type="button"
                         variant="outline"
+                        colorPalette="brand"
                         onClick={onBack}
                         disabled={pending}
                     >
                         Back
                     </Button>
 
-                    <Button type="submit" colorPalette="yellow" loading={pending}>
+                    <Button type="submit" colorPalette="brand" loading={pending}>
                         Create Proposal
                     </Button>
                 </HStack>

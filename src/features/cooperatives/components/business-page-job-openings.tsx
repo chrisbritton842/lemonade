@@ -32,12 +32,15 @@ const BusinessPageJobOpenings = ({
 
     return (
         <Stack gap={4}>
-            <Heading size="lg">Job Openings</Heading>
+            <Heading size="lg" color="app.text">Job Openings</Heading>
 
             {jobOpenings.length === 0 ? (
-                <Card.Root>
+                <Card.Root
+                    bg="app.surface"
+                    borderColor="app.border"
+                >
                     <Card.Body>
-                        <Text color="gray.600">
+                        <Text color="app.mutedText">
                             There are no job openings at this time.
                         </Text>
                     </Card.Body>
@@ -45,28 +48,45 @@ const BusinessPageJobOpenings = ({
             ) : (
                 <Stack gap={3}>
                     {jobOpenings.map((jobOpening) => (
-                        <Card.Root key={jobOpening.id}>
+                        <Card.Root 
+                            key={jobOpening.id}
+                            bg="app.surface"
+                            borderColor="app.border"
+                        >
                             <Card.Body>
                                 <Stack gap={4}>
-                                    <HStack justify="space-between" align="start" gap={3}>
-                                        <Stack gap={1}>
-                                            <Heading size="sm">{jobOpening.title}</Heading>
+                                    <HStack justify="space-between" align="start" gap={3} wrap="wrap">
+                                        <Stack gap={1} minW={0}>
+                                            <Heading
+                                                size="sm"
+                                                color="app.text"
+                                                overflowWrap="anywhere"
+                                            >
+                                                {jobOpening.title}
+                                            </Heading>
 
                                             {jobOpening.description && (
-                                                <Text color="gray.600" fontSize="sm">
+                                                <Text
+                                                    color="app.mutedText"
+                                                    fontSize="sm"
+                                                    whiteSpace="pre-wrap"
+                                                    overflowWrap="anywhere"
+                                                >
                                                     {jobOpening.description}
                                                 </Text>
                                             )}
                                         </Stack>
 
-                                        <Badge colorPalette="blue" variant="subtle">
+                                        <Badge colorPalette="brand" variant="subtle">
                                             {roleLabels[jobOpening.role]}
                                         </Badge>
                                     </HStack>
 
                                     {!isMember && (
                                         <Button
-                                            colorPalette="yellow"
+                                            type="button"
+                                            colorPalette="brand"
+                                            size="sm"
                                             alignSelf="start"
                                             onClick={() => setSelectedJobOpening(jobOpening)}
                                         >

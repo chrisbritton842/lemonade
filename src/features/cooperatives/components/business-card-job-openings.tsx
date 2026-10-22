@@ -33,13 +33,13 @@ const BusinessCardJobOpenings = ({
 
     return (
         <>
-            <Stack gap={2}>
-                <HStack gap={2}>
-                    <Badge colorPalette="green" variant="subtle">
+            <Stack gap={3}>
+                <HStack gap={2} wrap="wrap">
+                    <Badge colorPalette="brand" variant="subtle">
                         Now Hiring!
                     </Badge>
 
-                    <Text color="gray.600" fontSize="sm">
+                    <Text color="app.mutedText" fontSize="sm">
                         Click a position to apply.
                     </Text>
                 </HStack>
@@ -50,19 +50,40 @@ const BusinessCardJobOpenings = ({
                             key={jobOpening.id}
                             type="button"
                             variant="outline"
-                            justifyContent="start"
+                            colorPalette="brand"
+                            bg="app.surface"
+                            color="app.text"
+                            borderColor="app.border"
+                            borderRadius="lg"
+                            justifyContent="flex-start"
                             h="auto"
+                            w="full"
+                            px={4}
                             py={3}
                             whiteSpace="normal"
+                            textAlign="left"
+                            transition="background-color 0.2s, border-color 0.2s"
+                            _hover={{
+                                bg: "brand.subtle",
+                                borderColor: "brand.emphasized",
+                            }}
+                            _focusVisible={{
+                                outlineColor: "brand.focusRing",
+                                outlineWidth: "2px",
+                                outlineStyle: "solid",
+                                outlineOffset: "2px",
+                            }}
                             onClick={() => setSelectedJobOpening(jobOpening)}
                         >
-                            <Box textAlign="left">
-                                <Text fontWeight="semibold">
-                                    {roleLabels[jobOpening.role]}
-                                </Text>
-                                <Text color="gray.600" fontSize="sm">
-                                    {jobOpening.title}
-                                </Text>
+                            <Box textAlign="left" minW={0} w="full">
+                                <Stack gap={1}>
+                                    <Text fontWeight="semibold" color="app.text" overflowWrap="anywhere">
+                                        {roleLabels[jobOpening.role]}
+                                    </Text>
+                                    <Text color="app.mutedText" fontSize="sm" overflowWrap="anywhere">
+                                        {jobOpening.title}
+                                    </Text>
+                                </Stack>
                             </Box>
                         </Button>
                     ))}

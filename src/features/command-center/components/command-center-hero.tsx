@@ -6,6 +6,16 @@ import {
     Stack,
     Text,
 } from "@chakra-ui/react";
+import {
+    Boxes,
+    Calculator,
+    GlassWater,
+    Handshake,
+    type LucideIcon,
+    Megaphone,
+    UserRound,
+    UsersRound,
+} from "lucide-react";
 import type { CommandCenterCoop, CommandCenterMembership } from "@/features/command-center/types";
 
 type CommandCenterHeroProps = {
@@ -20,6 +30,15 @@ const roleLabels: Record<string, string> = {
     INVENTORY: "Inventory",
     MARKETING: "Marketing",
     ACCOUNTING: "Accounting",
+};
+
+const roleIcons: Record<string, LucideIcon> = {
+    BOARD_OF_DIRECTORS: UsersRound,
+    PRODUCTION: GlassWater,
+    CUSTOMER_SERVICE: Handshake,
+    INVENTORY: Boxes,
+    MARKETING: Megaphone,
+    ACCOUNTING: Calculator,
 };
 
 const CommandCenterHero = ({ coop, roles }: CommandCenterHeroProps) => {
@@ -42,13 +61,27 @@ const CommandCenterHero = ({ coop, roles }: CommandCenterHeroProps) => {
                         <Text fontWeight="medium" color="app.text">Your Roles:</Text>
 
                         {roles.length > 0 ? (
-                            roles.map((r) => (
-                                <Badge key={r.role} colorPalette="brand" variant="subtle">
-                                    {roleLabels[r.role] ?? r.role}
-                                </Badge>
-                            ))
+                            roles.map((r) => {
+                                const RoleIcon = roleIcons[r.role] ?? UserRound;
+
+                                return (
+                                    <Badge
+                                        key={r.role}
+                                        colorPalette="brand"
+                                        variant="subtle"
+                                        gap={2}
+                                        px={3}
+                                        py={1.5}
+                                    >
+                                        <RoleIcon size={16} aria-hidden="true" />
+                                        {roleLabels[r.role] ?? r.role}
+                                    </Badge>
+                                );
+                            })
                         ) : (
-                            <Text color="app.mutedText">No roles assigned</Text>
+                            <Text color="app.mutedText">
+                                No roles assigned
+                            </Text>
                         )}
                     </HStack>
                 </Stack>

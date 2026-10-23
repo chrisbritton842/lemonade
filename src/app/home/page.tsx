@@ -16,6 +16,7 @@ import {
   Handshake,
   type LucideIcon,
   Megaphone,
+  UserRound,
   UsersRound,
 } from "lucide-react";
 import NextLink from "next/link";
@@ -34,6 +35,10 @@ const roleInfo: Record<
   CoopRole,
   { label: string; icon: LucideIcon }
   > = {
+    [CoopRole.MEMBER]: {
+      label: "Member",
+      icon: UserRound,
+    },
     [CoopRole.BOARD_OF_DIRECTORS]: {
       label: "Board of Directors",
       icon: UsersRound,

@@ -1,5 +1,6 @@
-import { Box, Button, Flex, HStack, Link, Spacer,Text } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Spacer, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { signOutAction } from "@/features/auth/actions/sign-out";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import {
   businessesPagePath,
@@ -23,61 +24,66 @@ const Header = async () => {
       borderColor="app.border"
       color="app.text"
     >
-      <Flex align="center">
-        <Link
-          as={NextLink}
-          href={landingPagePath()}
-          _hover={{ textDecoration: "none", color: "brand.fg" }}
-        >
-          <Text fontSize="xl" fontWeight="bold" color="brand.fg">
+      <Flex align="center" gap={4} wrap="wrap">
+        <NextLink href={landingPagePath()}>
+          <Text
+            fontSize="xl"
+            fontWeight="bold"
+            color="brand.fg"
+            _hover={{ color: "sky.600" }}
+          >
             Lemonade
           </Text>
-        </Link>
+        </NextLink>
 
         <Spacer />
 
-        <HStack gap={4}>
+        <HStack gap={3} wrap="wrap">
           {isSignedIn ? (
             <>
-              <Link
-                as={NextLink}
-                href={homePagePath()}
-                _hover={{ textDecoration: "none" }}
-              >
-                <Button colorPalette="brand">
+              <Button asChild colorPalette="brand">
+                <NextLink href={homePagePath()}>
                   Home
-                </Button>
-              </Link>
+                </NextLink>
+              </Button>
 
-              <Link
-                as={NextLink}
-                href={businessesPagePath()}
-                _hover={{ textDecoration: "none" }}
+              <Button
+                asChild
+                variant="outline"
+                colorPalette="brand"
               >
-                <Button variant="outline" colorPalette="brand">
+                <NextLink href={businessesPagePath()}>
                   Businesses
+                </NextLink>
+              </Button>
+
+              <form action={signOutAction}>
+                <Button
+                  type="submit"
+                  variant="ghost"
+                  colorPalette="brand"
+                >
+                  Sign Out
                 </Button>
-              </Link>
+              </form>
             </>
           ) : (
             <>
-              <Link
-                as={NextLink}
-                href={signUpPagePath()}
-                _hover={{ textDecoration: "none" }}
-              >
-                <Button colorPalette="brand">Sign Up</Button>
-              </Link>
+              <Button asChild colorPalette="brand">
+                <NextLink href={signUpPagePath()}>
+                  Sign Up
+                </NextLink>
+              </Button>
 
-              <Link
-                as={NextLink}
-                href={signInPagePath()}
-                _hover={{ textDecoration: "none" }}
+              <Button
+                asChild
+                variant="outline"
+                colorPalette="brand"
               >
-                <Button variant="outline" colorPalette="brand">
+                <NextLink href={signInPagePath()}>
                   Sign In
-                </Button>
-              </Link>
+                </NextLink>
+              </Button>
             </>
           )}
         </HStack>

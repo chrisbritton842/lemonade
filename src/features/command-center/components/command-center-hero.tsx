@@ -58,8 +58,6 @@ const CommandCenterHero = ({ coop, roles }: CommandCenterHeroProps) => {
                     </Stack>
 
                     <HStack gap={2} wrap="wrap">
-                        <Text fontWeight="medium" color="app.text">Your Roles:</Text>
-
                         {roles.length > 0 ? (
                             roles.map((r) => {
                                 const RoleIcon = roleIcons[r.role] ?? UserRound;
@@ -79,7 +77,7 @@ const CommandCenterHero = ({ coop, roles }: CommandCenterHeroProps) => {
                                 );
                             })
                         ) : (
-                            <Text color="app.mutedText">
+                            <Text color="app.mutedText" fontSize="sm">
                                 No roles assigned
                             </Text>
                         )}

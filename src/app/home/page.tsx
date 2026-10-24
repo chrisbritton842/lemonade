@@ -151,10 +151,18 @@ const HomePage = async () => {
                     <Card.Body>
                       <Stack gap={4}>
                         <Stack gap={2}>
-                          <Heading size="md" color="app.text">
-                            {membership.cooperative.name}
-                          </Heading>
+                          <HStack justify="space-between" align="start" gap={3}>
+                            <Heading size="md" color="app.text">
+                              {membership.cooperative.name}
+                            </Heading>
 
+                            <ArrowRight
+                              size={20}
+                              color="#0369A1"
+                              aria-hidden="true"
+                            />
+                          </HStack>
+                          
                           {membership.cooperative.description && (
                             <Text color="app.mutedText">
                               {membership.cooperative.description}
@@ -188,13 +196,6 @@ const HomePage = async () => {
                             </HStack>
                           )}
                         </Stack>
-
-                        <HStack gap={2} color="brand.fg">
-                          <Text fontSize="sm" fontWeight="medium">
-                            Open Command Center
-                          </Text>
-                          <ArrowRight size={16} aria-hidden="true" />
-                        </HStack>
                       </Stack>
                     </Card.Body>
                   </NextLink>

@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
+  ArrowRight,
   Boxes,
   Calculator,
   GlassWater,
@@ -125,11 +126,31 @@ const HomePage = async () => {
           ) : (
             <Stack gap={4}>
               {memberships.map((membership) => (
-                <Card.Root key={membership.id} bg="app.surface" borderColor="app.border">
-                  <Card.Body>
-                    <Stack gap={4}>
-                      <Stack gap={3}>
-                        <Stack gap={1}>
+                <Card.Root
+                  key={membership.id}
+                  asChild
+                  bg="app.surface"
+                  borderColor="app.border"
+                  cursor="pointer"
+                  transition="all 0.2s"
+                  _hover={{
+                    borderColor: "brand.emphasized",
+                    shadow: "md",
+                    transform: "translateY(-2px)",
+                  }}
+                  _focusVisible={{
+                    outline: "2px solid",
+                    outlineColor: "brand.focusRing",
+                    outlineOffset: "2px",
+                  }}
+                >
+                  <NextLink
+                    href={commandCenterPagePath(membership.cooperative.id)}
+                    aria-label={`Open ${membership.cooperative.name} Command Center`}
+                  >
+                    <Card.Body>
+                      <Stack gap={4}>
+                        <Stack gap={2}>
                           <Heading size="md" color="app.text">
                             {membership.cooperative.name}
                           </Heading>
@@ -139,14 +160,11 @@ const HomePage = async () => {
                               {membership.cooperative.description}
                             </Text>
                           )}
-                        </Stack>
 
-                        {membership.roles.length > 0 && (
-                          <HStack gap={2} wrap="wrap">
-                            {membership.roles.map(
-                              (membershipRole) => {
-                                const role =
-                                  roleInfo[membershipRole.role];
+                          {membership.roles.length > 0 && (
+                            <HStack gap={2} wrap="wrap">
+                              {membership.roles.map((membershipRole) => {
+                                const role = roleInfo[membershipRole.role];
                                 const RoleIcon = role.icon;
 
                                 return (
@@ -165,21 +183,21 @@ const HomePage = async () => {
                                     {role.label}
                                   </Badge>
                                 );
-                              }
-                            )}
-                          </HStack>
-                        )}
-                      </Stack>
+                                }
+                              )}
+                            </HStack>
+                          )}
+                        </Stack>
 
-                      <Button asChild colorPalette="brand" alignSelf="start">
-                        <NextLink
-                          href={commandCenterPagePath(membership.cooperative.id)}
-                        >
-                          Open Command Center
-                        </NextLink>
-                      </Button>
-                    </Stack>
-                  </Card.Body>
+                        <HStack gap={2} color="brand.fg">
+                          <Text fontSize="sm" fontWeight="medium">
+                            Open Command Center
+                          </Text>
+                          <ArrowRight size={16} aria-hidden="true" />
+                        </HStack>
+                      </Stack>
+                    </Card.Body>
+                  </NextLink>
                 </Card.Root>
               ))}
             </Stack>

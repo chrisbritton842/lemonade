@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
-  ArrowRight,
+  ArrowUpRight,
   Boxes,
   Calculator,
   GlassWater,
@@ -156,7 +156,7 @@ const HomePage = async () => {
                               {membership.cooperative.name}
                             </Heading>
 
-                            <ArrowRight
+                            <ArrowUpRight
                               size={20}
                               color="#0369A1"
                               aria-hidden="true"

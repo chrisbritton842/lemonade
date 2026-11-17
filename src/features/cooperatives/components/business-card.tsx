@@ -1,11 +1,11 @@
 import {
-    Badge,
     Button,
     Card,
     HStack,
     Stack,
     Text,
 } from "@chakra-ui/react";
+import { Check } from "lucide-react";
 import NextLink from "next/link";
 import type { BusinessCardCoop } from "@/features/cooperatives/types";
 import {
@@ -19,7 +19,7 @@ type BusinessCardProps = {
 };
 
 const BusinessCard = ({ coop }: BusinessCardProps) => {
-    const hasOpenJobOpenings = coop.jobOpenings.length > 0;
+    const showJobOpenings = !coop.isMember && coop.jobOpenings.length > 0;
 
     return (
         <Card.Root
@@ -30,66 +30,31 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                 <Stack gap={4}>
                     <Stack gap={2}>
                         <HStack justify="space-between" align="start" gap={3} wrap="wrap">
-                            <Text fontWeight="bold" fontSize="lg" color="app.text" overflowWrap="anywhere">
+                            <Text
+                                fontWeight="bold"
+                                fontSize="lg"
+                                color="app.text"
+                                overflowWrap="anywhere"
+                            >
                                 {coop.name}
                             </Text>
 
-                            <HStack gap={2} wrap="wrap">
-                                {coop.isMember && (
-                                    <Badge colorPalette="brand" variant="subtle">Member</Badge>
-                                )}
-
-                                {hasOpenJobOpenings && (
-                                    <Badge colorPalette="indigo" variant="subtle">
-                                        Now Hiring!
-                                    </Badge>
-                                )}
-                            </HStack> 
+                            {coop.isMember && (
+                                <HStack gap={1} color="app.mutedText" flexShrink={0}>
+                                    <Check size={15} aria-hidden="true" />
+                                    <Text fontSize="sm" fontWeight="medium">
+                                        Joined
+                                    </Text>
+                                </HStack>
+                            )} 
                         </HStack>
 
-                        <Text color="app.mutedText" fontSize="sm">
+                        <Text color="app.mutedText" fontSize="sm" overflowWrap="anywhere">
                             {coop.description || "No description yet."}
                         </Text>
                     </Stack>
 
-                    <HStack gap={2} wrap="wrap">
-                        <Badge
-                            variant="outline"
-                            color="app.mutedText"
-                            borderColor="app.border"
-                        >
-                            {coop.memberCount} member{coop.memberCount === 1 ? "" : "s"}
-                        </Badge>
-
-                        <Badge
-                            variant="outline"
-                            color="app.mutedText"
-                            borderColor="app.border"
-                        >
-                            {coop.taskCount} job{coop.taskCount === 1 ? "" : "s"}
-                        </Badge>
-
-                        <Badge
-                            variant="outline"
-                            color="app.mutedText"
-                            borderColor="app.border"
-                        >
-                            {coop.eventCount} event{coop.eventCount === 1 ? "" : "s"}
-                        </Badge>
-
-                        {hasOpenJobOpenings && (
-                            <Badge
-                                variant="outline"
-                                color="app.mutedText"
-                                borderColor="app.border"
-                            >
-                                {coop.jobOpenings.length} opening
-                                {coop.jobOpenings.length === 1 ? "" : "s"}
-                            </Badge>
-                        )}
-                    </HStack>
-
-                    {!coop.isMember && coop.jobOpenings.length > 0 && (
+                    {showJobOpenings && (
                         <BusinessCardJobOpenings
                             coopId={coop.id}
                             coopName={coop.name}
@@ -112,7 +77,7 @@ const BusinessCard = ({ coop }: BusinessCardProps) => {
                         {coop.isMember && (
                             <Button asChild colorPalette="brand" size="sm">
                                 <NextLink href={commandCenterPagePath(coop.id)}>
-                                    Open Command Center
+                                    Command Center
                                 </NextLink>
                             </Button>
                         )}

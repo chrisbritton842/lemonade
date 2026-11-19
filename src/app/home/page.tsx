@@ -87,13 +87,6 @@ const HomePage = async () => {
           id: true,
           name: true,
           description: true,
-          _count: {
-            select: {
-              memberships: true,
-              tasks: true,
-              events: true,
-            },
-          },
         },
       },
     },
@@ -107,7 +100,7 @@ const HomePage = async () => {
     >
       <Container maxW="4xl" py={8}>
         <Stack gap={8}>
-          <Heading size="lg" color="app.text">Your Businesses</Heading>
+          <Heading as="h1" size="lg" color="app.text">Your Businesses</Heading>
 
           {memberships.length === 0 ? (
             <Card.Root
@@ -116,7 +109,7 @@ const HomePage = async () => {
             >
               <Card.Body>
                 <Stack gap={1}>
-                  <Heading size="md" color="app.text">No businesses yet</Heading>
+                  <Heading as="h2" size="md" color="app.text">No businesses yet</Heading>
                   <Text color="app.mutedText">
                     Start a new lemonade business or join an existing one.
                   </Text>
@@ -132,11 +125,13 @@ const HomePage = async () => {
                   bg="app.surface"
                   borderColor="app.border"
                   cursor="pointer"
-                  transition="all 0.2s"
+                  textDecoration="none"
+                  transition="border-color 0.2s, box-shadow 0.2s, transform 0.2s"
                   _hover={{
                     borderColor: "brand.emphasized",
                     shadow: "md",
                     transform: "translateY(-2px)",
+                    textDecoration: "none",
                   }}
                   _focusVisible={{
                     outline: "2px solid",
@@ -149,22 +144,27 @@ const HomePage = async () => {
                     aria-label={`Open ${membership.cooperative.name} Command Center`}
                   >
                     <Card.Body>
-                      <Stack gap={4}>
-                        <Stack gap={2}>
+                      <Stack gap={3}>
                           <HStack justify="space-between" align="start" gap={3}>
-                            <Heading size="md" color="app.text">
+                            <Heading as="h2" size="md" color="app.text" flex={1} minW={0} overflowWrap="anywhere">
                               {membership.cooperative.name}
                             </Heading>
 
-                            <ArrowUpRight
-                              size={20}
-                              color="#0369A1"
-                              aria-hidden="true"
-                            />
+                            <Box
+                              as="span"
+                              display="inline-flex"
+                              color="brand.fg"
+                              flexShrink={0}
+                            >
+                              <ArrowUpRight
+                                size={20}
+                                aria-hidden="true"
+                              />
+                            </Box>
                           </HStack>
                           
                           {membership.cooperative.description && (
-                            <Text color="app.mutedText">
+                            <Text color="app.mutedText" overflowWrap="anywhere">
                               {membership.cooperative.description}
                             </Text>
                           )}
@@ -195,7 +195,6 @@ const HomePage = async () => {
                               )}
                             </HStack>
                           )}
-                        </Stack>
                       </Stack>
                     </Card.Body>
                   </NextLink>
